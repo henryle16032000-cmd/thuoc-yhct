@@ -1206,9 +1206,12 @@
         state.history = res.history || [];
         if (res.config) state.config = Object.assign(state.config, res.config);
 
-        document.getElementById("headerSub").textContent = res.demo
-          ? `${state.herbs.length} vị mẫu (Chưa dán SCRIPT_URL)`
-          : `${state.herbs.length} vị thuốc • Đồng bộ trực tiếp Google Sheet`;
+        const headerSub = document.getElementById("headerSub");
+        if (headerSub) {
+          headerSub.textContent = res.demo
+            ? `${state.herbs.length} vị mẫu (Chưa dán SCRIPT_URL)`
+            : `${state.herbs.length} vị thuốc • Đồng bộ trực tiếp Google Sheet`;
+        }
 
         setSyncStatus("ok", res.demo ? "Chế độ mẫu" : "Đã đồng bộ");
         populateFilters();
