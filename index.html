@@ -1383,7 +1383,7 @@
   <div class="modal-backdrop" id="addHerbModal" onclick="if(event.target===this) closeAddHerbModal()">
     <div class="modal-box">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-        <h2 style="margin:0; font-size:19px; color:var(--primary-dark);">➕ Thêm Vị Thuốc Mới</h2>
+        <h2 id="herbModalTitle" style="margin:0; font-size:19px; color:var(--primary-dark);">➕ Thêm Vị Thuốc Mới</h2>
         <button class="btn btn-outline btn-sm" onclick="closeAddHerbModal()">✖️ Đóng</button>
       </div>
 
@@ -1840,24 +1840,61 @@
       });
     }
 
-    // =========================================================================
-    // MODAL THÊM VỊ THUỐC MỚI
-    // =========================================================================
     function openAddHerbModal() {
+      state.editingHerbId = null;
       document.getElementById("addHerbForm").reset();
       state.newHerbImageData = null;
+      document.getElementById("herbModalTitle").textContent = "➕ Thêm Vị Thuốc Mới";
+      document.getElementById("btnSubmitNewHerb").textContent = "💾 Lưu vị thuốc";
       document.getElementById("newHerbImgPreview").innerHTML = `
         <div style="font-size:28px; margin-bottom:4px;">📷</div>
         <div style="font-size:13px; font-weight:700; color:var(--primary-dark);">Bấm để chọn 1 ảnh vị thuốc từ máy</div>
       `;
       const groups = [...new Set(state.herbs.map(h => String(h.Nhom_Thuoc || "").trim()).filter(Boolean))].sort();
       document.getElementById("existingGroupsList").innerHTML = groups.map(g => `<option value="${esc(g)}">`).join("");
-      document.getElementById("addHerbModal").classList.add("open");
       document.getElementById("newTenDupWarn").style.display = "none";
       document.getElementById("btnSubmitNewHerb").disabled = false;
+      document.getElementById("addHerbModal").classList.add("open");
+    }
+
+    function openEditHerbModal(id) {
+      const h = state.herbs.find(x => String(x.ID) === String(id));
+      if (!h) return;
+
+      state.editingHerbId = String(h.ID);
+      state.newHerbImageData = null;
+      document.getElementById("herbModalTitle").textContent = `✏️ Chỉnh Sửa: ${h.Ten_Vi_Thuoc}`;
+      document.getElementById("btnSubmitNewHerb").textContent = "💾 Lưu cập nhật";
+
+      document.getElementById("newTen").value = h.Ten_Vi_Thuoc || "";
+      document.getElementById("newTenKhac").value = h.Ten_Khac_Ten_Khoa_Hoc || "";
+      document.getElementById("newNhom").value = h.Nhom_Thuoc || "";
+      document.getElementById("newBpd").value = h.Bo_Phan_Dung || "";
+      document.getElementById("newTinh").value = h.Tinh || "";
+      document.getElementById("newVi").value = h.Vi || "";
+      document.getElementById("newQuyKinh").value = h.Quy_Kinh || "";
+      document.getElementById("newCongDung").value = h.Cong_Dung || "";
+      document.getElementById("newDacDiem").value = h.Dac_Diem_Nhan_Dien || "";
+      document.getElementById("newLuuY").value = h.Chu_Tri_Luu_Y || "";
+      document.getElementById("newDeNham").value = h.Thuoc_De_Nham || "";
+      document.getElementById("newGhiChu").value = h.Ghi_Chu || "";
+
+      const imgUrl = getSingleImage(h.Link_Anh_Vi_Thuoc);
+      document.getElementById("newHerbImgPreview").innerHTML = imgUrl
+        ? `<img src="${esc(imgUrl)}" alt="Ảnh hiện tại">
+           <div style="font-size:12px; color:var(--primary-dark); font-weight:700;">Bấm vào đây nếu muốn đổi ảnh mới (để nguyên nếu giữ ảnh cũ)</div>`
+        : `<div style="font-size:28px; margin-bottom:4px;">📷</div>
+           <div style="font-size:13px; font-weight:700; color:var(--primary-dark);">Bấm để chọn 1 ảnh bổ sung cho vị thuốc</div>`;
+
+      const groups = [...new Set(state.herbs.map(x => String(x.Nhom_Thuoc || "").trim()).filter(Boolean))].sort();
+      document.getElementById("existingGroupsList").innerHTML = groups.map(g => `<option value="${esc(g)}">`).join("");
+      document.getElementById("newTenDupWarn").style.display = "none";
+      document.getElementById("btnSubmitNewHerb").disabled = false;
+      document.getElementById("addHerbModal").classList.add("open");
     }
 
     function closeAddHerbModal() {
+      state.editingHerbId = null;
       document.getElementById("addHerbModal").classList.remove("open");
     }
 
@@ -1885,12 +1922,14 @@
         return;
       }
 
+      const isEdit = !!state.editingHerbId;
       const btn = document.getElementById("btnSubmitNewHerb");
       btn.disabled = true;
-      btn.textContent = "⏳ Đang lưu lên Drive & Sheet...";
-      setSyncStatus("syncing", "Đang thêm vị thuốc...");
+      btn.textContent = isEdit ? "⏳ Đang cập nhật..." : "⏳ Đang lưu lên Drive & Sheet...";
+      setSyncStatus("syncing", isEdit ? "Đang cập nhật..." : "Đang thêm vị thuốc...");
 
       const payload = {
+        ID: state.editingHerbId || "",
         Ten_Vi_Thuoc: ten,
         Ten_Khac_Ten_Khoa_Hoc: document.getElementById("newTenKhac").value.trim(),
         Nhom_Thuoc: document.getElementById("newNhom").value.trim(),
@@ -1910,28 +1949,42 @@
       };
 
       try {
-        const res = await apiPost("addHerb", payload);
+        const actionName = isEdit ? "updateHerb" : "addHerb";
+        const res = await apiPost(actionName, payload);
         if (!res || !res.success) {
-          throw new Error((res && res.message) || "Không thêm được vị thuốc.");
+          throw new Error((res && res.message) || "Không lưu được thông tin vị thuốc.");
         }
 
-        state.herbs.push(res.herb);
-        populateFilters();
-        updateTestSliderLimits();
-        buildFlashcardDeck();
+        if (isEdit) {
+          const idx = state.herbs.findIndex(x => String(x.ID) === String(res.herb.ID));
+          if (idx !== -1) state.herbs[idx] = res.herb;
+          const deckIdx = state.fcDeck.findIndex(x => String(x.ID) === String(res.herb.ID));
+          if (deckIdx !== -1) state.fcDeck[deckIdx] = res.herb;
+          populateFilters();
+          renderCurrentFlashcard();
+        } else {
+          state.herbs.push(res.herb);
+          populateFilters();
+          updateTestSliderLimits();
+          buildFlashcardDeck();
+        }
+
         renderCompareSelectors();
         renderLibrary();
         renderStatsAndHistory();
 
-        setSyncStatus("ok", "Đã thêm vị thuốc");
-        showToast(`Đã thêm "${res.herb.Ten_Vi_Thuoc}" (${res.herb.ID}) vào hệ thống!`);
+        setSyncStatus("ok", isEdit ? "Đã cập nhật" : "Đã thêm vị thuốc");
+        showToast(isEdit
+          ? `Đã cập nhật thông tin "${res.herb.Ten_Vi_Thuoc}"!`
+          : `Đã thêm "${res.herb.Ten_Vi_Thuoc}" (${res.herb.ID}) vào hệ thống!`
+        );
         closeAddHerbModal();
       } catch (err) {
         setSyncStatus("error", "Lỗi lưu");
         showToast(err.message);
       } finally {
         btn.disabled = false;
-        btn.textContent = "💾 Lưu vị thuốc";
+        btn.textContent = isEdit ? "💾 Lưu cập nhật" : "💾 Lưu vị thuốc";
       }
     }
 
@@ -1954,11 +2007,12 @@
       return keys;
     }
 
-    function findDuplicateHerb(tenInput, tenKhacInput) {
+    function findDuplicateHerb(tenInput, tenKhacInput, excludeId = null) {
       const newKeys = extractHerbKeysClient(tenInput, tenKhacInput);
       if (!newKeys.length) return null;
 
       for (const h of state.herbs) {
+        if (excludeId && String(h.ID) === String(excludeId)) continue;
         const existKeys = extractHerbKeysClient(h.Ten_Vi_Thuoc, h.Ten_Khac_Ten_Khoa_Hoc);
         if (newKeys.some(k => existKeys.includes(k))) {
           return h;
@@ -1973,10 +2027,10 @@
       const warn = document.getElementById("newTenDupWarn");
       const btn = document.getElementById("btnSubmitNewHerb");
 
-      const dup = findDuplicateHerb(ten, tenKhac);
+      const dup = findDuplicateHerb(ten, tenKhac, state.editingHerbId);
       if (dup) {
         const by = dup.Nguoi_Them ? ` — do ${dup.Nguoi_Them} thêm` : "";
-        warn.textContent = `⚠️ Đã có vị thuốc "${dup.Ten_Vi_Thuoc}" (${dup.ID})${by}. Không thể thêm trùng!`;
+        warn.textContent = `⚠️ Đã có vị thuốc "${dup.Ten_Vi_Thuoc}" (${dup.ID})${by}. Không thể trùng tên!`;
         warn.style.display = "block";
         btn.disabled = true;
         return dup;
@@ -2430,7 +2484,11 @@
     }
 
     function renderFcBack(herb) {
-      document.getElementById("fcBack").innerHTML = buildHerbDetailHTML(herb);
+      document.getElementById("fcBack").innerHTML = buildHerbDetailHTML(herb) + `
+        <div style="margin-top:auto; padding-top:12px; display:flex; justify-content:flex-end;">
+          <button class="btn btn-soft btn-sm" data-id="${esc(herb.ID)}" onclick="event.stopPropagation(); openEditHerbModal(this.dataset.id)">✏️ Sửa thông tin</button>
+        </div>
+      `;
     }
 
     function handleCardClick(e) {
@@ -3346,7 +3404,8 @@
       if (!h) return;
       const imgUrl = getSingleImage(h.Link_Anh_Vi_Thuoc);
       document.getElementById("detailModalBody").innerHTML = `
-        <div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:8px;">
+          <button class="btn btn-soft btn-sm" data-id="${esc(h.ID)}" onclick="closeDetailModal(); openEditHerbModal(this.dataset.id)">✏️ Sửa thông tin</button>
           <button class="btn btn-outline btn-sm" onclick="closeDetailModal()">✖️ Đóng</button>
         </div>
         ${imgUrl ? `<img src="${esc(imgUrl)}" style="width:100%; height:240px; object-fit:contain; background:#0F172A; border-radius:14px; margin-bottom:14px; cursor:zoom-in;" onclick="openLightbox('${esc(imgUrl)}')">` : ""}
