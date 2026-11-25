@@ -36,14 +36,87 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding-bottom: 84px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* LOGIN SCREEN */
+    .login-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: linear-gradient(145deg, #075985 0%, #0284C7 55%, #38BDF8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .login-overlay.hidden { display: none; }
+    .login-card {
+      background: #fff;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 24px;
+      padding: 28px 24px;
+      box-shadow: 0 24px 50px rgba(7, 89, 133, 0.35);
+      animation: fadeIn 0.28s ease;
+    }
+    .login-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: var(--primary-soft);
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      margin: 0 auto 14px;
+    }
+    .login-card h2 {
+      margin: 0 0 6px;
+      text-align: center;
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+    .login-card p.login-sub {
+      margin: 0 0 20px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .login-field { margin-bottom: 14px; }
+    .login-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    .login-err {
+      background: var(--danger-soft);
+      color: #991B1B;
+      border: 1px solid #FCA5A5;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .login-footer {
+      text-align: center;
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 18px;
+      font-weight: 600;
     }
 
     /* HEADER */
     .topbar {
       background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-light) 100%);
       color: #fff;
-      padding: 16px 20px;
+      padding: 14px 18px;
       position: sticky;
       top: 0;
       z-index: 40;
@@ -55,7 +128,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
     .brand {
@@ -79,13 +152,24 @@
       font-weight: 800;
       letter-spacing: -0.3px;
     }
-    .brand small {
-      display: block;
-      font-size: 11.5px;
-      opacity: 0.9;
-      font-weight: 500;
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
-
+    .user-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.16);
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.22);
+      color: #fff;
+    }
     .sync-pill {
       display: inline-flex;
       align-items: center;
@@ -94,13 +178,14 @@
       padding: 6px 12px;
       border-radius: 999px;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       border: 1px solid rgba(255,255,255,0.25);
       color: #fff;
+      font-family: inherit;
       transition: 0.2s;
     }
-    .sync-pill:hover { background: rgba(255,255,255,0.28); }
+    .sync-pill:hover { background: rgba(255,255,255,0.3); }
     .dot { width: 8px; height: 8px; border-radius: 50%; background: #4ADE80; }
     .dot.syncing { background: #FACC15; animation: pulse 1s infinite; }
     .dot.error { background: #F87171; }
@@ -109,6 +194,7 @@
     /* NAV TABS */
     .nav-wrap {
       max-width: 1060px;
+      width: 100%;
       margin: 14px auto 0;
       padding: 0 16px;
     }
@@ -147,8 +233,10 @@
     /* MAIN CONTAINER */
     .container {
       max-width: 1060px;
-      margin: 16px auto;
+      width: 100%;
+      margin: 16px auto 0;
       padding: 0 16px;
+      flex: 1;
     }
     .view { display: none; }
     .view.active { display: block; animation: fadeIn 0.22s ease; }
@@ -200,6 +288,17 @@
       background: #fff;
     }
 
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+      cursor: pointer;
+      height: 6px;
+    }
+    input[type="range"]:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
     .btn {
       font-family: inherit;
       font-weight: 700;
@@ -215,6 +314,7 @@
       transition: transform 0.12s, box-shadow 0.2s, background 0.2s;
     }
     .btn:active { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-primary {
       background: linear-gradient(135deg, var(--primary-dark), var(--primary));
       color: #fff;
@@ -242,11 +342,13 @@
       font-weight: 700;
       color: var(--muted);
       gap: 10px;
-      flex-wrap: wrap;
+      max-width: 780px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .fc-stage {
       perspective: 1400px;
-      max-width: 720px;
+      max-width: 780px;
       margin: 0 auto;
     }
     .fc-card {
@@ -276,7 +378,7 @@
     }
     .fc-back {
       transform: rotateY(180deg);
-      cursor: default;
+      cursor: pointer;
     }
 
     .fc-img-box {
@@ -301,8 +403,30 @@
       text-align: center;
       color: #CBD5E1;
       padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      height: 100%;
     }
-    .no-img-placeholder .emoji { font-size: 46px; display: block; margin-bottom: 8px; }
+    .no-img-placeholder .emoji { font-size: 44px; display: block; }
+    .upload-cta-btn {
+      margin-top: 6px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);
+      transition: transform 0.15s;
+    }
+    .upload-cta-btn:active { transform: scale(0.96); }
 
     .img-toolbar {
       position: absolute;
@@ -321,6 +445,7 @@
       border: 1px solid rgba(255,255,255,0.2);
       border-radius: 999px;
       padding: 6px 12px;
+      font-family: inherit;
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
@@ -395,8 +520,19 @@
       line-height: 1.55;
     }
     .info-list li { margin-bottom: 3px; }
+    @media (min-width: 721px) {
+      .info-list.two-col {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 24px;
+        row-gap: 4px;
+      }
+    }
+
     .chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
-    .confuse-link {
+    .confuse-chip {
+      display: inline-flex;
+      align-items: center;
       background: #FEF2F2;
       color: #B91C1C;
       border: 1px solid #FECACA;
@@ -404,13 +540,11 @@
       padding: 4px 10px;
       font-size: 12.5px;
       font-weight: 700;
-      cursor: pointer;
     }
-    .confuse-link:hover { background: #FEE2E2; }
 
     /* SRS ACTION BAR */
     .srs-bar {
-      max-width: 720px;
+      max-width: 780px;
       margin: 14px auto 0;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -431,13 +565,12 @@
       transition: transform 0.12s;
     }
     .srs-btn:active { transform: scale(0.96); }
-    .srs-btn small { font-size: 11px; font-weight: 600; opacity: 0.85; }
     .srs-forgot { background: var(--danger-soft); color: #991B1B; border: 1.5px solid #FCA5A5; }
     .srs-hard { background: var(--warn-soft); color: #92400E; border: 1.5px solid #FCD34D; }
     .srs-good { background: var(--success-soft); color: #065F46; border: 1.5px solid #6EE7B7; }
 
     .fc-nav-row {
-      max-width: 720px;
+      max-width: 780px;
       margin: 12px auto 0;
       display: flex;
       justify-content: space-between;
@@ -445,31 +578,41 @@
       gap: 10px;
     }
 
-    /* TEST MODE */
+    /* TEST MODE (CHẠY TRẠM) */
     .setup-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
     }
-    .preset-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 6px;
-    }
-    .preset-chip {
-      padding: 5px 10px;
-      border-radius: 999px;
+    .slider-card {
+      background: #F8FAFC;
       border: 1.5px solid var(--border);
-      background: #fff;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--primary-dark);
-      cursor: pointer;
+      border-radius: 14px;
+      padding: 12px 14px;
     }
-    .preset-chip.active, .preset-chip:hover {
+    .slider-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .slider-val {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--primary-dark);
       background: var(--primary-soft);
-      border-color: var(--primary);
+      padding: 3px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .slider-bounds {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 4px;
     }
 
     .checkbox-group {
@@ -502,9 +645,9 @@
       margin-bottom: 12px;
     }
     .timer-box {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 800;
-      padding: 8px 18px;
+      padding: 8px 16px;
       border-radius: 14px;
       background: var(--primary-soft);
       color: var(--primary-dark);
@@ -529,30 +672,101 @@
       transition: width 0.3s ease;
     }
 
+    /* 4 Ô NHẬP ĐÁP ÁN TRẠM THI */
+    .station-inputs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .station-input-card {
+      background: #F8FAFC;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+    .station-input-card.full { grid-column: 1 / -1; }
+    .station-input-card label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .station-input-card label span.pt-tag {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: none;
+    }
+
+    /* REVIEW & AUTO-GRADING CARD */
     .grade-item {
       border: 1.5px solid var(--border);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 14px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       background: #fff;
-      display: grid;
-      grid-template-columns: 110px 1fr;
+    }
+    .grade-top {
+      display: flex;
       gap: 14px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
     }
     .grade-thumb {
-      width: 110px;
-      height: 110px;
+      width: 96px;
+      height: 96px;
       border-radius: 12px;
       object-fit: cover;
       background: #0F172A;
       cursor: zoom-in;
+      flex-shrink: 0;
     }
-    .criteria-checks {
+    .crit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .crit-box {
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #F8FAFC;
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
+      flex-direction: column;
+      gap: 4px;
     }
+    .crit-box.ok { border-color: #6EE7B7; background: #F0FDF4; }
+    .crit-box.partial { border-color: #FCD34D; background: #FFFBEB; }
+    .crit-box.miss { border-color: #FCA5A5; background: #FEF2F2; }
+    .crit-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+    .crit-title { font-size: 12px; font-weight: 800; text-transform: uppercase; color: var(--text); }
+    .crit-toggle-btn {
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1.5px solid currentColor;
+      background: #fff;
+      cursor: pointer;
+    }
+    .crit-box.ok .crit-toggle-btn { color: #059669; }
+    .crit-box.partial .crit-toggle-btn { color: #D97706; }
+    .crit-box.miss .crit-toggle-btn { color: #DC2626; }
+    .crit-ans { font-size: 12.5px; line-height: 1.45; }
+    .crit-ans b { color: var(--primary-dark); }
+    .crit-note { font-size: 11.5px; color: var(--muted); font-style: italic; }
 
     /* COMPARE SPLIT-SCREEN */
     .compare-grid {
@@ -590,9 +804,13 @@
       border-radius: 16px;
       padding: 14px;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
     }
-    .stat-num { font-size: 24px; font-weight: 800; color: var(--primary-dark); }
-    .stat-lbl { font-size: 12px; font-weight: 600; color: var(--muted); margin-top: 2px; }
+    .stat-lbl { font-size: 12.5px; font-weight: 700; color: var(--muted); }
+    .stat-num { font-size: 26px; font-weight: 800; color: var(--primary-dark); line-height: 1.1; }
 
     .herb-grid {
       display: grid;
@@ -618,15 +836,15 @@
     }
     .herb-card-body { padding: 12px 14px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
 
-    /* LIGHTBOX MODAL */
+    /* MODALS */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.8);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 100;
+      z-index: 150;
       padding: 16px;
     }
     .modal-backdrop.open { display: flex; }
@@ -639,12 +857,52 @@
     .modal-box {
       background: #fff;
       border-radius: 20px;
-      max-width: 620px;
+      max-width: 700px;
       width: 100%;
-      max-height: 88vh;
+      max-height: 90vh;
       overflow-y: auto;
       padding: 20px;
       position: relative;
+    }
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .form-field { display: flex; flex-direction: column; gap: 4px; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .img-preview-box {
+      border: 1.5px dashed #94A3B8;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      background: #F8FAFC;
+      cursor: pointer;
+    }
+    .img-preview-box img {
+      max-height: 170px;
+      max-width: 100%;
+      border-radius: 10px;
+      object-fit: contain;
+      margin-bottom: 8px;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      max-width: 1060px;
+      width: 100%;
+      margin: 28px auto 0;
+      padding: 18px 16px 26px;
+      text-align: center;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
     }
 
     /* TOAST */
@@ -659,10 +917,12 @@
       border-radius: 999px;
       font-size: 13px;
       font-weight: 600;
-      z-index: 120;
+      z-index: 250;
       opacity: 0;
       transition: 0.25s;
       box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      max-width: 92vw;
+      text-align: center;
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
@@ -682,19 +942,60 @@
       color: var(--muted);
     }
 
+    .preset-chip {
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      cursor: pointer;
+    }
+    .preset-chip:hover { background: var(--primary-soft); border-color: var(--primary); }
+
     @media (max-width: 720px) {
       .nav-tabs { gap: 4px; padding: 5px; }
       .nav-btn { font-size: 12px; padding: 9px 4px; flex-direction: column; gap: 3px; }
-      .compare-grid { grid-template-columns: 1fr; }
+      .compare-grid, .station-inputs, .crit-grid, .form-grid-2 { grid-template-columns: 1fr; }
       .stat-grid { grid-template-columns: repeat(2, 1fr); }
-      .grade-item { grid-template-columns: 1fr; }
-      .grade-thumb { width: 100%; height: 170px; object-fit: contain; }
       .fc-card { min-height: 450px; }
       .fc-img-box { height: 240px; }
+      .user-chip span.hide-sm { display: none; }
     }
   </style>
 </head>
 <body>
+
+  <!-- MÀN HÌNH ĐĂNG NHẬP TỔ HỌC TẬP -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+      <div class="login-logo">🌿</div>
+      <h2>Thực Hành Thuốc YHCT</h2>
+      <p class="login-sub">Đăng nhập bằng Họ tên và MSSV để đồng bộ tiến độ học riêng của bạn</p>
+
+      <div class="login-err" id="loginError"></div>
+
+      <form onsubmit="handleLogin(event)">
+        <div class="login-field">
+          <label for="loginHoTen">Họ và tên</label>
+          <input type="text" id="loginHoTen" placeholder="Ví dụ: Lê Thanh Hải" autocomplete="name" required>
+        </div>
+        <div class="login-field">
+          <label for="loginMssv">Mã số sinh viên (MSSV)</label>
+          <input type="text" id="loginMssv" placeholder="Nhập MSSV của bạn" autocomplete="username" required>
+        </div>
+        <button type="submit" class="btn btn-primary" id="btnLoginSubmit" style="width:100%; padding:13px; margin-top:4px;">
+          Vào học ngay →
+        </button>
+      </form>
+
+      <div class="login-footer">This website was developed by Thanh Hai</div>
+    </div>
+  </div>
+
+  <!-- INPUT ẨN CHỌN 1 ẢNH CHO FLASHCARD -->
+  <input type="file" id="herbImgInput" accept="image/*" style="display:none" onchange="handleHerbImageSelected(event)">
 
   <!-- TOP BAR -->
   <header class="topbar">
@@ -705,10 +1006,21 @@
           <h1>Thực Hành Thuốc YHCT</h1>
         </div>
       </div>
-      <button class="sync-pill" onclick="loadData(true)" title="Tải lại dữ liệu từ Google Sheet">
-        <span class="dot" id="syncDot"></span>
-        <span id="syncText">Đồng bộ</span>
-      </button>
+      <div class="header-actions">
+        <span class="user-chip" id="userChip" style="display:none;">
+          👤 <span id="userChipName"></span>
+        </span>
+        <button class="sync-pill" onclick="openAddHerbModal()" title="Thêm vị thuốc mới vào hệ thống">
+          ➕ <span>Thêm vị thuốc</span>
+        </button>
+        <button class="sync-pill" onclick="loadData(true)" title="Tải lại dữ liệu từ Google Sheet">
+          <span class="dot" id="syncDot"></span>
+          <span id="syncText">Đồng bộ</span>
+        </button>
+        <button class="sync-pill" onclick="logoutUser()" title="Đăng xuất tài khoản">
+          🚪 <span>Đăng xuất</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -757,24 +1069,18 @@
       <div id="fcEmpty" class="panel" style="display:none; text-align:center; padding:36px;">
         <div style="font-size:40px; margin-bottom:8px;">🎉</div>
         <h3 style="margin:0 0 6px;">Không có vị thuốc nào trong bộ lọc này</h3>
-        <p style="color:var(--muted); margin:0 0 14px;">Bạn hãy đổi bộ lọc sang "Tất cả vị thuốc" hoặc thêm dữ liệu vào Google Sheet nhé.</p>
+        <p style="color:var(--muted); margin:0 0 14px;">Bạn hãy đổi bộ lọc sang "Tất cả vị thuốc" hoặc thêm vị thuốc mới nhé.</p>
         <button class="btn btn-primary btn-sm" onclick="resetFcFilters()">Xem tất cả vị thuốc</button>
       </div>
 
       <div id="fcWorkspace">
         <div class="fc-meta-bar">
           <span id="fcCounter">Thẻ 1 / 1</span>
-          <div style="display:flex; gap:6px; align-items:center;">
-            <span class="badge b-blue" id="fcBoxBadge">Box 1</span>
-            <span class="badge b-slate" id="fcStatBadge">Đúng 0 • Sai 0</span>
-          </div>
         </div>
 
         <div class="fc-stage">
           <div class="fc-card" id="fcCard" onclick="handleCardClick(event)">
-            <!-- FRONT -->
             <div class="fc-face fc-front" id="fcFront"></div>
-            <!-- BACK -->
             <div class="fc-face fc-back" id="fcBack"></div>
           </div>
         </div>
@@ -793,55 +1099,61 @@
 
         <div class="fc-nav-row">
           <button class="btn btn-outline btn-sm" onclick="prevCard()">⬅️ Thẻ trước</button>
-          <small style="color:var(--muted); text-align:center;">Chạm thẻ để lật</small>
+          <small style="color:var(--muted); text-align:center;">Chạm thẻ để lật • Quẹt trái/phải đổi vị</small>
           <button class="btn btn-outline btn-sm" onclick="nextCard()">Thẻ sau ➡️</button>
         </div>
       </div>
     </section>
 
-    <!-- ==================== TAB 2: THI CHẠY TRẠM ==================== -->
+    <!-- ==================== TAB 2: THI THỬ (CHẠY TRẠM) ==================== -->
     <section id="view-test" class="view">
       <!-- STEP A: SETUP -->
       <div id="testSetup">
         <div class="panel">
-          <h2 style="margin:0 0 14px; font-size:19px; color:var(--primary-dark);">⚙️ Cài Đặt Bài Thi Chạy Trạm</h2>
+          <h2 style="margin:0 0 14px; font-size:20px; color:var(--primary-dark);">⏰ Chạy trạm</h2>
           <div class="setup-grid">
-            <div>
-              <label style="font-size:12px; font-weight:700; color:var(--muted);">SỐ CÂY THUỐC (SỐ TRẠM)</label>
-              <input type="number" id="cfgCount" min="1" max="200" value="10" style="margin-top:4px;">
-              <div class="preset-row">
-                <button class="preset-chip" onclick="setVal('cfgCount', 5)">5 cây</button>
-                <button class="preset-chip" onclick="setVal('cfgCount', 10)">10 cây</button>
-                <button class="preset-chip" onclick="setVal('cfgCount', 15)">15 cây</button>
-                <button class="preset-chip" onclick="setVal('cfgCount', 20)">20 cây</button>
-                <button class="preset-chip" onclick="setVal('cfgCount', state.herbs.length || 10)">Tất cả</button>
+
+            <!-- THANH KÉO SỐ CÂY THUỐC -->
+            <div class="slider-card">
+              <div class="slider-head">
+                <label style="font-size:12px; font-weight:800; color:var(--muted);">SỐ CÂY THUỐC (SỐ TRẠM)</label>
+                <span class="slider-val" id="cfgCountLabel">1 / 1 cây</span>
+              </div>
+              <input type="range" id="cfgCountSlider" min="1" max="1" value="1" oninput="updateCountLabel()">
+              <div class="slider-bounds">
+                <span>1 cây</span>
+                <span id="cfgCountMaxText">Tối đa 1 cây</span>
               </div>
             </div>
 
-            <div>
-              <label style="font-size:12px; font-weight:700; color:var(--muted);">THỜI GIAN MỖI TRẠM (GIÂY) — 0 LÀ KHÔNG GIỚI HẠN</label>
-              <input type="number" id="cfgTime" min="0" max="600" value="45" style="margin-top:4px;">
-              <div class="preset-row">
-                <button class="preset-chip" onclick="setVal('cfgTime', 20)">20s</button>
-                <button class="preset-chip" onclick="setVal('cfgTime', 30)">30s</button>
-                <button class="preset-chip" onclick="setVal('cfgTime', 45)">45s</button>
-                <button class="preset-chip" onclick="setVal('cfgTime', 60)">60s</button>
-                <button class="preset-chip" onclick="setVal('cfgTime', 0)">Tự do</button>
+            <!-- THANH KÉO THỜI GIAN MỖI TRẠM (1s - 90s + KHÔNG GIỚI HẠN) -->
+            <div class="slider-card">
+              <div class="slider-head">
+                <label style="font-size:12px; font-weight:800; color:var(--muted);">THỜI GIAN MỖI TRẠM (GIÂY)</label>
+                <span class="slider-val" id="cfgTimeLabel">45 giây</span>
+              </div>
+              <input type="range" id="cfgTimeSlider" min="1" max="90" value="45" oninput="updateTimeLabel()">
+              <div class="slider-bounds" style="align-items:center; margin-top:6px;">
+                <span>1s — 90s</span>
+                <label style="display:inline-flex; align-items:center; gap:5px; cursor:pointer; color:var(--primary-dark); font-weight:700; font-size:12px;">
+                  <input type="checkbox" id="cfgUnlimitedTime" onchange="updateTimeLabel()" style="width:14px; height:14px; accent-color:var(--primary);">
+                  Không giới hạn
+                </label>
               </div>
             </div>
 
             <div>
               <label style="font-size:12px; font-weight:700; color:var(--muted);">KIỂU CHẠY TRẠM</label>
               <select id="cfgStyle" style="margin-top:4px;">
-                <option value="exam">Thi thật (Chạy liên tục → Cuối bài tự chấm)</option>
-                <option value="drill">Luyện phản xạ (Chấm đáp án ngay từng trạm)</option>
+                <option value="exam">Thi thật</option>
+                <option value="drill">Luyện tập</option>
               </select>
             </div>
 
             <div>
               <label style="font-size:12px; font-weight:700; color:var(--muted);">CHẾ ĐỘ BỐC ĐỀ</label>
               <select id="cfgPool" style="margin-top:4px;">
-                <option value="weighted">Ưu tiên các cây hay sai / chưa thuộc</option>
+                <option value="weighted">Ưu tiên các cây chưa thuộc</option>
                 <option value="random">Ngẫu nhiên đều tất cả</option>
                 <option value="weakOnly">Chỉ bốc các cây chưa thuộc</option>
               </select>
@@ -849,19 +1161,16 @@
           </div>
 
           <div style="margin-top:16px;">
-            <label style="font-size:12px; font-weight:700; color:var(--muted);">CHỌN NHÓM THUỐC (Để trống hoặc chọn tất cả)</label>
+            <label style="font-size:12px; font-weight:700; color:var(--muted);">CHỌN NHÓM THUỐC</label>
             <div id="testGroupChecks" class="checkbox-group"></div>
           </div>
 
-          <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:14px; padding-top:12px; border-top:1px solid var(--border);">
+          <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:12px; padding-top:12px; border-top:1px solid var(--border);">
             <label class="check-pill">
               <input type="checkbox" id="cfgAutoNext" checked> Tự động chuyển trạm khi hết giờ
             </label>
             <label class="check-pill">
               <input type="checkbox" id="cfgSound" checked> Tiếng bíp 5s cuối & chuông hết trạm
-            </label>
-            <label class="check-pill">
-              <input type="checkbox" id="cfgSaveDefault"> Lưu làm mặc định lên Sheet
             </label>
           </div>
 
@@ -884,15 +1193,30 @@
 
           <div class="progress-track"><div class="progress-fill" id="testProgressFill" style="width:10%"></div></div>
 
-          <div class="fc-img-box" id="testImgBox" style="height:310px;"></div>
+          <div class="fc-img-box" id="testImgBox" style="height:290px;"></div>
 
-          <div id="testExamInputWrap">
-            <label style="font-size:12px; font-weight:700; color:var(--muted);">GHI CHÚ NHÁP NHANH (Tùy chọn — hoặc nhẩm/ghi ra giấy):</label>
-            <textarea id="testNoteInput" rows="2" placeholder="Tên vị thuốc, tính vị, quy kinh, công dụng..." style="margin-top:6px;"></textarea>
+          <!-- 4 Ô NHẬP RIÊNG BIỆT -->
+          <div id="testInputsWrap" class="station-inputs">
+            <div class="station-input-card">
+              <label>Tên <span class="pt-tag">0,2 đ</span></label>
+              <input type="text" id="ansTen" placeholder="Nhập tên vị thuốc..." autocomplete="off">
+            </div>
+            <div class="station-input-card">
+              <label>Tính - vị <span class="pt-tag">0,25 đ</span></label>
+              <input type="text" id="ansTinhVi" placeholder="VD: Ôn, ngọt (hoặc ấm, cam)..." autocomplete="off">
+            </div>
+            <div class="station-input-card full">
+              <label>Quy kinh <span class="pt-tag">0,25 đ</span></label>
+              <input type="text" id="ansQuyKinh" placeholder="VD: Tâm, Phế, Tỳ, Vị..." autocomplete="off">
+            </div>
+            <div class="station-input-card full">
+              <label>Công dụng <span class="pt-tag">0,3 đ</span></label>
+              <textarea id="ansCongDung" rows="2" placeholder="Nhập các công dụng chính (cách nhau bởi dấu phẩy hoặc chấm phẩy)..."></textarea>
+            </div>
           </div>
 
-          <!-- Đáp án hiện ngay khi ở chế độ Luyện phản xạ -->
-          <div id="testDrillReveal" style="display:none; margin-top:14px; padding:14px; background:#F8FAFC; border-radius:14px; border:1px solid var(--border);"></div>
+          <!-- ĐÁP ÁN & TỰ CHẤM NGAY Ở CHẾ ĐỘ LUYỆN TẬP -->
+          <div id="testDrillReveal" style="display:none; margin-top:14px;"></div>
 
           <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap; justify-content:space-between;">
             <div style="display:flex; gap:8px;">
@@ -904,22 +1228,25 @@
         </div>
       </div>
 
-      <!-- STEP C: GRADING & SUMMARY -->
+      <!-- STEP C: GRADING & REVIEW -->
       <div id="testGrading" style="display:none;">
         <div class="panel">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
             <div>
-              <h2 style="margin:0; font-size:20px; color:var(--primary-dark);">📝 Tự Chấm & Tổng Kết Bài Chạy Trạm</h2>
-              <small style="color:var(--muted);">Đối chiếu đáp án và chọn Đúng / Sai cho từng trạm để lưu lịch sử</small>
+              <h2 style="margin:0; font-size:20px; color:var(--primary-dark);">📝 Kết Quả & Review Chạy Trạm</h2>
+              <small style="color:var(--muted);">Hệ thống đã tự chấm (thang 100). Bấm vào từng mục nhỏ nếu muốn sửa lại kết quả chấm.</small>
             </div>
-            <div class="badge b-blue" style="font-size:15px; padding:8px 14px;" id="gradeLiveScore">0 / 0 đúng</div>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+              <div class="badge b-blue" style="font-size:17px; padding:8px 16px;" id="gradeLiveScore">0 / 100 điểm</div>
+              <div class="badge b-slate" style="font-size:13px; padding:6px 12px;" id="gradePassCount">Đạt 0/0 trạm</div>
+            </div>
           </div>
 
           <div id="gradeList"></div>
 
           <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
             <button class="btn btn-primary" id="btnSaveTest" onclick="submitTestGrades()">💾 Lưu Kết Quả Lên Google Sheet</button>
-            <button class="btn btn-soft" id="btnReviewWrong" style="display:none;" onclick="reviewWrongInFlashcard()">🃏 Ôn Flashcard ngay các cây vừa sai</button>
+            <button class="btn btn-soft" id="btnReviewWrong" style="display:none;" onclick="reviewWrongInFlashcard()">🃏 Ôn Flashcard ngay các cây chưa đạt</button>
             <button class="btn btn-outline" onclick="resetTestUI()">🔁 Làm bài test mới</button>
           </div>
         </div>
@@ -957,7 +1284,7 @@
         <div class="controls-grid">
           <div class="control-item" style="min-width:210px;">
             <label>Tìm kiếm nhanh</label>
-            <input type="text" id="libSearch" placeholder="Tên thuốc, công dụng, đặc điểm..." oninput="renderLibrary()">
+            <input type="text" id="libSearch" placeholder="Nhập tên vị thuốc..." oninput="renderLibrary()">
           </div>
           <div class="control-item">
             <label>Nhóm thuốc</label>
@@ -981,17 +1308,18 @@
       <div class="herb-grid" id="libGrid"></div>
 
       <div class="panel" style="margin-top:20px;">
-        <h3 style="margin:0 0 10px; font-size:16px; color:var(--primary-dark);">📊 Lịch Sử Thi Chạy Trạm</h3>
+        <h3 style="margin:0 0 10px; font-size:16px; color:var(--primary-dark);">📊 Lịch Sử Thi Chạy Trạm Của Bạn</h3>
         <div style="overflow-x:auto;">
           <table class="hist-table">
             <thead>
               <tr>
                 <th>Thời gian</th>
+                <th>Kiểu thi</th>
                 <th>Nhóm lọc</th>
                 <th>Số trạm</th>
                 <th>Thời gian/trạm</th>
-                <th>Kết quả</th>
-                <th>Các vị làm sai</th>
+                <th>Điểm (/100)</th>
+                <th>Các vị cần ôn lại</th>
               </tr>
             </thead>
             <tbody id="historyBody"></tbody>
@@ -1001,6 +1329,11 @@
     </section>
 
   </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    This website was developed by Thanh Hai
+  </footer>
 
   <!-- LIGHTBOX PHÓNG TO ẢNH -->
   <div class="modal-backdrop" id="lightbox" onclick="closeLightbox()">
@@ -1012,22 +1345,95 @@
     <div class="modal-box" id="detailModalBody"></div>
   </div>
 
+  <!-- MODAL THÊM VỊ THUỐC MỚI -->
+  <div class="modal-backdrop" id="addHerbModal" onclick="if(event.target===this) closeAddHerbModal()">
+    <div class="modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <h2 style="margin:0; font-size:19px; color:var(--primary-dark);">➕ Thêm Vị Thuốc Mới</h2>
+        <button class="btn btn-outline btn-sm" onclick="closeAddHerbModal()">✖️ Đóng</button>
+      </div>
+
+      <form id="addHerbForm" onsubmit="submitNewHerb(event)">
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label>Tên vị thuốc *</label>
+            <input type="text" id="newTen" placeholder="VD: Đẳng sâm" required>
+          </div>
+          <div class="form-field">
+            <label>Tên khác / Tên khoa học</label>
+            <input type="text" id="newTenKhac" placeholder="VD: Radix Codonopsis">
+          </div>
+          <div class="form-field">
+            <label>Nhóm thuốc</label>
+            <input type="text" id="newNhom" list="existingGroupsList" placeholder="VD: Bổ khí">
+            <datalist id="existingGroupsList"></datalist>
+          </div>
+          <div class="form-field">
+            <label>Bộ phận dùng</label>
+            <input type="text" id="newBpd" placeholder="VD: Rễ">
+          </div>
+          <div class="form-field">
+            <label>Tính</label>
+            <input type="text" id="newTinh" placeholder="VD: Bình, Ôn, Hàn, Lương...">
+          </div>
+          <div class="form-field">
+            <label>Vị</label>
+            <input type="text" id="newVi" placeholder="VD: Ngọt (Cam), Đắng (Khổ)...">
+          </div>
+          <div class="form-field full">
+            <label>Quy kinh</label>
+            <input type="text" id="newQuyKinh" placeholder="VD: Tỳ, Phế">
+          </div>
+          <div class="form-field full">
+            <label>Công dụng (ngăn cách từng công dụng bằng dấu chấm phẩy ;)</label>
+            <textarea id="newCongDung" rows="3" placeholder="VD: Bổ trung ích khí; Sinh tân dưỡng huyết; Kiện tỳ ích phế"></textarea>
+          </div>
+          <div class="form-field full">
+            <label>Đặc điểm nhận diện</label>
+            <textarea id="newDacDiem" rows="2" placeholder="Màu sắc, mặt cắt, thể chất, mùi vị..."></textarea>
+          </div>
+          <div class="form-field full">
+            <label>Chủ trị / Lưu ý / Kiêng kỵ</label>
+            <input type="text" id="newLuuY" placeholder="Tương phản, thận trọng...">
+          </div>
+          <div class="form-field">
+            <label>Thuốc dễ nhầm</label>
+            <input type="text" id="newDeNham" placeholder="VD: Hoàng kỳ, Cam thảo">
+          </div>
+          <div class="form-field">
+            <label>Ghi chú</label>
+            <input type="text" id="newGhiChu" placeholder="Ghi chú thêm (nếu có)">
+          </div>
+          <div class="form-field full">
+            <label>Ảnh vị thuốc (tối đa 1 ảnh — tự động lưu lên Drive & Sheet)</label>
+            <input type="file" id="newHerbFile" accept="image/*" style="display:none" onchange="previewNewHerbImage(event)">
+            <div class="img-preview-box" onclick="document.getElementById('newHerbFile').click()">
+              <div id="newHerbImgPreview">
+                <div style="font-size:28px; margin-bottom:4px;">📷</div>
+                <div style="font-size:13px; font-weight:700; color:var(--primary-dark);">Bấm để chọn 1 ảnh vị thuốc từ máy</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px;">
+          <button type="button" class="btn btn-outline" onclick="closeAddHerbModal()">Hủy</button>
+          <button type="submit" class="btn btn-primary" id="btnSubmitNewHerb">💾 Lưu vị thuốc</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
   <script>
-    // =========================================================================
-    // CẤU HÌNH KẾT NỐI:
-    // - Nếu đẩy lên GitHub / Vercel: Dán link Apps Script Web App (/exec) vào đây
-    // - Nếu dán index.html trực tiếp trong Apps Script: Để trống ""
-    // =========================================================================
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbznH_BVZNh_eIJpjUxp7Z4HS1VccEKQlr7eRBV4v2o_INrXJABM797lHoyRHQgxwRLaCA/exec";
+    const STORAGE_USER_KEY = "yhct_logged_user_v1";
 
-    // =========================================================================
-    // TRẠNG THÁI ỨNG DỤNG
-    // =========================================================================
     const state = {
+      user: null, // { mssv, hoTen, vaiTro }
       herbs: [],
-      progressMap: {}, // { ID_Thuoc: record }
+      progressMap: {},
       history: [],
       config: {
         Thoi_Gian_Tram_Mac_Dinh_Giay: 45,
@@ -1036,23 +1442,26 @@
         Am_Thanh_Bao_Het_Gio: true,
         Che_Do_Uu_Tien_Cau_Sai: true
       },
-      // Flashcard state
+      // Flashcard
       fcDeck: [],
       fcIndex: 0,
       fcFlipped: false,
       fcHintLevel: 0,
-      fcImgIndex: 0,
-      fcShowFresh: false,
-      // Test state
+      // Upload ảnh trên flashcard
+      uploadingHerbId: null,
+      uploadTarget: null,
+      // Ảnh cho modal thêm vị thuốc mới
+      newHerbImageData: null, // { base64, mimeType }
+      // Test chạy trạm
       test: {
         active: false,
         paused: false,
-        style: 'exam', // 'exam' | 'drill'
+        style: 'exam',
         timePerStation: 45,
         autoNext: true,
         sound: true,
         groupLabel: 'Tất cả',
-        stations: [], // [{ herb, imgUrl, note, revealed, isCorrect, criteria }]
+        stations: [],
         index: 0,
         timeLeft: 45,
         timerId: null,
@@ -1063,50 +1472,23 @@
     let audioCtx = null;
 
     // =========================================================================
-    // API LAYER (Hỗ trợ cả Fetch CORS-free và google.script.run)
+    // API LAYER
     // =========================================================================
     function isGasEmbedded() {
       return !SCRIPT_URL && typeof google !== 'undefined' && google.script && google.script.run;
     }
 
-    async function apiGetAll() {
+    async function apiGetAll(mssv) {
       if (SCRIPT_URL) {
-        const res = await fetch(SCRIPT_URL + "?action=getData&t=" + Date.now());
+        const res = await fetch(SCRIPT_URL + "?action=getData&mssv=" + encodeURIComponent(mssv || "") + "&t=" + Date.now());
         return await res.json();
       }
       if (isGasEmbedded()) {
         return new Promise((resolve, reject) => {
-          google.script.run.withSuccessHandler(resolve).withFailureHandler(reject).getAllData();
+          google.script.run.withSuccessHandler(resolve).withFailureHandler(reject).getAllData(mssv || "");
         });
       }
-      // Fallback dữ liệu mẫu nếu người dùng mở file HTML cục bộ chưa gắn SCRIPT_URL
-      return {
-        success: true,
-        demo: true,
-        herbs: [
-          {
-            ID: "TH001", Ten_Vi_Thuoc: "Cam thảo", Ten_Khac_Ten_Khoa_Hoc: "Quốc lão / Radix Glycyrrhizae",
-            Nhom_Thuoc: "Bổ khí", Bo_Phan_Dung: "Rễ và thân rễ", Link_Anh_Vi_Thuoc: "", Link_Anh_Cay_Tuoi: "",
-            Dac_Diem_Nhan_Dien: "Phiến tròn hoặc bầu dục, vỏ nâu đỏ, mặt cắt vàng nhạt có vân tỏa tròn, mùi thơm nhẹ, vị rất ngọt",
-            Tinh: "Bình", Vi: "Ngọt (Cam)", Quy_Kinh: "Tâm, Phế, Tỳ, Vị",
-            Cong_Dung: "Bổ trung ích khí; Nhuận phế chỉ khái; Thanh nhiệt giải độc; Hoãn cấp chỉ thống; Điều hòa các vị thuốc",
-            Chu_Tri_Luu_Y: "Phản Hải tảo, Đại kích, Cam toại, Nguyên hoa; thận trọng khi thấp trệ, phù thũng",
-            Thuoc_De_Nham: "Hoàng kỳ", Ghi_Chu: "Dữ liệu mẫu (chưa gắn SCRIPT_URL)"
-          },
-          {
-            ID: "TH002", Ten_Vi_Thuoc: "Hoàng kỳ", Ten_Khac_Ten_Khoa_Hoc: "Bắc kỳ / Radix Astragali",
-            Nhom_Thuoc: "Bổ khí", Bo_Phan_Dung: "Rễ", Link_Anh_Vi_Thuoc: "", Link_Anh_Cay_Tuoi: "",
-            Dac_Diem_Nhan_Dien: "Phiến xéo dài hoặc tròn, chất dai nhiều xơ, mặt cắt vỏ trắng ngà lõi vàng, mùi đậu đặc trưng, nhai ngọt nhẹ",
-            Tinh: "Ôn", Vi: "Ngọt (Cam)", Quy_Kinh: "Tỳ, Phế",
-            Cong_Dung: "Bổ khí thăng dương; Ích vệ cố biểu; Thác độc sinh cơ; Lợi thủy tiêu thũng",
-            Chu_Tri_Luu_Y: "Tránh dùng khi biểu thực tà thịnh, âm hư dương cang",
-            Thuoc_De_Nham: "Cam thảo, Đẳng sâm", Ghi_Chu: "Dữ liệu mẫu (chưa gắn SCRIPT_URL)"
-          }
-        ],
-        progress: [],
-        history: [],
-        config: state.config
-      };
+      return { success: false, message: "Chưa cấu hình SCRIPT_URL" };
     }
 
     async function apiPost(action, data) {
@@ -1121,29 +1503,102 @@
       if (isGasEmbedded()) {
         return new Promise((resolve, reject) => {
           const runner = google.script.run.withSuccessHandler(resolve).withFailureHandler(reject);
-          if (action === "saveProgress") runner.saveProgress(data);
+          if (action === "login") runner.loginUser(data);
+          else if (action === "saveProgress") runner.saveProgress(data);
           else if (action === "saveTestResult") runner.saveTestResult(data);
-          else if (action === "saveConfig") runner.saveConfig(data);
+          else if (action === "uploadHerbImage") runner.uploadHerbImage(data);
+          else if (action === "addHerb") runner.addHerb(data);
           else resolve({ success: true });
         });
       }
-      return { success: true, localOnly: true };
+      return { success: false, message: "Chưa cấu hình SCRIPT_URL" };
     }
 
     // =========================================================================
-    // XỬ LÝ LINK ẢNH GOOGLE DRIVE & TIỆN ÍCH
+    // ĐĂNG NHẬP / ĐĂNG XUẤT
     // =========================================================================
-    function parseImageLinks(raw) {
-      if (!raw) return [];
-      return String(raw)
+    function initAuth() {
+      try {
+        const saved = localStorage.getItem(STORAGE_USER_KEY);
+        if (saved) {
+          const u = JSON.parse(saved);
+          if (u && u.mssv && u.hoTen) {
+            setLoggedInUser(u);
+            loadData();
+            return;
+          }
+        }
+      } catch (e) {}
+      document.getElementById("loginOverlay").classList.remove("hidden");
+    }
+
+    function setLoggedInUser(user) {
+      state.user = user;
+      localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(user));
+      document.getElementById("loginOverlay").classList.add("hidden");
+      document.getElementById("userChip").style.display = "inline-flex";
+      document.getElementById("userChipName").textContent = `${user.hoTen} (${user.mssv})`;
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const hoTen = document.getElementById("loginHoTen").value.trim();
+      const mssv = document.getElementById("loginMssv").value.trim();
+      const errBox = document.getElementById("loginError");
+      const btn = document.getElementById("btnLoginSubmit");
+
+      errBox.style.display = "none";
+      if (!hoTen || !mssv) {
+        errBox.textContent = "Vui lòng nhập đầy đủ Họ tên và MSSV.";
+        errBox.style.display = "block";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Đang kiểm tra...";
+
+      try {
+        const res = await apiPost("login", { hoTen, mssv });
+        if (!res || !res.success) {
+          throw new Error((res && res.message) || "Đăng nhập không thành công.");
+        }
+        setLoggedInUser(res.user);
+        showToast(`Chào ${res.user.hoTen}!`);
+        loadData();
+      } catch (err) {
+        errBox.textContent = err.message;
+        errBox.style.display = "block";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Vào học ngay →";
+      }
+    }
+
+    function logoutUser() {
+      clearInterval(state.test.timerId);
+      localStorage.removeItem(STORAGE_USER_KEY);
+      state.user = null;
+      state.progressMap = {};
+      state.history = [];
+      document.getElementById("userChip").style.display = "none";
+      document.getElementById("loginError").style.display = "none";
+      document.getElementById("loginOverlay").classList.remove("hidden");
+      resetTestUI();
+    }
+
+    // =========================================================================
+    // XỬ LÝ ẢNH (TỐI ĐA 1 ẢNH) & UPLOAD LÊN DRIVE
+    // =========================================================================
+    function getSingleImage(raw) {
+      if (!raw) return "";
+      const links = String(raw)
         .split(/[\n,;]+/)
         .map(s => s.trim())
-        .filter(s => s && /^https?:\/\//i.test(s))
-        .map(normalizeImageUrl);
+        .filter(s => s && /^https?:\/\//i.test(s));
+      return links.length ? normalizeImageUrl(links[0]) : "";
     }
 
     function normalizeImageUrl(u) {
-      // Tự động chuyển link chia sẻ Google Drive sang dạng thumbnail tải cực ổn định trên iPad/Safari
       const m1 = u.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
       if (m1) return `https://drive.google.com/thumbnail?id=${m1[1]}&sz=w1000`;
       const m2 = u.match(/drive\.google\.com\/(?:open|uc)\?.*id=([a-zA-Z0-9_-]+)/);
@@ -1151,6 +1606,182 @@
       return u;
     }
 
+    function compressImageToBase64(file, maxDim = 1280, quality = 0.82) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = () => reject(new Error("Không đọc được file ảnh"));
+        reader.onload = () => {
+          const img = new Image();
+          img.onerror = () => {
+            const raw = String(reader.result || "");
+            const parts = raw.split(",");
+            resolve({ base64: parts[1] || "", mimeType: file.type || "image/jpeg", dataUrl: raw });
+          };
+          img.onload = () => {
+            let w = img.width;
+            let h = img.height;
+            if (w > maxDim || h > maxDim) {
+              if (w >= h) { h = Math.round(h * maxDim / w); w = maxDim; }
+              else { w = Math.round(w * maxDim / h); h = maxDim; }
+            }
+            const canvas = document.createElement("canvas");
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, w, h);
+            const dataUrl = canvas.toDataURL("image/jpeg", quality);
+            resolve({ base64: dataUrl.split(",")[1], mimeType: "image/jpeg", dataUrl });
+          };
+          img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function triggerUploadImage(idThuoc, tenViThuoc) {
+      if (state.uploadingHerbId) {
+        showToast("Đang tải ảnh khác lên, bạn chờ xíu nhé!");
+        return;
+      }
+      state.uploadTarget = { idThuoc: String(idThuoc), tenViThuoc: String(tenViThuoc || "") };
+      const input = document.getElementById("herbImgInput");
+      input.value = "";
+      input.click();
+    }
+
+    async function handleHerbImageSelected(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file || !state.uploadTarget) return;
+
+      const { idThuoc, tenViThuoc } = state.uploadTarget;
+      state.uploadingHerbId = idThuoc;
+      setSyncStatus("syncing", "Đang tải ảnh...");
+      showToast(`Đang tải ảnh cho "${tenViThuoc}" lên Drive...`);
+      renderCurrentFlashcard();
+
+      try {
+        const { base64, mimeType } = await compressImageToBase64(file);
+        const res = await apiPost("uploadHerbImage", {
+          idThuoc,
+          tenViThuoc,
+          base64,
+          mimeType
+        });
+
+        if (!res || !res.success) {
+          throw new Error((res && res.message) || "Không lưu được ảnh lên Drive/Sheet");
+        }
+
+        const herb = state.herbs.find(h => String(h.ID) === idThuoc);
+        if (herb) herb.Link_Anh_Vi_Thuoc = res.driveUrl;
+
+        state.uploadingHerbId = null;
+        setSyncStatus("ok", "Đã lưu ảnh");
+        showToast(`Đã lưu ảnh "${tenViThuoc}" vào Drive & Sheet!`);
+        renderCurrentFlashcard();
+        renderLibrary();
+        renderCompare();
+      } catch (err) {
+        console.error(err);
+        state.uploadingHerbId = null;
+        setSyncStatus("error", "Lỗi tải ảnh");
+        showToast("Lỗi tải ảnh: " + err.message);
+        renderCurrentFlashcard();
+      }
+    }
+
+    // =========================================================================
+    // MODAL THÊM VỊ THUỐC MỚI
+    // =========================================================================
+    function openAddHerbModal() {
+      document.getElementById("addHerbForm").reset();
+      state.newHerbImageData = null;
+      document.getElementById("newHerbImgPreview").innerHTML = `
+        <div style="font-size:28px; margin-bottom:4px;">📷</div>
+        <div style="font-size:13px; font-weight:700; color:var(--primary-dark);">Bấm để chọn 1 ảnh vị thuốc từ máy</div>
+      `;
+      const groups = [...new Set(state.herbs.map(h => String(h.Nhom_Thuoc || "").trim()).filter(Boolean))].sort();
+      document.getElementById("existingGroupsList").innerHTML = groups.map(g => `<option value="${esc(g)}">`).join("");
+      document.getElementById("addHerbModal").classList.add("open");
+    }
+
+    function closeAddHerbModal() {
+      document.getElementById("addHerbModal").classList.remove("open");
+    }
+
+    async function previewNewHerbImage(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      try {
+        const res = await compressImageToBase64(file);
+        state.newHerbImageData = { base64: res.base64, mimeType: res.mimeType };
+        document.getElementById("newHerbImgPreview").innerHTML = `
+          <img src="${res.dataUrl}" alt="Xem trước">
+          <div style="font-size:12px; color:var(--primary-dark); font-weight:700;">Bấm vào đây để đổi ảnh khác</div>
+        `;
+      } catch (err) {
+        showToast("Không đọc được ảnh đã chọn.");
+      }
+    }
+
+    async function submitNewHerb(e) {
+      e.preventDefault();
+      const ten = document.getElementById("newTen").value.trim();
+      if (!ten) return;
+
+      const btn = document.getElementById("btnSubmitNewHerb");
+      btn.disabled = true;
+      btn.textContent = "⏳ Đang lưu lên Drive & Sheet...";
+      setSyncStatus("syncing", "Đang thêm vị thuốc...");
+
+      const payload = {
+        Ten_Vi_Thuoc: ten,
+        Ten_Khac_Ten_Khoa_Hoc: document.getElementById("newTenKhac").value.trim(),
+        Nhom_Thuoc: document.getElementById("newNhom").value.trim(),
+        Bo_Phan_Dung: document.getElementById("newBpd").value.trim(),
+        Tinh: document.getElementById("newTinh").value.trim(),
+        Vi: document.getElementById("newVi").value.trim(),
+        Quy_Kinh: document.getElementById("newQuyKinh").value.trim(),
+        Cong_Dung: document.getElementById("newCongDung").value.trim(),
+        Dac_Diem_Nhan_Dien: document.getElementById("newDacDiem").value.trim(),
+        Chu_Tri_Luu_Y: document.getElementById("newLuuY").value.trim(),
+        Thuoc_De_Nham: document.getElementById("newDeNham").value.trim(),
+        Ghi_Chu: document.getElementById("newGhiChu").value.trim(),
+        imageBase64: state.newHerbImageData ? state.newHerbImageData.base64 : "",
+        imageMimeType: state.newHerbImageData ? state.newHerbImageData.mimeType : "",
+        mssv: state.user ? state.user.mssv : "",
+        hoTen: state.user ? state.user.hoTen : ""
+      };
+
+      try {
+        const res = await apiPost("addHerb", payload);
+        if (!res || !res.success) {
+          throw new Error((res && res.message) || "Không thêm được vị thuốc.");
+        }
+
+        state.herbs.push(res.herb);
+        populateFilters();
+        updateTestSliderLimits();
+        buildFlashcardDeck();
+        renderCompareSelectors();
+        renderLibrary();
+        renderStatsAndHistory();
+
+        setSyncStatus("ok", "Đã thêm vị thuốc");
+        showToast(`Đã thêm "${res.herb.Ten_Vi_Thuoc}" (${res.herb.ID}) vào hệ thống!`);
+        closeAddHerbModal();
+      } catch (err) {
+        setSyncStatus("error", "Lỗi lưu");
+        showToast(err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "💾 Lưu vị thuốc";
+      }
+    }
+
+    // =========================================================================
+    // TIỆN ÍCH CHUNG & CHUẨN HÓA TIẾNG VIỆT
+    // =========================================================================
     function esc(str) {
       return String(str == null ? "" : str)
         .replace(/&/g, "&amp;")
@@ -1159,10 +1790,38 @@
         .replace(/"/g, "&quot;");
     }
 
+    function normVi(str) {
+      return String(str || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/đ/g, "d")
+        .replace(/Đ/g, "d")
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function levenshtein(a, b) {
+      const m = a.length, n = b.length;
+      if (!m) return n;
+      if (!n) return m;
+      const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+      for (let i = 0; i <= m; i++) dp[i][0] = i;
+      for (let j = 0; j <= n; j++) dp[0][j] = j;
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+          dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost);
+        }
+      }
+      return dp[m][n];
+    }
+
     function getTinhBadgeClass(tinh) {
-      const t = String(tinh || "").toLowerCase();
-      if (t.includes("hàn") || t.includes("lương") || t.includes("mát") || t.includes("lạnh")) return "b-blue";
-      if (t.includes("ôn") || t.includes("nhiệt") || t.includes("ấm") || t.includes("nóng")) return "b-red";
+      const t = normVi(tinh);
+      if (t.includes("han") || t.includes("luong") || t.includes("mat") || t.includes("lanh")) return "b-blue";
+      if (t.includes("on") || t.includes("nhiet") || t.includes("am") || t.includes("nong")) return "b-red";
       return "b-green";
     }
 
@@ -1188,16 +1847,17 @@
       el.textContent = msg;
       el.classList.add("show");
       clearTimeout(el._t);
-      el._t = setTimeout(() => el.classList.remove("show"), 2600);
+      el._t = setTimeout(() => el.classList.remove("show"), 2800);
     }
 
     // =========================================================================
-    // KHỞI TẠO & TẢI DỮ LIỆU
+    // TẢI DỮ LIỆU
     // =========================================================================
     async function loadData(manual = false) {
+      if (!state.user) return;
       setSyncStatus("syncing", "Đang tải...");
       try {
-        const res = await apiGetAll();
+        const res = await apiGetAll(state.user.mssv);
         if (!res.success) throw new Error(res.message || "Lỗi đọc dữ liệu");
 
         state.herbs = res.herbs || [];
@@ -1206,14 +1866,7 @@
         state.history = res.history || [];
         if (res.config) state.config = Object.assign(state.config, res.config);
 
-        const headerSub = document.getElementById("headerSub");
-        if (headerSub) {
-          headerSub.textContent = res.demo
-            ? `${state.herbs.length} vị mẫu (Chưa dán SCRIPT_URL)`
-            : `${state.herbs.length} vị thuốc • Đồng bộ trực tiếp Google Sheet`;
-        }
-
-        setSyncStatus("ok", res.demo ? "Chế độ mẫu" : "Đã đồng bộ");
+        setSyncStatus("ok", "Đã đồng bộ");
         populateFilters();
         applyConfigToTestForm();
         buildFlashcardDeck();
@@ -1249,33 +1902,84 @@
       fillSelect("libVi", vis, "Tất cả vị");
       fillSelect("libKinh", kinhs, "Tất cả kinh");
 
-      // Checkboxes cho Tab Test
       const box = document.getElementById("testGroupChecks");
       box.innerHTML = groups.length
-        ? groups.map(g => `<label class="check-pill"><input type="checkbox" class="test-grp-cb" value="${esc(g)}" checked> ${esc(g)}</label>`).join("")
+        ? groups.map(g => `<label class="check-pill"><input type="checkbox" class="test-grp-cb" value="${esc(g)}" checked onchange="updateTestSliderLimits()"> ${esc(g)}</label>`).join("")
         : `<span style="color:var(--muted); font-size:13px;">Tất cả vị thuốc</span>`;
+
+      updateTestSliderLimits();
+    }
+
+    function getFilteredTestPool() {
+      const allCbs = [...document.querySelectorAll(".test-grp-cb")];
+      const checkedGroups = allCbs.filter(cb => cb.checked).map(cb => cb.value);
+      let pool = state.herbs.slice();
+      let groupLabel = "Tất cả";
+
+      if (allCbs.length > 0 && checkedGroups.length > 0 && checkedGroups.length < allCbs.length) {
+        pool = pool.filter(h => checkedGroups.includes(String(h.Nhom_Thuoc || "").trim()));
+        groupLabel = checkedGroups.join(", ");
+      }
+      return { pool, groupLabel };
+    }
+
+    function updateTestSliderLimits() {
+      const { pool } = getFilteredTestPool();
+      const maxCount = Math.max(1, pool.length);
+      const slider = document.getElementById("cfgCountSlider");
+      const oldVal = parseInt(slider.value, 10) || 1;
+      slider.min = 1;
+      slider.max = maxCount;
+      slider.value = Math.min(Math.max(1, oldVal), maxCount);
+      document.getElementById("cfgCountMaxText").textContent = `Tối đa ${pool.length} cây`;
+      updateCountLabel();
+    }
+
+    function updateCountLabel() {
+      const slider = document.getElementById("cfgCountSlider");
+      const { pool } = getFilteredTestPool();
+      document.getElementById("cfgCountLabel").textContent = `${slider.value} / ${pool.length} cây`;
+    }
+
+    function updateTimeLabel() {
+      const unlimited = document.getElementById("cfgUnlimitedTime").checked;
+      const slider = document.getElementById("cfgTimeSlider");
+      slider.disabled = unlimited;
+      document.getElementById("cfgTimeLabel").textContent = unlimited ? "Không giới hạn" : `${slider.value} giây`;
     }
 
     function applyConfigToTestForm() {
-      document.getElementById("cfgTime").value = state.config.Thoi_Gian_Tram_Mac_Dinh_Giay ?? 45;
-      document.getElementById("cfgCount").value = Math.min(state.herbs.length || 10, state.config.So_Cay_Test_Mac_Dinh ?? 10);
+      const defTime = Number(state.config.Thoi_Gian_Tram_Mac_Dinh_Giay);
+      if (defTime === 0) {
+        document.getElementById("cfgUnlimitedTime").checked = true;
+      } else {
+        document.getElementById("cfgUnlimitedTime").checked = false;
+        document.getElementById("cfgTimeSlider").value = Math.min(90, Math.max(1, defTime || 45));
+      }
+      updateTimeLabel();
+
+      const total = Math.max(1, state.herbs.length);
+      const defCount = Number(state.config.So_Cay_Test_Mac_Dinh) || 10;
+      const slider = document.getElementById("cfgCountSlider");
+      slider.max = total;
+      slider.value = Math.min(total, Math.max(1, defCount));
+      updateTestSliderLimits();
+
       document.getElementById("cfgAutoNext").checked = !!state.config.Tu_Dong_Chuyen_Tram;
       document.getElementById("cfgSound").checked = !!state.config.Am_Thanh_Bao_Het_Gio;
       document.getElementById("cfgPool").value = state.config.Che_Do_Uu_Tien_Cau_Sai ? "weighted" : "random";
     }
 
-    // =========================================================================
-    // CHUYỂN TAB
-    // =========================================================================
     function switchTab(tab) {
       document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
       document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === "view-" + tab));
       if (tab === "library") { renderStatsAndHistory(); renderLibrary(); }
       if (tab === "compare") renderCompare();
+      if (tab === "test") updateTestSliderLimits();
     }
 
     // =========================================================================
-    // TAB 1: FLASHCARD SRS + GỢI Ý + VUỐT CẢM ỨNG + PHÍM TẮT
+    // TAB 1: FLASHCARD
     // =========================================================================
     function buildFlashcardDeck(customIds = null) {
       const grp = document.getElementById("fcGroupFilter").value;
@@ -1339,32 +2043,26 @@
       if (state.fcIndex < 0) state.fcIndex = state.fcDeck.length - 1;
 
       const herb = state.fcDeck[state.fcIndex];
-      const prog = getProg(herb.ID);
       const mode = document.getElementById("fcModeFilter").value;
 
       state.fcFlipped = false;
       state.fcHintLevel = 0;
-      state.fcShowFresh = false;
-      const dryImgs = parseImageLinks(herb.Link_Anh_Vi_Thuoc);
-      const freshImgs = parseImageLinks(herb.Link_Anh_Cay_Tuoi);
-      state.fcImgIndex = dryImgs.length ? Math.floor(Math.random() * dryImgs.length) : 0;
 
       document.getElementById("fcCard").classList.remove("flipped");
       document.getElementById("fcCounter").textContent = `Thẻ ${state.fcIndex + 1} / ${state.fcDeck.length}`;
-      document.getElementById("fcBoxBadge").textContent = `Box ${prog.Box_Leitner || 1} • ${prog.Trang_Thai || "Chưa thuộc"}`;
-      document.getElementById("fcStatBadge").textContent = `Đúng ${prog.So_Lan_Dung || 0} • Sai ${prog.So_Lan_Sai || 0}`;
 
-      renderFcFront(herb, mode, dryImgs, freshImgs);
+      renderFcFront(herb, mode);
       renderFcBack(herb);
     }
 
-    function renderFcFront(herb, mode, dryImgs, freshImgs) {
+    function renderFcFront(herb, mode) {
       const front = document.getElementById("fcFront");
       if (mode === "reverse") {
         const congDungItems = String(herb.Cong_Dung || "").split(";").map(s => s.trim()).filter(Boolean);
+        const listCls = congDungItems.length > 1 ? "info-list two-col" : "info-list";
         front.innerHTML = `
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span class="badge b-blue">CHẾ ĐỘ ĐẢO CHIỀU — ĐOÁN TÊN VỊ THUỐC</span>
+            <span class="badge b-blue">ĐOÁN TÊN VỊ THUỐC</span>
             <span class="badge b-slate">${esc(herb.Nhom_Thuoc || "")}</span>
           </div>
           <div class="chip-row" style="margin-bottom:12px;">
@@ -1379,7 +2077,7 @@
           </div>
           <div class="info-section">
             <div class="info-label">Công dụng</div>
-            <ul class="info-list">${congDungItems.map(c => `<li>${esc(c)}</li>`).join("") || "<li>Chưa cập nhật</li>"}</ul>
+            <ul class="${listCls}">${congDungItems.map(c => `<li>${esc(c)}</li>`).join("") || "<li>Chưa cập nhật</li>"}</ul>
           </div>
           <div id="fcHintContainer" class="hint-area">
             <button class="btn btn-soft btn-sm" onclick="event.stopPropagation(); showNextHint()">💡 Gợi ý đặc điểm nhận diện</button>
@@ -1388,47 +2086,44 @@
         return;
       }
 
-      const imgs = state.fcShowFresh && freshImgs.length ? freshImgs : dryImgs;
-      const curImg = imgs.length ? imgs[state.fcImgIndex % imgs.length] : "";
+      const curImg = getSingleImage(herb.Link_Anh_Vi_Thuoc);
+      const isUploading = state.uploadingHerbId === String(herb.ID);
+
+      let imgContent = "";
+      if (isUploading) {
+        imgContent = `
+          <div class="no-img-placeholder">
+            <span class="emoji">⏳</span>
+            <div style="font-weight:700; color:#fff;">Đang tải ảnh lên Drive & lưu vào Sheet...</div>
+          </div>
+        `;
+      } else if (curImg) {
+        imgContent = `
+          <img src="${esc(curImg)}" alt="Vị thuốc" onerror="this.parentElement.innerHTML='<div class=no-img-placeholder><span class=emoji>⚠️</span><div style=font-weight:700;color:#fff>Không tải được ảnh</div><button class=upload-cta-btn onclick=\\'event.stopPropagation(); triggerUploadImage(${JSON.stringify(String(herb.ID))}, ${JSON.stringify(String(herb.Ten_Vi_Thuoc))})\\'>📤 Tải lại ảnh khác</button></div>'">
+          <div class="img-toolbar">
+            <button onclick="event.stopPropagation(); triggerUploadImage('${esc(herb.ID)}', '${esc(herb.Ten_Vi_Thuoc)}')">📷 Đổi ảnh</button>
+            <button onclick="event.stopPropagation(); openLightbox('${esc(curImg)}')">🔍 Phóng to</button>
+          </div>
+        `;
+      } else {
+        imgContent = `
+          <div class="no-img-placeholder">
+            <span class="emoji">🌿</span>
+            <div style="font-weight:700; color:#fff; font-size:14.5px;">Bạn có thể tải ảnh để bổ sung cho vị thuốc</div>
+            <button class="upload-cta-btn" onclick="event.stopPropagation(); triggerUploadImage('${esc(herb.ID)}', '${esc(herb.Ten_Vi_Thuoc)}')">📤 Tải ảnh lên</button>
+          </div>
+        `;
+      }
 
       front.innerHTML = `
-        <div class="fc-img-box">
-          ${curImg
-            ? `<img src="${esc(curImg)}" alt="Vị thuốc" onerror="this.parentElement.innerHTML='<div class=no-img-placeholder><span class=emoji>⚠️</span>Không tải được ảnh<br><small>Kiểm tra quyền chia sẻ công khai trên Drive</small></div>'">`
-            : `<div class="no-img-placeholder">
-                 <span class="emoji">🌿</span>
-                 <div style="font-weight:700; color:#fff; margin-bottom:4px;">Chưa có ảnh vị thuốc</div>
-                 <small>Dán link ảnh vào cột Link_Anh_Vi_Thuoc trong Sheet</small>
-               </div>`
-          }
-          <div class="img-toolbar">
-            <div style="display:flex; gap:6px;">
-              ${imgs.length > 1 ? `<button onclick="event.stopPropagation(); cycleFcImg()">🔄 Góc khác (${(state.fcImgIndex % imgs.length) + 1}/${imgs.length})</button>` : ""}
-              ${freshImgs.length ? `<button onclick="event.stopPropagation(); toggleFreshImg()">${state.fcShowFresh ? "🪵 Xem vị khô" : "🌱 Xem cây tươi"}</button>` : ""}
-            </div>
-            ${curImg ? `<button onclick="event.stopPropagation(); openLightbox('${esc(curImg)}')">🔍 Phóng to</button>` : ""}
-          </div>
-        </div>
-        <div style="text-align:center; font-size:13.5px; color:var(--muted); font-weight:600; margin-bottom:6px;">
-          Đây là vị thuốc nào? Tính vị – Quy kinh – Công dụng ra sao?
+        <div class="fc-img-box">${imgContent}</div>
+        <div style="text-align:center; font-size:14px; color:var(--muted); font-weight:700; margin-bottom:6px;">
+          Tên vị thuốc nào? Tính - vị - quy kinh - Công dụng?
         </div>
         <div id="fcHintContainer" class="hint-area">
           <button class="btn btn-soft btn-sm" onclick="event.stopPropagation(); showNextHint()">💡 Gợi ý 1 (Nhóm & Bộ phận dùng)</button>
         </div>
       `;
-    }
-
-    function cycleFcImg() {
-      const herb = state.fcDeck[state.fcIndex];
-      state.fcImgIndex += 1;
-      renderFcFront(herb, document.getElementById("fcModeFilter").value, parseImageLinks(herb.Link_Anh_Vi_Thuoc), parseImageLinks(herb.Link_Anh_Cay_Tuoi));
-    }
-
-    function toggleFreshImg() {
-      const herb = state.fcDeck[state.fcIndex];
-      state.fcShowFresh = !state.fcShowFresh;
-      state.fcImgIndex = 0;
-      renderFcFront(herb, document.getElementById("fcModeFilter").value, parseImageLinks(herb.Link_Anh_Vi_Thuoc), parseImageLinks(herb.Link_Anh_Cay_Tuoi));
     }
 
     function showNextHint() {
@@ -1456,6 +2151,7 @@
       const congDungList = String(herb.Cong_Dung || "").split(";").map(s => s.trim()).filter(Boolean);
       const kinhList = String(herb.Quy_Kinh || "").split(/[,;]+/).map(s => s.trim()).filter(Boolean);
       const nhamList = String(herb.Thuoc_De_Nham || "").split(/[,;]+/).map(s => s.trim()).filter(Boolean);
+      const listCls = congDungList.length > 1 ? "info-list two-col" : "info-list";
 
       return `
         <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
@@ -1481,7 +2177,7 @@
 
         <div class="info-section">
           <div class="info-label">Công dụng</div>
-          <ul class="info-list">
+          <ul class="${listCls}">
             ${congDungList.length ? congDungList.map(c => `<li>${esc(c)}</li>`).join("") : "<li>Chưa cập nhật</li>"}
           </ul>
         </div>
@@ -1500,9 +2196,9 @@
 
         ${nhamList.length && !compact ? `
           <div class="info-section">
-            <div class="info-label">Thuốc dễ nhầm (Bấm để so sánh)</div>
+            <div class="info-label">Thuốc dễ nhầm</div>
             <div class="chip-row">
-              ${nhamList.map(n => `<button class="confuse-link" onclick="event.stopPropagation(); openComparePair('${esc(herb.ID)}', '${esc(n)}')">⚖️ So với ${esc(n)}</button>`).join("")}
+              ${nhamList.map(n => `<span class="confuse-chip">${esc(n)}</span>`).join("")}
             </div>
           </div>` : ""}
 
@@ -1515,15 +2211,11 @@
     }
 
     function renderFcBack(herb) {
-      document.getElementById("fcBack").innerHTML = buildHerbDetailHTML(herb) + `
-        <div style="margin-top:auto; padding-top:12px; text-align:right;">
-          <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); toggleFlip()">🔄 Lật lại mặt ảnh</button>
-        </div>
-      `;
+      document.getElementById("fcBack").innerHTML = buildHerbDetailHTML(herb);
     }
 
     function handleCardClick(e) {
-      if (e.target.closest("button")) return;
+      if (e.target.closest("button") || e.target.closest("input")) return;
       toggleFlip();
     }
 
@@ -1545,11 +2237,10 @@
     }
 
     function rateCard(rating) {
-      if (!state.fcDeck.length) return;
+      if (!state.fcDeck.length || !state.user) return;
       const herb = state.fcDeck[state.fcIndex];
       const cur = Object.assign({}, getProg(herb.ID));
 
-      // Optimistic local update
       let box = Number(cur.Box_Leitner) || 1;
       if (rating === "good") { cur.So_Lan_Dung = (Number(cur.So_Lan_Dung) || 0) + 1; box = Math.min(5, box + 1); }
       else if (rating === "hard") { cur.So_Lan_Dung = (Number(cur.So_Lan_Dung) || 0) + 1; box = Math.max(2, Math.min(3, box)); }
@@ -1559,23 +2250,26 @@
       cur.Trang_Thai = box >= 4 ? "Đã thuộc" : box >= 2 ? "Đang ôn" : "Chưa thuộc";
       state.progressMap[herb.ID] = cur;
 
-      // Nếu bấm Quên, đẩy thẻ lặp lại ở cuối phiên học để ôn kỹ
       if (rating === "forgot" && state.fcDeck.length > 1) {
         state.fcDeck.push(herb);
-        showToast(`Đã đánh dấu Quên "${herb.Ten_Vi_Thuoc}" — sẽ lặp lại cuối phiên!`);
+        showToast(`Đã đánh dấu Không nhớ "${herb.Ten_Vi_Thuoc}" — sẽ lặp lại cuối phiên!`);
       } else if (rating === "good") {
-        showToast(`Thuộc làu "${herb.Ten_Vi_Thuoc}" → Box ${box}`);
+        showToast(`Đã nhớ "${herb.Ten_Vi_Thuoc}"`);
       } else {
-        showToast(`Đã lưu "${herb.Ten_Vi_Thuoc}" (Lấn cấn)`);
+        showToast(`Đã lưu "${herb.Ten_Vi_Thuoc}" (Phân vân)`);
       }
 
-      // Chuyển thẻ tiếp ngay cho mượt
       state.fcIndex = (state.fcIndex + 1) % state.fcDeck.length;
       renderCurrentFlashcard();
 
-      // Đồng bộ nền lên Google Sheet
       setSyncStatus("syncing", "Đang lưu...");
-      apiPost("saveProgress", { idThuoc: herb.ID, tenViThuoc: herb.Ten_Vi_Thuoc, rating })
+      apiPost("saveProgress", {
+        mssv: state.user.mssv,
+        hoTen: state.user.hoTen,
+        idThuoc: herb.ID,
+        tenViThuoc: herb.Ten_Vi_Thuoc,
+        rating
+      })
         .then(res => {
           if (res && res.record) state.progressMap[herb.ID] = res.record;
           setSyncStatus("ok", "Đã lưu");
@@ -1583,7 +2277,7 @@
         .catch(() => setSyncStatus("error", "Lỗi lưu"));
     }
 
-    // Cử chỉ vuốt trên iPad / điện thoại
+    // Quẹt trái → Vị tiếp theo | Quẹt phải → Vị trước
     (function initSwipe() {
       let startX = 0, startY = 0;
       const card = document.getElementById("fcCard");
@@ -1592,18 +2286,21 @@
         startY = e.changedTouches[0].screenY;
       }, { passive: true });
       card.addEventListener("touchend", e => {
+        if (e.target.closest("button") || e.target.closest("input")) return;
         const dx = e.changedTouches[0].screenX - startX;
         const dy = e.changedTouches[0].screenY - startY;
-        if (Math.abs(dx) > 75 && Math.abs(dx) > Math.abs(dy) * 1.4) {
-          if (dx > 0) rateCard("good");
-          else rateCard("forgot");
+        if (Math.abs(dx) > 65 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+          if (dx < 0) nextCard();
+          else prevCard();
         }
       }, { passive: true });
     })();
 
-    // Phím tắt trên máy tính / bàn phím rời iPad
+    // Phím tắt máy tính
     document.addEventListener("keydown", e => {
       if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) return;
+      if (!document.getElementById("loginOverlay").classList.contains("hidden")) return;
+      if (document.getElementById("addHerbModal").classList.contains("open")) return;
       if (!document.getElementById("view-flashcard").classList.contains("active")) return;
       if (e.code === "Space") { e.preventDefault(); toggleFlip(); }
       else if (e.key === "1") rateCard("forgot");
@@ -1614,10 +2311,182 @@
     });
 
     // =========================================================================
-    // TAB 2: THI CHẠY TRẠM (WEB AUDIO + 2 CHẾ ĐỘ + TỰ CHẤM CHI TIẾT)
+    // BỘ CHẤM ĐIỂM TỰ ĐỘNG CHÂM CHƯỚC (KIỂU B: TÊN 0.2 | TÍNH-VỊ 0.25 | QUY KINH 0.25 | CÔNG DỤNG 0.3)
     // =========================================================================
-    function setVal(id, v) { document.getElementById(id).value = v; }
+    const TINH_GROUPS = [
+      ["han", "lanh"],
+      ["luong", "mat"],
+      ["binh"],
+      ["on", "am"],
+      ["nhiet", "nong"]
+    ];
+    const VI_GROUPS = [
+      ["cam", "ngot"],
+      ["kho", "dang"],
+      ["tan", "cay"],
+      ["toan", "chua"],
+      ["ham", "man"],
+      ["dam", "nhat"],
+      ["sap", "chat"]
+    ];
+    const KINH_LIST = [
+      { key: "tam bao", aliases: ["tam bao"] },
+      { key: "tam tieu", aliases: ["tam tieu"] },
+      { key: "dai truong", aliases: ["dai truong", "dai trang"] },
+      { key: "tieu truong", aliases: ["tieu truong", "tieu trang"] },
+      { key: "bang quang", aliases: ["bang quang"] },
+      { key: "tam", aliases: ["tam"] },
+      { key: "phe", aliases: ["phe"] },
+      { key: "ty", aliases: ["ty", "ti"] },
+      { key: "vi", aliases: ["vi"] },
+      { key: "can", aliases: ["can"] },
+      { key: "than", aliases: ["than"] },
+      { key: "dam", aliases: ["dam"] }
+    ];
 
+    function hasWord(haystack, word) {
+      return new RegExp(`(?:^|\\s)${word}(?:$|\\s)`).test(haystack);
+    }
+
+    function extractMatchedGroups(text, groups) {
+      const n = normVi(text);
+      const found = [];
+      groups.forEach((syns, idx) => {
+        if (syns.some(w => hasWord(n, w))) found.push(idx);
+      });
+      return found;
+    }
+
+    function extractKinhs(text) {
+      let n = normVi(text);
+      const found = new Set();
+      // Kiểm tra các kinh 2 chữ trước để tránh "tam bao" bị bắt nhầm thành "tam"
+      KINH_LIST.forEach(item => {
+        for (const a of item.aliases) {
+          const rx = new RegExp(`(?:^|\\s)${a}(?:$|\\s)`, "g");
+          if (rx.test(n)) {
+            found.add(item.key);
+            n = n.replace(rx, " ");
+            break;
+          }
+        }
+      });
+      return [...found];
+    }
+
+    function autoGradeStation(st) {
+      const h = st.herb;
+      const ans = st.answers;
+
+      // 1. CHẤM TÊN (0.2đ)
+      const uName = normVi(ans.ten);
+      const validNames = [h.Ten_Vi_Thuoc];
+      if (h.Ten_Khac_Ten_Khoa_Hoc) {
+        const beforeSlash = String(h.Ten_Khac_Ten_Khoa_Hoc).split("/")[0];
+        beforeSlash.split(/[,;]+/).forEach(x => { if (x.trim()) validNames.push(x.trim()); });
+      }
+      let tenScore = 0;
+      let tenNote = uName ? "Chưa khớp tên vị thuốc" : "Bỏ trống";
+      if (uName) {
+        for (const vn of validNames) {
+          const nv = normVi(vn);
+          if (!nv) continue;
+          if (uName === nv || (nv.length >= 4 && levenshtein(uName, nv) <= 1)) {
+            tenScore = 0.2;
+            tenNote = uName === nv ? "Khớp chính xác" : "Châm chước lỗi gõ nhẹ";
+            break;
+          }
+        }
+      }
+
+      // 2. CHẤM TÍNH - VỊ (0.25đ)
+      const expTinh = extractMatchedGroups(h.Tinh, TINH_GROUPS);
+      const expVi = extractMatchedGroups(h.Vi, VI_GROUPS);
+      const usrTinh = extractMatchedGroups(ans.tinhVi, TINH_GROUPS);
+      const usrVi = extractMatchedGroups(ans.tinhVi, VI_GROUPS);
+
+      const totalTV = expTinh.length + expVi.length;
+      let matchedTV = 0;
+      expTinh.forEach(g => { if (usrTinh.includes(g)) matchedTV++; });
+      expVi.forEach(g => { if (usrVi.includes(g)) matchedTV++; });
+
+      let tvScore = 0;
+      let tvNote = normVi(ans.tinhVi) ? `Đúng ${matchedTV}/${totalTV || 1} yếu tố` : "Bỏ trống";
+      if (totalTV === 0) {
+        tvScore = normVi(ans.tinhVi) ? 0.25 : 0;
+      } else {
+        const ratioTV = matchedTV / totalTV;
+        if (ratioTV >= 0.8) { tvScore = 0.25; tvNote = "Đạt đầy đủ Tính - vị"; }
+        else if (ratioTV >= 0.4) { tvScore = 0.125; tvNote = `Đúng một phần (${matchedTV}/${totalTV} yếu tố)`; }
+      }
+
+      // 3. CHẤM QUY KINH (0.25đ)
+      const expKinh = extractKinhs(h.Quy_Kinh);
+      const usrKinh = extractKinhs(ans.quyKinh);
+      let matchedKinh = 0;
+      expKinh.forEach(k => { if (usrKinh.includes(k)) matchedKinh++; });
+
+      let qkScore = 0;
+      let qkNote = normVi(ans.quyKinh) ? `Đúng ${matchedKinh}/${expKinh.length || 1} kinh` : "Bỏ trống";
+      if (expKinh.length === 0) {
+        qkScore = normVi(ans.quyKinh) ? 0.25 : 0;
+      } else {
+        const ratioK = matchedKinh / expKinh.length;
+        if (ratioK === 1) {
+          qkScore = 0.25;
+          qkNote = `Đúng đủ ${matchedKinh}/${expKinh.length} kinh`;
+        } else if (expKinh.length >= 3 && ratioK >= 0.74) {
+          qkScore = 0.25;
+          qkNote = `Châm chước đạt (${matchedKinh}/${expKinh.length} kinh)`;
+        } else if (ratioK >= 0.5) {
+          qkScore = 0.125;
+          qkNote = `Đúng một phần (${matchedKinh}/${expKinh.length} kinh)`;
+        }
+      }
+
+      // 4. CHẤM CÔNG DỤNG (0.3đ) — châm chước theo từ khóa & >= 50% số ý
+      const expUses = String(h.Cong_Dung || "").split(/[;\n]+/).map(s => s.trim()).filter(Boolean);
+      const uUseNorm = normVi(ans.congDung);
+      let matchedUses = 0;
+
+      if (uUseNorm && expUses.length) {
+        expUses.forEach(phrase => {
+          const words = normVi(phrase).split(" ").filter(w => w.length >= 2);
+          if (!words.length) return;
+          let hit = 0;
+          words.forEach(w => { if (hasWord(uUseNorm, w)) hit++; });
+          if (hit / words.length >= 0.5) matchedUses++;
+        });
+      }
+
+      let cdScore = 0;
+      let cdNote = uUseNorm ? `Trúng ${matchedUses}/${expUses.length || 1} công dụng` : "Bỏ trống";
+      if (expUses.length === 0) {
+        cdScore = uUseNorm ? 0.3 : 0;
+      } else if (matchedUses / expUses.length >= 0.5) {
+        cdScore = 0.3;
+        cdNote = `Đạt (${matchedUses}/${expUses.length} công dụng)`;
+      } else if (matchedUses >= 1) {
+        cdScore = 0.15;
+        cdNote = `Đạt một phần (${matchedUses}/${expUses.length} công dụng)`;
+      }
+
+      st.grade = {
+        ten: tenScore, tenNote,
+        tinhVi: tvScore, tvNote,
+        quyKinh: qkScore, qkNote,
+        congDung: cdScore, cdNote
+      };
+    }
+
+    function getStationTotal(st) {
+      if (!st.grade) return 0;
+      return Math.round((st.grade.ten + st.grade.tinhVi + st.grade.quyKinh + st.grade.congDung) * 1000) / 1000;
+    }
+
+    // =========================================================================
+    // TAB 2: THI CHẠY TRẠM
+    // =========================================================================
     function unlockAudio() {
       try {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1643,15 +2512,7 @@
 
     function startTest() {
       unlockAudio();
-      const checkedGroups = [...document.querySelectorAll(".test-grp-cb:checked")].map(cb => cb.value);
-      let pool = state.herbs.slice();
-      let groupLabel = "Tất cả";
-
-      const allGroupCount = document.querySelectorAll(".test-grp-cb").length;
-      if (checkedGroups.length > 0 && checkedGroups.length < allGroupCount) {
-        pool = pool.filter(h => checkedGroups.includes(String(h.Nhom_Thuoc || "").trim()));
-        groupLabel = checkedGroups.join(", ");
-      }
+      let { pool, groupLabel } = getFilteredTestPool();
 
       const poolMode = document.getElementById("cfgPool").value;
       if (poolMode === "weakOnly") {
@@ -1665,27 +2526,14 @@
         return;
       }
 
-      const reqCount = Math.max(1, parseInt(document.getElementById("cfgCount").value, 10) || 10);
+      const reqCount = Math.max(1, parseInt(document.getElementById("cfgCountSlider").value, 10) || 1);
       const finalCount = Math.min(reqCount, pool.length);
-      const timeSec = Math.max(0, parseInt(document.getElementById("cfgTime").value, 10) || 0);
+      const unlimited = document.getElementById("cfgUnlimitedTime").checked;
+      const timeSec = unlimited ? 0 : Math.max(1, parseInt(document.getElementById("cfgTimeSlider").value, 10) || 45);
       const style = document.getElementById("cfgStyle").value;
       const autoNext = document.getElementById("cfgAutoNext").checked;
       const sound = document.getElementById("cfgSound").checked;
 
-      // Lưu cấu hình mặc định nếu tick
-      if (document.getElementById("cfgSaveDefault").checked) {
-        const newCfg = {
-          Thoi_Gian_Tram_Mac_Dinh_Giay: timeSec,
-          So_Cay_Test_Mac_Dinh: reqCount,
-          Tu_Dong_Chuyen_Tram: autoNext,
-          Am_Thanh_Bao_Het_Gio: sound,
-          Che_Do_Uu_Tien_Cau_Sai: poolMode === "weighted"
-        };
-        Object.assign(state.config, newCfg);
-        apiPost("saveConfig", newCfg);
-      }
-
-      // Chọn ngẫu nhiên (có trọng số nếu ưu tiên câu hay sai)
       const selected = pickHerbs(pool, finalCount, poolMode === "weighted");
 
       state.test = {
@@ -1696,11 +2544,13 @@
         autoNext,
         sound,
         groupLabel,
-        stations: selected.map(h => {
-          const imgs = parseImageLinks(h.Link_Anh_Vi_Thuoc);
-          const randomImg = imgs.length ? imgs[Math.floor(Math.random() * imgs.length)] : "";
-          return { herb: h, imgUrl: randomImg, note: "", revealed: false, isCorrect: null };
-        }),
+        stations: selected.map(h => ({
+          herb: h,
+          imgUrl: getSingleImage(h.Link_Anh_Vi_Thuoc),
+          answers: { ten: "", tinhVi: "", quyKinh: "", congDung: "" },
+          grade: null,
+          revealed: false
+        })),
         index: 0,
         timeLeft: timeSec,
         timerId: null,
@@ -1740,13 +2590,24 @@
       return picked;
     }
 
+    function saveCurrentStationInputs() {
+      const st = state.test.stations[state.test.index];
+      if (!st) return;
+      st.answers = {
+        ten: document.getElementById("ansTen").value.trim(),
+        tinhVi: document.getElementById("ansTinhVi").value.trim(),
+        quyKinh: document.getElementById("ansQuyKinh").value.trim(),
+        congDung: document.getElementById("ansCongDung").value.trim()
+      };
+    }
+
     function renderTestStation() {
       clearInterval(state.test.timerId);
       const t = state.test;
       const st = t.stations[t.index];
 
       document.getElementById("testStationLabel").textContent = `TRẠM ${t.index + 1} / ${t.stations.length}`;
-      document.getElementById("testModeTag").textContent = t.style === "exam" ? "Thi thật" : "Luyện phản xạ";
+      document.getElementById("testModeTag").textContent = t.style === "exam" ? "Thi thật" : "Luyện tập";
       document.getElementById("testProgressFill").style.width = `${((t.index + 1) / t.stations.length) * 100}%`;
 
       const imgBox = document.getElementById("testImgBox");
@@ -1759,31 +2620,32 @@
              <small>Đặc điểm: ${esc(st.herb.Dac_Diem_Nhan_Dien || "Chưa cập nhật")}</small>
            </div>`;
 
-      const noteEl = document.getElementById("testNoteInput");
-      noteEl.value = st.note || "";
-      document.getElementById("testExamInputWrap").style.display = (t.style === "exam" || !st.revealed) ? "block" : "none";
+      document.getElementById("ansTen").value = st.answers.ten || "";
+      document.getElementById("ansTinhVi").value = st.answers.tinhVi || "";
+      document.getElementById("ansQuyKinh").value = st.answers.quyKinh || "";
+      document.getElementById("ansCongDung").value = st.answers.congDung || "";
 
+      const inputsWrap = document.getElementById("testInputsWrap");
       const revealBox = document.getElementById("testDrillReveal");
       const btnArea = document.getElementById("testActionBtns");
 
       if (t.style === "drill" && st.revealed) {
+        inputsWrap.style.display = "none";
         revealBox.style.display = "block";
-        revealBox.innerHTML = buildHerbDetailHTML(st.herb, true);
-        btnArea.innerHTML = `
-          <button class="btn" style="background:var(--danger-soft); color:#991B1B;" onclick="gradeDrillStation(false)">❌ Mình sai</button>
-          <button class="btn" style="background:var(--success-soft); color:#065F46;" onclick="gradeDrillStation(true)">✅ Mình đúng</button>
-        `;
+        revealBox.innerHTML = renderSingleGradeCardHTML(st, t.index, true);
+        const isLast = t.index === t.stations.length - 1;
+        btnArea.innerHTML = `<button class="btn btn-primary" onclick="nextFromDrill()">${isLast ? "🏁 Xem tổng kết & Lưu" : "Trạm tiếp theo ➡️"}</button>`;
       } else {
+        inputsWrap.style.display = "grid";
         revealBox.style.display = "none";
         if (t.style === "drill") {
-          btnArea.innerHTML = `<button class="btn btn-primary" onclick="revealDrillStation()">👁️ Xem đáp án & tự chấm</button>`;
+          btnArea.innerHTML = `<button class="btn btn-primary" onclick="revealDrillStation()">✅ Chấm trạm này</button>`;
         } else {
           const isLast = t.index === t.stations.length - 1;
           btnArea.innerHTML = `<button class="btn btn-primary" onclick="advanceTestStation()">${isLast ? "🏁 Hoàn tất & Chấm điểm" : "Trạm tiếp theo ➡️"}</button>`;
         }
       }
 
-      // Khởi động đồng hồ
       t.timeLeft = t.timePerStation;
       t.paused = false;
       document.getElementById("btnPauseTest").textContent = "⏸️ Tạm dừng";
@@ -1838,14 +2700,14 @@
 
     function revealDrillStation() {
       clearInterval(state.test.timerId);
+      saveCurrentStationInputs();
       const st = state.test.stations[state.test.index];
-      st.note = document.getElementById("testNoteInput").value;
+      autoGradeStation(st);
       st.revealed = true;
       renderTestStation();
     }
 
-    function gradeDrillStation(isCorrect) {
-      state.test.stations[state.test.index].isCorrect = isCorrect;
+    function nextFromDrill() {
       if (state.test.index < state.test.stations.length - 1) {
         state.test.index += 1;
         renderTestStation();
@@ -1856,7 +2718,7 @@
 
     function advanceTestStation() {
       clearInterval(state.test.timerId);
-      state.test.stations[state.test.index].note = document.getElementById("testNoteInput").value;
+      saveCurrentStationInputs();
       if (state.test.index < state.test.stations.length - 1) {
         state.test.index += 1;
         renderTestStation();
@@ -1876,6 +2738,7 @@
       document.getElementById("testRunning").style.display = "none";
       document.getElementById("testGrading").style.display = "none";
       document.getElementById("testSetup").style.display = "block";
+      updateTestSliderLimits();
     }
 
     function openGradingScreen() {
@@ -1883,89 +2746,191 @@
       document.getElementById("testRunning").style.display = "none";
       document.getElementById("testGrading").style.display = "block";
 
-      // Nếu là chế độ Thi thật, mặc định set true để người dùng chỉ cần bấm Sai ở những câu nhầm (hoặc chấm từng câu)
-      state.test.stations.forEach(s => { if (s.isCorrect === null) s.isCorrect = false; });
+      state.test.stations.forEach(st => {
+        if (!st.grade) autoGradeStation(st);
+      });
       renderGradeList();
     }
 
-    function renderGradeList() {
-      const list = document.getElementById("gradeList");
-      list.innerHTML = state.test.stations.map((st, idx) => {
-        const h = st.herb;
-        const ok = st.isCorrect === true;
-        return `
-          <div class="grade-item" style="border-color:${ok ? '#6EE7B7' : '#FCA5A5'}; background:${ok ? '#F0FDF4' : '#FFF5F5'}">
-            <div>
-              ${st.imgUrl
+    function critClass(val, max) {
+      if (val >= max - 0.001) return "ok";
+      if (val > 0) return "partial";
+      return "miss";
+    }
+
+    function critBtnText(val, max) {
+      const fmt = v => String(v).replace(".", ",");
+      if (val >= max - 0.001) return `✅ ${fmt(val)}/${fmt(max)}đ`;
+      if (val > 0) return `🟡 ${fmt(val)}/${fmt(max)}đ`;
+      return `❌ 0/${fmt(max)}đ`;
+    }
+
+    function renderSingleGradeCardHTML(st, idx, inDrill = false) {
+      const h = st.herb;
+      const g = st.grade;
+      const tot = getStationTotal(st);
+      const passed = tot >= 0.8;
+
+      return `
+        <div class="grade-item" style="border-color:${passed ? '#6EE7B7' : '#FCA5A5'};">
+          <div class="grade-top">
+            ${!inDrill ? (
+              st.imgUrl
                 ? `<img class="grade-thumb" src="${esc(st.imgUrl)}" onclick="openLightbox('${esc(st.imgUrl)}')">`
-                : `<div class="grade-thumb" style="display:grid;place-items:center;color:#fff;font-size:28px;">🌿</div>`
-              }
-            </div>
-            <div>
+                : `<div class="grade-thumb" style="display:grid;place-items:center;color:#fff;font-size:26px;">🌿</div>`
+            ) : ""}
+            <div style="flex:1; min-width:210px;">
               <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
-                <strong style="font-size:17px; color:var(--primary-dark);">Trạm ${idx + 1}: ${esc(h.Ten_Vi_Thuoc)}</strong>
+                <div>
+                  <strong style="font-size:17px; color:var(--primary-dark);">Trạm ${idx + 1}: ${esc(h.Ten_Vi_Thuoc)}</strong>
+                  <span class="badge ${passed ? 'b-green' : 'b-red'}" style="margin-left:6px;">${String(tot).replace(".", ",")} / 1 đ</span>
+                </div>
                 <div style="display:flex; gap:6px;">
-                  <button class="btn btn-sm" style="background:${ok ? 'var(--success)' : '#fff'}; color:${ok ? '#fff' : '#065F46'}; border:1.5px solid #6EE7B7;" onclick="setStationGrade(${idx}, true)">✅ Đúng</button>
-                  <button class="btn btn-sm" style="background:${!ok ? 'var(--danger)' : '#fff'}; color:${!ok ? '#fff' : '#991B1B'}; border:1.5px solid #FCA5A5;" onclick="setStationGrade(${idx}, false)">❌ Sai</button>
+                  <button class="btn btn-sm" style="background:var(--success-soft); color:#065F46;" onclick="overrideWholeStation(${idx}, true, ${inDrill})">✅ Đúng hết</button>
+                  <button class="btn btn-sm" style="background:var(--danger-soft); color:#991B1B;" onclick="overrideWholeStation(${idx}, false, ${inDrill})">❌ Chấm 0đ</button>
                 </div>
               </div>
-              <div style="font-size:13px; margin-top:6px; line-height:1.5;">
-                <b>Tính vị:</b> ${esc(h.Tinh || "—")}, ${esc(h.Vi || "—")} &nbsp;|&nbsp; <b>Quy kinh:</b> ${esc(h.Quy_Kinh || "—")}<br>
-                <b>Công dụng:</b> ${esc(h.Cong_Dung || "—")}
-              </div>
-              ${st.note ? `<div style="margin-top:6px; font-size:12.5px; color:var(--muted); background:#fff; padding:6px 10px; border-radius:8px; border:1px solid var(--border);"><b>Nháp của bạn:</b> ${esc(st.note)}</div>` : ""}
+              <small style="color:var(--muted);">Bấm vào nút điểm từng ô bên dưới để tự đổi lại Đúng / Một phần / Sai</small>
             </div>
           </div>
-        `;
-      }).join("");
 
-      const correctCount = state.test.stations.filter(s => s.isCorrect).length;
-      const total = state.test.stations.length;
-      const pct = total ? Math.round((correctCount / total) * 100) : 0;
-      document.getElementById("gradeLiveScore").textContent = `${correctCount} / ${total} đúng (${pct}%)`;
-      document.getElementById("btnReviewWrong").style.display = (correctCount < total) ? "inline-flex" : "none";
+          <div class="crit-grid">
+            <div class="crit-box ${critClass(g.ten, 0.2)}">
+              <div class="crit-head">
+                <span class="crit-title">1. Tên</span>
+                <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'ten', ${inDrill})">${critBtnText(g.ten, 0.2)}</button>
+              </div>
+              <div class="crit-ans"><b>Bạn ghi:</b> ${esc(st.answers.ten || "(Trống)")}</div>
+              <div class="crit-ans"><b>Đáp án:</b> ${esc(h.Ten_Vi_Thuoc)}</div>
+              <div class="crit-note">${esc(g.tenNote)}</div>
+            </div>
+
+            <div class="crit-box ${critClass(g.tinhVi, 0.25)}">
+              <div class="crit-head">
+                <span class="crit-title">2. Tính - vị</span>
+                <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'tinhVi', ${inDrill})">${critBtnText(g.tinhVi, 0.25)}</button>
+              </div>
+              <div class="crit-ans"><b>Bạn ghi:</b> ${esc(st.answers.tinhVi || "(Trống)")}</div>
+              <div class="crit-ans"><b>Đáp án:</b> ${esc(h.Tinh || "—")}, ${esc(h.Vi || "—")}</div>
+              <div class="crit-note">${esc(g.tvNote)}</div>
+            </div>
+
+            <div class="crit-box ${critClass(g.quyKinh, 0.25)}">
+              <div class="crit-head">
+                <span class="crit-title">3. Quy kinh</span>
+                <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'quyKinh', ${inDrill})">${critBtnText(g.quyKinh, 0.25)}</button>
+              </div>
+              <div class="crit-ans"><b>Bạn ghi:</b> ${esc(st.answers.quyKinh || "(Trống)")}</div>
+              <div class="crit-ans"><b>Đáp án:</b> ${esc(h.Quy_Kinh || "—")}</div>
+              <div class="crit-note">${esc(g.qkNote)}</div>
+            </div>
+
+            <div class="crit-box ${critClass(g.congDung, 0.3)}">
+              <div class="crit-head">
+                <span class="crit-title">4. Công dụng</span>
+                <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'congDung', ${inDrill})">${critBtnText(g.congDung, 0.3)}</button>
+              </div>
+              <div class="crit-ans"><b>Bạn ghi:</b> ${esc(st.answers.congDung || "(Trống)")}</div>
+              <div class="crit-ans"><b>Đáp án:</b> ${esc(h.Cong_Dung || "—")}</div>
+              <div class="crit-note">${esc(g.cdNote)}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function cycleCrit(idx, field, inDrill) {
+      const g = state.test.stations[idx].grade;
+      const steps = {
+        ten: [0.2, 0],
+        tinhVi: [0.25, 0.125, 0],
+        quyKinh: [0.25, 0.125, 0],
+        congDung: [0.3, 0.15, 0]
+      }[field];
+      const curIdx = steps.findIndex(v => Math.abs(v - g[field]) < 0.001);
+      const nextVal = steps[(curIdx + 1) % steps.length];
+      g[field] = nextVal;
+      const noteKey = field === "ten" ? "tenNote" : field === "tinhVi" ? "tvNote" : field === "quyKinh" ? "qkNote" : "cdNote";
+      g[noteKey] = "Đã tự điều chỉnh điểm";
+
+      if (inDrill) {
+        document.getElementById("testDrillReveal").innerHTML = renderSingleGradeCardHTML(state.test.stations[idx], idx, true);
+      } else {
+        renderGradeList();
+      }
+    }
+
+    function overrideWholeStation(idx, fullPass, inDrill) {
+      const g = state.test.stations[idx].grade;
+      g.ten = fullPass ? 0.2 : 0;
+      g.tinhVi = fullPass ? 0.25 : 0;
+      g.quyKinh = fullPass ? 0.25 : 0;
+      g.congDung = fullPass ? 0.3 : 0;
+      const label = fullPass ? "Tự chấm Đúng hết" : "Tự chấm Sai (0đ)";
+      g.tenNote = g.tvNote = g.qkNote = g.cdNote = label;
+
+      if (inDrill) {
+        document.getElementById("testDrillReveal").innerHTML = renderSingleGradeCardHTML(state.test.stations[idx], idx, true);
+      } else {
+        renderGradeList();
+      }
+    }
+
+    function renderGradeList() {
+      const stations = state.test.stations;
+      document.getElementById("gradeList").innerHTML = stations.map((st, idx) => renderSingleGradeCardHTML(st, idx, false)).join("");
+
+      const sumPts = stations.reduce((acc, st) => acc + getStationTotal(st), 0);
+      const score100 = stations.length ? Math.round((sumPts / stations.length) * 1000) / 10 : 0;
+      const passCount = stations.filter(st => getStationTotal(st) >= 0.8).length;
+
+      document.getElementById("gradeLiveScore").textContent = `${String(score100).replace(".", ",")} / 100 điểm`;
+      document.getElementById("gradePassCount").textContent = `Đạt ${passCount}/${stations.length} trạm`;
+      document.getElementById("btnReviewWrong").style.display = (passCount < stations.length) ? "inline-flex" : "none";
       document.getElementById("btnSaveTest").disabled = state.test.saved;
       document.getElementById("btnSaveTest").textContent = state.test.saved ? "✅ Đã lưu lên Google Sheet" : "💾 Lưu Kết Quả Lên Google Sheet";
     }
 
-    function setStationGrade(idx, val) {
-      state.test.stations[idx].isCorrect = val;
-      renderGradeList();
-    }
-
     async function submitTestGrades() {
-      if (state.test.saved) return;
+      if (state.test.saved || !state.user) return;
       const btn = document.getElementById("btnSaveTest");
       btn.disabled = true;
       btn.textContent = "⏳ Đang lưu...";
       setSyncStatus("syncing", "Đang lưu bài test...");
 
       const stations = state.test.stations;
-      const correctCount = stations.filter(s => s.isCorrect).length;
-      const wrongNames = stations.filter(s => !s.isCorrect).map(s => s.herb.Ten_Vi_Thuoc);
+      const sumPts = stations.reduce((acc, st) => acc + getStationTotal(st), 0);
+      const score100 = stations.length ? Math.round((sumPts / stations.length) * 1000) / 10 : 0;
+      const passCount = stations.filter(st => getStationTotal(st) >= 0.8).length;
+      const needReviewNames = stations.filter(st => getStationTotal(st) < 0.8).map(st => st.herb.Ten_Vi_Thuoc);
 
       const payload = {
+        mssv: state.user.mssv,
+        hoTen: state.user.hoTen,
+        kieuThi: state.test.style === "exam" ? "Thi thật" : "Luyện tập",
         nhomThuocLoc: state.test.groupLabel,
         soTram: stations.length,
         thoiGianMoiTramGiay: state.test.timePerStation,
-        soCauDung: correctCount,
-        danhSachCauSai: wrongNames,
-        chiTietCham: stations.map(s => ({
-          idThuoc: s.herb.ID,
-          tenViThuoc: s.herb.Ten_Vi_Thuoc,
-          isCorrect: !!s.isCorrect
+        diemThang100: score100,
+        soTramDat: passCount,
+        danhSachCanOnLai: needReviewNames,
+        chiTietCham: stations.map(st => ({
+          idThuoc: st.herb.ID,
+          tenViThuoc: st.herb.Ten_Vi_Thuoc,
+          isPassed: getStationTotal(st) >= 0.8
         }))
       };
 
       try {
         const res = await apiPost("saveTestResult", payload);
+        if (!res || !res.success) throw new Error((res && res.message) || "Không lưu được bài test");
         state.test.saved = true;
-        if (res && res.historyRecord) state.history.unshift(res.historyRecord);
-        if (res && Array.isArray(res.updatedProgress)) {
+        if (res.historyRecord) state.history.unshift(res.historyRecord);
+        if (Array.isArray(res.updatedProgress)) {
           res.updatedProgress.forEach(p => { state.progressMap[p.ID_Thuoc] = p; });
         }
         setSyncStatus("ok", "Đã lưu bài test");
-        showToast("Đã lưu điểm chạy trạm & cập nhật tiến độ!");
+        showToast(`Đã lưu kết quả ${score100}/100 điểm lên Sheet!`);
         renderGradeList();
       } catch (err) {
         btn.disabled = false;
@@ -1976,15 +2941,15 @@
     }
 
     function reviewWrongInFlashcard() {
-      const wrongIds = state.test.stations.filter(s => !s.isCorrect).map(s => String(s.herb.ID));
+      const wrongIds = state.test.stations.filter(st => getStationTotal(st) < 0.8).map(st => String(st.herb.ID));
       if (!wrongIds.length) return;
       switchTab("flashcard");
       buildFlashcardDeck(wrongIds);
-      showToast(`Đang ôn ${wrongIds.length} vị thuốc vừa làm sai!`);
+      showToast(`Đang ôn ${wrongIds.length} vị thuốc cần củng cố!`);
     }
 
     // =========================================================================
-    // TAB 3: SO SÁNH CẶP DỄ NHẦM
+    // TAB 3: SO SÁNH
     // =========================================================================
     function renderCompareSelectors() {
       const left = document.getElementById("cmpLeft");
@@ -1994,12 +2959,11 @@
       right.innerHTML = opts;
       if (state.herbs.length > 1) right.selectedIndex = 1;
 
-      // Gợi ý các cặp từ cột Thuoc_De_Nham
       const pairSet = new Set();
       const pairs = [];
       state.herbs.forEach(h => {
         String(h.Thuoc_De_Nham || "").split(/[,;]+/).map(s => s.trim()).filter(Boolean).forEach(otherName => {
-          const match = state.herbs.find(x => x.ID !== h.ID && String(x.Ten_Vi_Thuoc).toLowerCase().includes(otherName.toLowerCase()));
+          const match = state.herbs.find(x => x.ID !== h.ID && normVi(x.Ten_Vi_Thuoc).includes(normVi(otherName)));
           if (match) {
             const key = [h.ID, match.ID].sort().join("|");
             if (!pairSet.has(key)) {
@@ -2024,14 +2988,6 @@
       renderCompare();
     }
 
-    function openComparePair(idA, targetName) {
-      const match = state.herbs.find(x => String(x.Ten_Vi_Thuoc).toLowerCase().includes(targetName.toLowerCase()));
-      switchTab("compare");
-      document.getElementById("cmpLeft").value = idA;
-      if (match) document.getElementById("cmpRight").value = match.ID;
-      renderCompare();
-    }
-
     function renderCompare() {
       const a = state.herbs.find(h => String(h.ID) === document.getElementById("cmpLeft").value);
       const b = state.herbs.find(h => String(h.ID) === document.getElementById("cmpRight").value);
@@ -2039,13 +2995,13 @@
 
       const colHtml = (h) => {
         if (!h) return `<div class="compare-col" style="color:var(--muted);">Chưa chọn vị thuốc</div>`;
-        const imgs = parseImageLinks(h.Link_Anh_Vi_Thuoc);
+        const imgUrl = getSingleImage(h.Link_Anh_Vi_Thuoc);
         return `
           <div class="compare-col">
             <h3 style="margin:0; color:var(--primary-dark); font-size:20px;">${esc(h.Ten_Vi_Thuoc)}</h3>
             <small style="color:var(--muted);">${esc(h.Ten_Khac_Ten_Khoa_Hoc || h.Nhom_Thuoc || "")}</small>
-            ${imgs.length
-              ? `<img class="compare-img" src="${esc(imgs[0])}" onclick="openLightbox('${esc(imgs[0])}')">`
+            ${imgUrl
+              ? `<img class="compare-img" src="${esc(imgUrl)}" onclick="openLightbox('${esc(imgUrl)}')">`
               : `<div class="compare-img" style="display:grid;place-items:center;color:#94A3B8;">🌿 Chưa có ảnh</div>`
             }
             <div class="chip-row" style="margin-bottom:8px;">
@@ -2065,7 +3021,7 @@
     }
 
     // =========================================================================
-    // TAB 4: TRA CỨU CHÉO & THỐNG KÊ
+    // TAB 4: TRA CỨU & THỐNG KÊ
     // =========================================================================
     function renderStatsAndHistory() {
       const total = state.herbs.length;
@@ -2077,32 +3033,34 @@
         else weak++;
       });
 
+      // Chữ ghi trước con số, bỏ phần trong ngoặc
       document.getElementById("statGrid").innerHTML = `
-        <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-lbl">Tổng vị thuốc</div></div>
-        <div class="stat-card"><div class="stat-num" style="color:var(--success);">${mastered}</div><div class="stat-lbl">Đã thuộc (Box 4-5)</div></div>
-        <div class="stat-card"><div class="stat-num" style="color:var(--warn);">${learning}</div><div class="stat-lbl">Đang ôn (Box 2-3)</div></div>
-        <div class="stat-card"><div class="stat-num" style="color:var(--danger);">${weak}</div><div class="stat-lbl">Chưa thuộc (Box 1)</div></div>
+        <div class="stat-card"><div class="stat-lbl">Tổng vị thuốc</div><div class="stat-num">${total}</div></div>
+        <div class="stat-card"><div class="stat-lbl">Đã thuộc</div><div class="stat-num" style="color:var(--success);">${mastered}</div></div>
+        <div class="stat-card"><div class="stat-lbl">Đang ôn</div><div class="stat-num" style="color:var(--warn);">${learning}</div></div>
+        <div class="stat-card"><div class="stat-lbl">Chưa thuộc</div><div class="stat-num" style="color:var(--danger);">${weak}</div></div>
       `;
 
       const tbody = document.getElementById("historyBody");
       if (!state.history.length) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--muted); padding:18px;">Chưa có lịch sử thi chạy trạm nào.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--muted); padding:18px;">Chưa có lịch sử thi chạy trạm nào.</td></tr>`;
       } else {
         tbody.innerHTML = state.history.slice(0, 20).map(r => `
           <tr>
             <td><b>${esc(r.Thoi_Gian_Lam)}</b></td>
+            <td>${esc(r.Kieu_Thi || "Thi thật")}</td>
             <td>${esc(r.Nhom_Thuoc_Loc)}</td>
             <td>${esc(r.So_Tram)}</td>
-            <td>${Number(r.Thoi_Gian_Moi_Tram_Giay) > 0 ? esc(r.Thoi_Gian_Moi_Tram_Giay) + "s" : "Tự do"}</td>
-            <td><span class="badge b-blue">${esc(r.So_Cau_Dung)}/${esc(r.So_Tram)} (${esc(r.Ty_Le_Dung)})</span></td>
-            <td style="color:#B91C1C; font-size:12.5px;">${esc(r.Danh_Sach_Cau_Sai || "Không có 🎉")}</td>
+            <td>${Number(r.Thoi_Gian_Moi_Tram_Giay) > 0 ? esc(r.Thoi_Gian_Moi_Tram_Giay) + "s" : "Không giới hạn"}</td>
+            <td><span class="badge b-blue">${esc(r.Diem_Thang_100)} / 100</span></td>
+            <td style="color:#B91C1C; font-size:12.5px;">${esc(r.Danh_Sach_Can_On_Lai || "Không có 🎉")}</td>
           </tr>
         `).join("");
       }
     }
 
     function renderLibrary() {
-      const q = document.getElementById("libSearch").value.trim().toLowerCase();
+      const q = normVi(document.getElementById("libSearch").value);
       const grp = document.getElementById("libGroup").value;
       const tinh = document.getElementById("libTinh").value;
       const vi = document.getElementById("libVi").value;
@@ -2113,10 +3071,8 @@
         if (tinh !== "all" && String(h.Tinh || "").trim() !== tinh) return false;
         if (vi !== "all" && !String(h.Vi || "").toLowerCase().includes(vi.toLowerCase())) return false;
         if (kinh !== "all" && !String(h.Quy_Kinh || "").toLowerCase().includes(kinh.toLowerCase())) return false;
-        if (q) {
-          const blob = [h.Ten_Vi_Thuoc, h.Ten_Khac_Ten_Khoa_Hoc, h.Nhom_Thuoc, h.Dac_Diem_Nhan_Dien, h.Cong_Dung, h.Quy_Kinh].join(" ").toLowerCase();
-          if (!blob.includes(q)) return false;
-        }
+        // Tìm kiếm nhanh chỉ tìm theo Tên vị thuốc
+        if (q && !normVi(h.Ten_Vi_Thuoc).includes(q)) return false;
         return true;
       });
 
@@ -2127,20 +3083,21 @@
       }
 
       grid.innerHTML = filtered.map(h => {
-        const imgs = parseImageLinks(h.Link_Anh_Vi_Thuoc);
+        const imgUrl = getSingleImage(h.Link_Anh_Vi_Thuoc);
         const prog = getProg(h.ID);
         const box = Number(prog.Box_Leitner) || 1;
+        const statusText = box >= 4 ? "Đã thuộc" : box >= 2 ? "Đang ôn" : "Chưa thuộc";
         const statusCls = box >= 4 ? "b-green" : box >= 2 ? "b-amber" : "b-slate";
         return `
           <div class="herb-card" onclick="openDetailModal('${esc(h.ID)}')">
-            ${imgs.length
-              ? `<img class="herb-card-img" src="${esc(imgs[0])}" loading="lazy">`
+            ${imgUrl
+              ? `<img class="herb-card-img" src="${esc(imgUrl)}" loading="lazy">`
               : `<div class="herb-card-img" style="display:grid;place-items:center;color:#94A3B8;font-size:32px;">🌿</div>`
             }
             <div class="herb-card-body">
               <div style="display:flex; justify-content:space-between; gap:6px; align-items:flex-start;">
                 <strong style="font-size:16px; color:var(--primary-dark);">${esc(h.Ten_Vi_Thuoc)}</strong>
-                <span class="badge ${statusCls}" style="font-size:11px;">Box ${box}</span>
+                <span class="badge ${statusCls}" style="font-size:11px;">${statusText}</span>
               </div>
               <div class="chip-row">
                 ${h.Tinh ? `<span class="badge ${getTinhBadgeClass(h.Tinh)}" style="font-size:11px;">${esc(h.Tinh)}</span>` : ""}
@@ -2157,7 +3114,7 @@
     }
 
     // =========================================================================
-    // MODALS (LIGHTBOX & CHI TIẾT THUỐC)
+    // MODALS
     // =========================================================================
     function openLightbox(src) {
       document.getElementById("lightboxImg").src = src;
@@ -2168,21 +3125,20 @@
     function openDetailModal(id) {
       const h = state.herbs.find(x => String(x.ID) === String(id));
       if (!h) return;
-      const imgs = parseImageLinks(h.Link_Anh_Vi_Thuoc);
+      const imgUrl = getSingleImage(h.Link_Anh_Vi_Thuoc);
       document.getElementById("detailModalBody").innerHTML = `
         <div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
           <button class="btn btn-outline btn-sm" onclick="closeDetailModal()">✖️ Đóng</button>
         </div>
-        ${imgs.length ? `<img src="${esc(imgs[0])}" style="width:100%; height:240px; object-fit:contain; background:#0F172A; border-radius:14px; margin-bottom:14px; cursor:zoom-in;" onclick="openLightbox('${esc(imgs[0])}')">` : ""}
+        ${imgUrl ? `<img src="${esc(imgUrl)}" style="width:100%; height:240px; object-fit:contain; background:#0F172A; border-radius:14px; margin-bottom:14px; cursor:zoom-in;" onclick="openLightbox('${esc(imgUrl)}')">` : ""}
         ${buildHerbDetailHTML(h)}
       `;
       document.getElementById("detailModal").classList.add("open");
     }
     function closeDetailModal() { document.getElementById("detailModal").classList.remove("open"); }
 
-    // Khởi chạy
-    loadData();
+    // Khởi chạy kiểm tra đăng nhập
+    initAuth();
   </script>
 </body>
 </html>
-
