@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
   <style>
     :root {
       --primary-dark: #075985;
@@ -899,6 +901,29 @@
       border-top: 1px solid var(--border);
     }
 
+    /* CROP MODAL */
+    #cropModal { z-index: 220; }
+    .crop-stage {
+      width: 100%;
+      height: 360px;
+      max-height: 55vh;
+      background: #0F172A;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .crop-stage img {
+      display: block;
+      max-width: 100%;
+    }
+    .crop-tools {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
     /* TOAST */
     .toast {
       position: fixed;
@@ -1418,6 +1443,36 @@
     </div>
   </div>
 
+  <!-- MODAL CẮT & CĂN CHỈNH ẢNH -->
+  <div class="modal-backdrop" id="cropModal">
+    <div class="modal-box" style="max-width:640px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <div>
+          <h3 style="margin:0; font-size:18px; color:var(--primary-dark);">✂️ Cắt & Căn Chỉnh Ảnh</h3>
+          <small style="color:var(--muted);">Kéo ảnh để đưa vị thuốc vào giữa khung, dùng 2 ngón tay hoặc nút bên dưới để zoom</small>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="closeCropModal()">✖️</button>
+      </div>
+
+      <div class="crop-stage">
+        <img id="cropImageTarget" src="" alt="Cắt ảnh vị thuốc">
+      </div>
+
+      <div class="crop-tools">
+        <button type="button" class="btn btn-outline btn-sm" onclick="cropAction('zoomIn')">🔍+ Phóng to</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="cropAction('zoomOut')">🔍- Thu nhỏ</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="cropAction('rotateLeft')">↺ Xoay trái</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="cropAction('rotateRight')">↻ Xoay phải</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="cropAction('reset')">🔄 Đặt lại</button>
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end;">
+        <button type="button" class="btn btn-outline" onclick="closeCropModal()">Hủy</button>
+        <button type="button" class="btn btn-primary" id="btnConfirmCrop" onclick="confirmCropImage()">✅ OK, dùng ảnh này</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
   <script>
@@ -1581,7 +1636,7 @@
     }
 
     // =========================================================================
-    // XỬ LÝ ẢNH (TỐI ĐA 1 ẢNH) & UPLOAD LÊN DRIVE
+    // XỬ LÝ ẢNH (TỐI ĐA 1 ẢNH), CẮT ẢNH 16:9 & UPLOAD LÊN DRIVE
     // =========================================================================
     function getSingleImage(raw) {
       if (!raw) return "";
@@ -1632,6 +1687,89 @@
       });
     }
 
+    let cropperInstance = null;
+    let cropConfirmCallback = null;
+
+    function openCropModal(file, onConfirm) {
+      if (typeof Cropper === "undefined") {
+        compressImageToBase64(file).then(onConfirm).catch(() => showToast("Không đọc được ảnh."));
+        return;
+      }
+
+      cropConfirmCallback = onConfirm;
+      const reader = new FileReader();
+      reader.onerror = () => showToast("Không đọc được file ảnh đã chọn.");
+      reader.onload = () => {
+        const imgEl = document.getElementById("cropImageTarget");
+        if (cropperInstance) {
+          cropperInstance.destroy();
+          cropperInstance = null;
+        }
+        imgEl.src = reader.result;
+        document.getElementById("cropModal").classList.add("open");
+
+        setTimeout(() => {
+          cropperInstance = new Cropper(imgEl, {
+            aspectRatio: 16 / 9,
+            viewMode: 1,
+            dragMode: "move",
+            autoCropArea: 0.92,
+            restore: false,
+            guides: true,
+            center: true,
+            highlight: false,
+            cropBoxMovable: false,
+            cropBoxResizable: true,
+            toggleDragModeOnDblclick: false,
+            background: false
+          });
+        }, 60);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function cropAction(type) {
+      if (!cropperInstance) return;
+      if (type === "zoomIn") cropperInstance.zoom(0.15);
+      else if (type === "zoomOut") cropperInstance.zoom(-0.15);
+      else if (type === "rotateLeft") cropperInstance.rotate(-90);
+      else if (type === "rotateRight") cropperInstance.rotate(90);
+      else if (type === "reset") cropperInstance.reset();
+    }
+
+    function closeCropModal() {
+      document.getElementById("cropModal").classList.remove("open");
+      if (cropperInstance) {
+        cropperInstance.destroy();
+        cropperInstance = null;
+      }
+      cropConfirmCallback = null;
+      const f1 = document.getElementById("herbImgInput");
+      const f2 = document.getElementById("newHerbFile");
+      if (f1) f1.value = "";
+      if (f2) f2.value = "";
+    }
+
+    function confirmCropImage() {
+      if (!cropperInstance || !cropConfirmCallback) return;
+      const canvas = cropperInstance.getCroppedCanvas({
+        width: 1200,
+        height: 675,
+        fillColor: "#0F172A",
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: "high"
+      });
+      const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+      const result = {
+        base64: dataUrl.split(",")[1],
+        mimeType: "image/jpeg",
+        dataUrl
+      };
+      const cb = cropConfirmCallback;
+      closeCropModal();
+      cb(result);
+    }
+
     function triggerUploadImage(idThuoc, tenViThuoc) {
       if (state.uploadingHerbId) {
         showToast("Đang tải ảnh khác lên, bạn chờ xíu nhé!");
@@ -1643,45 +1781,47 @@
       input.click();
     }
 
-    async function handleHerbImageSelected(e) {
+    function handleHerbImageSelected(e) {
       const file = e.target.files && e.target.files[0];
       if (!file || !state.uploadTarget) return;
 
-      const { idThuoc, tenViThuoc } = state.uploadTarget;
-      state.uploadingHerbId = idThuoc;
-      setSyncStatus("syncing", "Đang tải ảnh...");
-      showToast(`Đang tải ảnh cho "${tenViThuoc}" lên Drive...`);
-      renderCurrentFlashcard();
+      const target = Object.assign({}, state.uploadTarget);
+      openCropModal(file, async ({ base64, mimeType }) => {
+        const { idThuoc, tenViThuoc } = target;
+        state.uploadingHerbId = idThuoc;
+        setSyncStatus("syncing", "Đang tải ảnh...");
+        showToast(`Đang tải ảnh cho "${tenViThuoc}" lên Drive...`);
+        renderCurrentFlashcard();
 
-      try {
-        const { base64, mimeType } = await compressImageToBase64(file);
-        const res = await apiPost("uploadHerbImage", {
-          idThuoc,
-          tenViThuoc,
-          base64,
-          mimeType
-        });
+        try {
+          const res = await apiPost("uploadHerbImage", {
+            idThuoc,
+            tenViThuoc,
+            base64,
+            mimeType
+          });
 
-        if (!res || !res.success) {
-          throw new Error((res && res.message) || "Không lưu được ảnh lên Drive/Sheet");
+          if (!res || !res.success) {
+            throw new Error((res && res.message) || "Không lưu được ảnh lên Drive/Sheet");
+          }
+
+          const herb = state.herbs.find(h => String(h.ID) === idThuoc);
+          if (herb) herb.Link_Anh_Vi_Thuoc = res.driveUrl;
+
+          state.uploadingHerbId = null;
+          setSyncStatus("ok", "Đã lưu ảnh");
+          showToast(`Đã lưu ảnh "${tenViThuoc}" vào Drive & Sheet!`);
+          renderCurrentFlashcard();
+          renderLibrary();
+          renderCompare();
+        } catch (err) {
+          console.error(err);
+          state.uploadingHerbId = null;
+          setSyncStatus("error", "Lỗi tải ảnh");
+          showToast("Lỗi tải ảnh: " + err.message);
+          renderCurrentFlashcard();
         }
-
-        const herb = state.herbs.find(h => String(h.ID) === idThuoc);
-        if (herb) herb.Link_Anh_Vi_Thuoc = res.driveUrl;
-
-        state.uploadingHerbId = null;
-        setSyncStatus("ok", "Đã lưu ảnh");
-        showToast(`Đã lưu ảnh "${tenViThuoc}" vào Drive & Sheet!`);
-        renderCurrentFlashcard();
-        renderLibrary();
-        renderCompare();
-      } catch (err) {
-        console.error(err);
-        state.uploadingHerbId = null;
-        setSyncStatus("error", "Lỗi tải ảnh");
-        showToast("Lỗi tải ảnh: " + err.message);
-        renderCurrentFlashcard();
-      }
+      });
     }
 
     // =========================================================================
@@ -1705,19 +1845,17 @@
       document.getElementById("addHerbModal").classList.remove("open");
     }
 
-    async function previewNewHerbImage(e) {
+    function previewNewHerbImage(e) {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      try {
-        const res = await compressImageToBase64(file);
+
+      openCropModal(file, (res) => {
         state.newHerbImageData = { base64: res.base64, mimeType: res.mimeType };
         document.getElementById("newHerbImgPreview").innerHTML = `
           <img src="${res.dataUrl}" alt="Xem trước">
-          <div style="font-size:12px; color:var(--primary-dark); font-weight:700;">Bấm vào đây để đổi ảnh khác</div>
+          <div style="font-size:12px; color:var(--primary-dark); font-weight:700;">Bấm vào đây để đổi hoặc cắt lại ảnh khác</div>
         `;
-      } catch (err) {
-        showToast("Không đọc được ảnh đã chọn.");
-      }
+      });
     }
 
     async function submitNewHerb(e) {
