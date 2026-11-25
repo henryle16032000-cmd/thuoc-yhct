@@ -387,12 +387,13 @@
       justify-content: center;
       margin-bottom: 14px;
     }
-    .fc-img-box img {
+     .fc-img-box img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      background: #0F172A;
-    }
+      object-fit: cover;
+      object-position: center;
+      display: block;
+   }
     .no-img-placeholder {
       text-align: center;
       color: #CBD5E1;
@@ -422,21 +423,12 @@
     }
     .upload-cta-btn:active { transform: scale(0.96); }
 
-    .img-toolbar {
+    .img-action-btn {
       position: absolute;
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      pointer-events: none;
-    }
-    .img-toolbar button {
-      pointer-events: auto;
+      z-index: 2;
       background: rgba(15, 23, 42, 0.72);
       color: #fff;
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.22);
       border-radius: 999px;
       padding: 6px 12px;
       font-family: inherit;
@@ -444,6 +436,14 @@
       font-weight: 600;
       cursor: pointer;
       backdrop-filter: blur(4px);
+    }
+    .img-btn-zoom {
+      top: 10px;
+      right: 10px;
+    }
+    .img-btn-change {
+      bottom: 10px;
+      right: 10px;
     }
 
     .hint-area {
@@ -2152,11 +2152,9 @@
         `;
       } else if (curImg) {
         imgContent = `
-          <img src="${esc(curImg)}" alt="Vị thuốc" onerror="this.parentElement.innerHTML='<div class=no-img-placeholder><span class=emoji>⚠️</span><div style=font-weight:700;color:#fff>Không tải được ảnh</div><button class=upload-cta-btn onclick=\\'event.stopPropagation(); triggerUploadImage(${JSON.stringify(String(herb.ID))}, ${JSON.stringify(String(herb.Ten_Vi_Thuoc))})\\'>📤 Tải lại ảnh khác</button></div>'">
-          <div class="img-toolbar">
-            <button onclick="event.stopPropagation(); triggerUploadImage('${esc(herb.ID)}', '${esc(herb.Ten_Vi_Thuoc)}')">📷 Đổi ảnh</button>
-            <button onclick="event.stopPropagation(); openLightbox('${esc(curImg)}')">🔍 Phóng to</button>
-          </div>
+          <img src="${esc(curImg)}" alt="Vị thuốc" data-id="${esc(herb.ID)}" data-name="${esc(herb.Ten_Vi_Thuoc)}" onerror="handleFcImgError(this)">
+          <button class="img-action-btn img-btn-zoom" data-src="${esc(curImg)}" onclick="event.stopPropagation(); openLightbox(this.dataset.src)">🔍 Phóng to</button>
+          <button class="img-action-btn img-btn-change" data-id="${esc(herb.ID)}" data-name="${esc(herb.Ten_Vi_Thuoc)}" onclick="event.stopPropagation(); triggerUploadImage(this.dataset.id, this.dataset.name)">📷 Đổi ảnh</button>
         `;
       } else {
         imgContent = `
@@ -2175,6 +2173,20 @@
         </div>
         <div id="fcHintContainer" class="hint-area">
           <button class="btn btn-soft btn-sm" onclick="event.stopPropagation(); showNextHint()">💡 Gợi ý 1 (Nhóm & Bộ phận dùng)</button>
+        </div>
+      `;
+    }
+
+    function handleFcImgError(imgEl) {
+      const id = imgEl.dataset.id || "";
+      const name = imgEl.dataset.name || "";
+      const box = imgEl.parentElement;
+      if (!box) return;
+      box.innerHTML = `
+        <div class="no-img-placeholder">
+          <span class="emoji">⚠️</span>
+          <div style="font-weight:700; color:#fff;">Không tải được ảnh</div>
+          <button class="upload-cta-btn" data-id="${esc(id)}" data-name="${esc(name)}" onclick="event.stopPropagation(); triggerUploadImage(this.dataset.id, this.dataset.name)">📤 Tải lại ảnh khác</button>
         </div>
       `;
     }
@@ -2665,8 +2677,8 @@
 
       const imgBox = document.getElementById("testImgBox");
       imgBox.innerHTML = st.imgUrl
-        ? `<img src="${esc(st.imgUrl)}" alt="Trạm thi" onclick="openLightbox('${esc(st.imgUrl)}')" style="cursor:zoom-in;">
-           <div class="img-toolbar"><span></span><button onclick="openLightbox('${esc(st.imgUrl)}')">🔍 Phóng to</button></div>`
+        ? `<img src="${esc(st.imgUrl)}" alt="Trạm thi" data-src="${esc(st.imgUrl)}" onclick="openLightbox(this.dataset.src)" style="cursor:zoom-in;">
+           <button class="img-action-btn img-btn-zoom" data-src="${esc(st.imgUrl)}" onclick="event.stopPropagation(); openLightbox(this.dataset.src)">🔍 Phóng to</button>`
         : `<div class="no-img-placeholder">
              <span class="emoji">🌿</span>
              <div style="font-weight:700; color:#fff;">Vị thuốc chưa có ảnh</div>
