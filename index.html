@@ -703,7 +703,6 @@
         <div class="brand-icon">🌿</div>
         <div>
           <h1>Thực Hành Thuốc YHCT</h1>
-          <small id="headerSub">Đang tải dữ liệu từ Google Sheet...</small>
         </div>
       </div>
       <button class="sync-pill" onclick="loadData(true)" title="Tải lại dữ liệu từ Google Sheet">
@@ -717,7 +716,7 @@
   <div class="nav-wrap">
     <nav class="nav-tabs">
       <button class="nav-btn active" data-tab="flashcard" onclick="switchTab('flashcard')">🃏 <span>Flashcard</span></button>
-      <button class="nav-btn" data-tab="test" onclick="switchTab('test')">⏱️ <span>Thi Chạy Trạm</span></button>
+      <button class="nav-btn" data-tab="test" onclick="switchTab('test')">⏱️ <span>Thi thử</span></button>
       <button class="nav-btn" data-tab="compare" onclick="switchTab('compare')">⚖️ <span>So Sánh</span></button>
       <button class="nav-btn" data-tab="library" onclick="switchTab('library')">📚 <span>Tra Cứu</span></button>
     </nav>
@@ -737,20 +736,20 @@
             <label>Lọc tiến độ</label>
             <select id="fcStatusFilter" onchange="buildFlashcardDeck()">
               <option value="all">Tất cả vị thuốc</option>
-              <option value="due">Cần ôn hôm nay (SRS)</option>
-              <option value="weak">Chưa thuộc / Hay sai</option>
-              <option value="mastered">Đã thuộc (Box 4-5)</option>
+              <option value="due">Cần ôn</option>
+              <option value="weak">Chưa nhớ</option>
+              <option value="mastered">Đã nhớ</option>
             </select>
           </div>
           <div class="control-item">
-            <label>Chiều học</label>
+            <label>Học theo thứ tự</label>
             <select id="fcModeFilter" onchange="renderCurrentFlashcard()">
-              <option value="normal">Nhìn ảnh → Đoán tên & Tính vị</option>
-              <option value="reverse">Nhìn Công dụng & Tính vị → Đoán tên</option>
+              <option value="normal">Nhìn ảnh → Đoán tên</option>
+              <option value="reverse">Nhìn Công dụng → Đoán tên</option>
             </select>
           </div>
           <div style="display:flex; gap:8px; align-self:flex-end;">
-            <button class="btn btn-outline btn-sm" onclick="shuffleFlashcards()">🔀 Trộn thẻ</button>
+            <button class="btn btn-outline btn-sm" onclick="shuffleFlashcards()">🔀 Trộn flashcard</button>
           </div>
         </div>
       </div>
@@ -782,22 +781,19 @@
 
         <div class="srs-bar">
           <button class="srs-btn srs-forgot" onclick="rateCard('forgot')">
-            <span>❌ Quên</span>
-            <small>Ôn lại ngay • Phím 1</small>
+            <span>❌ Không nhớ</span>
           </button>
           <button class="srs-btn srs-hard" onclick="rateCard('hard')">
-            <span>🤔 Lấn cấn</span>
-            <small>Ôn lại sau 1 ngày • Phím 2</small>
+            <span>🤔 Phân vân</span>
           </button>
           <button class="srs-btn srs-good" onclick="rateCard('good')">
-            <span>✅ Thuộc làu</span>
-            <small>Lên Box • Phím 3</small>
+            <span>✅ Đã nhớ</span>
           </button>
         </div>
 
         <div class="fc-nav-row">
           <button class="btn btn-outline btn-sm" onclick="prevCard()">⬅️ Thẻ trước</button>
-          <small style="color:var(--muted); text-align:center;">Chạm thẻ (hoặc Space) để lật • Vuốt trái/phải để đánh giá</small>
+          <small style="color:var(--muted); text-align:center;">Chạm thẻ để lật</small>
           <button class="btn btn-outline btn-sm" onclick="nextCard()">Thẻ sau ➡️</button>
         </div>
       </div>
