@@ -1350,11 +1350,12 @@
         <div class="form-grid-2">
           <div class="form-field">
             <label>Tên vị thuốc *</label>
-            <input type="text" id="newTen" placeholder="VD: Đẳng sâm" required>
+            <input type="text" id="newTen" placeholder="VD: Đẳng sâm" oninput="checkDuplicateHerbUI()" required>
+            <div id="newTenDupWarn" style="display:none; margin-top:4px; padding:7px 10px; border-radius:10px; background:var(--danger-soft); color:#991B1B; border:1px solid #FCA5A5; font-size:12px; font-weight:700;"></div>
           </div>
           <div class="form-field">
             <label>Tên khác / Tên khoa học</label>
-            <input type="text" id="newTenKhac" placeholder="VD: Radix Codonopsis">
+            <input type="text" id="newTenKhac" placeholder="VD: Radix Codonopsis" oninput="checkDuplicateHerbUI()">
           </div>
           <div class="form-field">
             <label>Nhóm thuốc</label>
@@ -1696,6 +1697,8 @@
       const groups = [...new Set(state.herbs.map(h => String(h.Nhom_Thuoc || "").trim()).filter(Boolean))].sort();
       document.getElementById("existingGroupsList").innerHTML = groups.map(g => `<option value="${esc(g)}">`).join("");
       document.getElementById("addHerbModal").classList.add("open");
+      document.getElementById("newTenDupWarn").style.display = "none";
+      document.getElementById("btnSubmitNewHerb").disabled = false;
     }
 
     function closeAddHerbModal() {
@@ -1721,6 +1724,12 @@
       e.preventDefault();
       const ten = document.getElementById("newTen").value.trim();
       if (!ten) return;
+
+      const dup = checkDuplicateHerbUI();
+      if (dup) {
+        showToast(`Vị thuốc "${dup.Ten_Vi_Thuoc}" đã có trong danh sách!`);
+        return;
+      }
 
       const btn = document.getElementById("btnSubmitNewHerb");
       btn.disabled = true;
@@ -1770,6 +1779,57 @@
         btn.disabled = false;
         btn.textContent = "💾 Lưu vị thuốc";
       }
+    }
+
+    function normHerbKey(str) {
+      return normVi(str).replace(/y/g, "i");
+    }
+
+    function extractHerbKeysClient(tenChinh, tenKhac) {
+      const keys = [];
+      const mainKey = normHerbKey(tenChinh);
+      if (mainKey) keys.push(mainKey);
+      if (tenKhac) {
+        String(tenKhac)
+          .split(/[\/,;\(\)\n]+/)
+          .forEach(part => {
+            const k = normHerbKey(part);
+            if (k && k.length >= 2 && !keys.includes(k)) keys.push(k);
+          });
+      }
+      return keys;
+    }
+
+    function findDuplicateHerb(tenInput, tenKhacInput) {
+      const newKeys = extractHerbKeysClient(tenInput, tenKhacInput);
+      if (!newKeys.length) return null;
+
+      for (const h of state.herbs) {
+        const existKeys = extractHerbKeysClient(h.Ten_Vi_Thuoc, h.Ten_Khac_Ten_Khoa_Hoc);
+        if (newKeys.some(k => existKeys.includes(k))) {
+          return h;
+        }
+      }
+      return null;
+    }
+
+    function checkDuplicateHerbUI() {
+      const ten = document.getElementById("newTen").value.trim();
+      const tenKhac = document.getElementById("newTenKhac").value.trim();
+      const warn = document.getElementById("newTenDupWarn");
+      const btn = document.getElementById("btnSubmitNewHerb");
+
+      const dup = findDuplicateHerb(ten, tenKhac);
+      if (dup) {
+        const by = dup.Nguoi_Them ? ` — do ${dup.Nguoi_Them} thêm` : "";
+        warn.textContent = `⚠️ Đã có vị thuốc "${dup.Ten_Vi_Thuoc}" (${dup.ID})${by}. Không thể thêm trùng!`;
+        warn.style.display = "block";
+        btn.disabled = true;
+        return dup;
+      }
+      warn.style.display = "none";
+      btn.disabled = false;
+      return null;
     }
 
     // =========================================================================
