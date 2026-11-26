@@ -376,26 +376,34 @@
       transform: rotateY(180deg);
       cursor: pointer;
     }
-
     .fc-img-box {
-      position: relative;
       width: 100%;
-      height: 290px;
-      background: #0F172A;
+      max-width: 420px;      /* Giữ khung dọc gọn đẹp trên màn hình ngang/iPad */
+      aspect-ratio: 3 / 4;   /* Khớp chuẩn tỷ lệ 1920x2560 (3:4) */
+      height: auto !important;
+      margin: 0 auto 14px;
       border-radius: 16px;
       overflow: hidden;
+      background: #0F172A;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 14px;
+      position: relative;
     }
-     .fc-img-box img {
+
+    .fc-img-box img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: center;
+      object-fit: contain;   /* Hiện trọn vẹn 1920x2560 không mất rìa; đổi thành "cover" nếu muốn lấp đầy khung */
       display: block;
-   }
+    }
+
+    @media (max-width: 720px) {
+      .fc-img-box {
+        max-width: 100%;
+        aspect-ratio: 3 / 4;
+      }
+    }
     .no-img-placeholder {
       text-align: center;
       color: #CBD5E1;
@@ -921,12 +929,14 @@
     #cropModal { z-index: 220; }
     .crop-stage {
       width: 100%;
-      height: 360px;
-      max-height: 55vh;
+      max-width: 420px;
+      aspect-ratio: 3 / 4;
+      height: auto;
+      max-height: 60vh;
+      margin: 0 auto 12px;
       background: #0F172A;
       border-radius: 14px;
       overflow: hidden;
-      margin-bottom: 12px;
     }
     .crop-stage img {
       display: block;
