@@ -378,8 +378,8 @@
     }
     .fc-img-box {
       width: 100%;
-      max-width: 420px;
-      aspect-ratio: 3 / 4;
+      max-width: 360px;
+      aspect-ratio: 3 / 5;
       height: auto !important;
       margin: 0 auto 14px;
       border-radius: 16px;
@@ -1389,7 +1389,6 @@
       .compare-grid, .station-inputs, .crit-grid, .form-grid-2 { grid-template-columns: 1fr; }
       .stat-grid { grid-template-columns: repeat(2, 1fr); }
       .fc-card { min-height: 450px; }
-      .fc-img-box { height: 240px; }
       .user-chip span.hide-sm { display: none; }
     }
     .pt-tag { display: none !important; }
@@ -1628,22 +1627,11 @@
                 Yêu cầu gõ Tên vị thuốc + Chọn ảnh vị thuốc
               </label>
             </div>
-
-            <div id="drillLeitnerHint" class="leitner-hint"></div>
           </div>
 
           <div style="margin-top:16px;">
             <label style="font-size:12px; font-weight:700; color:var(--muted);">CHỌN NHÓM THUỐC</label>
             <div id="testGroupChecks" class="checkbox-group"></div>
-          </div>
-
-          <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:12px; padding-top:12px; border-top:1px solid var(--border);">
-            <label class="check-pill">
-              <input type="checkbox" id="cfgAutoNext" checked> Tự động chuyển trạm khi hết giờ
-            </label>
-            <label class="check-pill">
-              <input type="checkbox" id="cfgSound" checked> Tiếng bíp 5s cuối & chuông hết trạm
-            </label>
           </div>
 
           <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
@@ -1726,7 +1714,6 @@
             <div>
               <h2 style="margin:0; font-size:20px; color:var(--primary-dark);">📝 Kết Quả & Review Chạy Trạm</h2>
               <small style="color:var(--muted);">Hệ thống đã tự chấm (thang 100). Bấm vào từng mục nhỏ nếu muốn sửa lại kết quả chấm.</small>
-              <div id="gradeLeitnerBanner" style="display:none; margin-top:8px;"></div>
             </div>
             <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
               <div class="badge b-blue" style="font-size:17px; padding:8px 16px;" id="gradeLiveScore">0 / 100 điểm</div>
@@ -2222,7 +2209,7 @@
 
         setTimeout(() => {
           cropperInstance = new Cropper(imgEl, {
-            aspectRatio: 16 / 9,
+            aspectRatio: 3 / 5,
             viewMode: 1,
             dragMode: "move",
             autoCropArea: 0.92,
@@ -2265,8 +2252,8 @@
     function confirmCropImage() {
       if (!cropperInstance || !cropConfirmCallback) return;
       const canvas = cropperInstance.getCroppedCanvas({
-        width: 1200,
-        height: 675,
+        width: 1920,
+        height: 3200,
         fillColor: "#0F172A",
         imageSmoothingEnabled: true,
         imageSmoothingQuality: "high"
@@ -2724,8 +2711,6 @@
       slider.value = Math.min(total, Math.max(1, defCount));
       updateTestSliderLimits();
 
-      document.getElementById("cfgAutoNext").checked = !!state.config.Tu_Dong_Chuyen_Tram;
-      document.getElementById("cfgSound").checked = !!state.config.Am_Thanh_Bao_Het_Gio;
       document.getElementById("cfgPool").value = state.config.Che_Do_Uu_Tien_Cau_Sai ? "weighted" : "random";
     }
 
@@ -3586,8 +3571,8 @@
       const finalCount = Math.min(reqCount, pool.length);
       const unlimited = document.getElementById("cfgUnlimitedTime").checked;
       const timeSec = unlimited ? 0 : Math.max(1, parseInt(document.getElementById("cfgTimeSlider").value, 10) || 45);
-      const autoNext = document.getElementById("cfgAutoNext").checked;
-      const sound = document.getElementById("cfgSound").checked;
+      const autoNext = true;
+      const sound = true;
 
       const selected = pickHerbs(pool, finalCount, poolMode === "weighted");
 
@@ -4150,16 +4135,6 @@
       const sumPts = stations.reduce((acc, st) => acc + getStationTotal(st), 0);
       const score100 = stations.length ? Math.round((sumPts / stations.length) * 1000) / 10 : 0;
       const passCount = stations.filter(st => getStationTotal(st) >= 0.8).length;
-
-      const banner = document.getElementById("gradeLeitnerBanner");
-      if (banner) {
-        if (!state.test.updateLeitner) {
-          banner.style.display = "block";
-          banner.innerHTML = `<div class="leitner-hint locked" style="margin-top:0;">🔒 Chế độ luyện rút gọn (${esc(state.test.modeDisplayLabel)}): vẫn lưu điểm vào Lịch sử, nhưng giữ nguyên cấp độ Đã thuộc / Chưa thuộc (Leitner).</div>`;
-        } else {
-          banner.style.display = "none";
-        }
-      }
 
       document.getElementById("gradeLiveScore").textContent = `${String(score100).replace(".", ",")} / 100 điểm`;
       document.getElementById("gradePassCount").textContent = `Đạt ${passCount}/${stations.length} trạm`;
