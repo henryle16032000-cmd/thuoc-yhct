@@ -378,11 +378,9 @@
     }
     .fc-img-box {
       width: 100%;
-      max-width: 300px;      /* Giữ chiều ngang vừa phải để chiều cao vươn dài đúng tỷ lệ dọc */
-      aspect-ratio: 3 / 5;   /* Chiều cao cao hơn chiều ngang theo tỷ lệ 3:5 (1920x3200) */
+      max-width: 360px;
+      aspect-ratio: 3 / 5;
       height: auto !important;
-      max-height: none !important;
-      flex-shrink: 0;
       margin: 0 auto 14px;
       border-radius: 16px;
       overflow: hidden;
@@ -392,12 +390,22 @@
       justify-content: center;
       position: relative;
     }
-
     .fc-img-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+    .crop-stage {
+      width: 100%;
+      max-width: 360px;
+      aspect-ratio: 3 / 5;
+      height: auto;
+      max-height: 60vh;
+      margin: 0 auto 12px;
+      background: #0F172A;
+      border-radius: 14px;
+      overflow: hidden;
     }
     .no-img-placeholder {
       text-align: center;
