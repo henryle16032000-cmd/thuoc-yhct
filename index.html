@@ -1580,8 +1580,8 @@
             <div>
               <label style="font-size:12px; font-weight:700; color:var(--muted);">CHẾ ĐỘ BỐC ĐỀ</label>
               <select id="cfgPool" style="margin-top:4px;">
-                <option value="weighted">Ưu tiên các cây chưa thuộc</option>
                 <option value="random">Ngẫu nhiên đều tất cả</option>
+                <option value="weighted">Ưu tiên các cây chưa thuộc</option>
                 <option value="weakOnly">Chỉ bốc các cây chưa thuộc</option>
               </select>
             </div>
@@ -3215,40 +3215,21 @@
       updateDrillConfigHints();
     }
 
-    function updateDrillConfigHints() {
+      function updateDrillConfigHints() {
       const mode = getCurrentDrillMode();
       const preview = document.getElementById("drillWeightPreview");
-      const hint = document.getElementById("drillLeitnerHint");
-      if (!hint) return;
+      if (!preview) return;
 
       if (mode === "fields") {
         const fields = getSelectedDrillFields();
         if (!fields.length) {
-          if (preview) preview.textContent = "⚠️ Hãy chọn ít nhất 1 mục để kiểm tra.";
-          hint.className = "leitner-hint locked";
-          hint.textContent = "⚠️ Chưa chọn mục nào.";
+          preview.textContent = "";
           return;
         }
         const w = computeScaledWeights(fields);
-        if (preview) {
-          preview.textContent = "Điểm quy đổi (1đ/trạm): " + fields.map(k => `${FIELD_LABELS[k]} ${fmtPt(w[k])}đ`).join(" • ");
-        }
-        if (fields.length <= 2) {
-          hint.className = "leitner-hint locked";
-          hint.textContent = "🔒 Luyện lẻ 1–2 mục: vẫn lưu điểm vào Lịch sử, nhưng giữ nguyên cấp độ Đã thuộc / Chưa thuộc (Leitner).";
-        } else {
-          hint.className = "leitner-hint";
-          hint.textContent = "✅ Luyện từ 3–4 mục: sẽ cập nhật tiến độ Đã thuộc / Chưa thuộc (Leitner) khi lưu kết quả.";
-        }
+        preview.textContent = "Điểm quy đổi: " + fields.map(k => `${FIELD_LABELS[k]} ${fmtPt(w[k])}đ`).join(" • ");
       } else {
-        const reqName = document.getElementById("chkReverseName")?.checked;
-        if (reqName) {
-          hint.className = "leitner-hint";
-          hint.textContent = "✅ Đủ cả Gõ Tên (0,5đ) + Chọn 4 ảnh (0,5đ): sẽ cập nhật tiến độ Leitner khi lưu kết quả.";
-        } else {
-          hint.className = "leitner-hint locked";
-          hint.textContent = "🔒 Chỉ chọn nhanh 4 ảnh (1đ): vẫn lưu điểm vào Lịch sử, giữ nguyên cấp độ Leitner.";
-        }
+        preview.textContent = "";
       }
     }
 
