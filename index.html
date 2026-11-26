@@ -940,6 +940,180 @@
       margin-bottom: 14px;
     }
 
+    /* AI CHAT BUBBLE & PANEL */
+    .ai-fab {
+      position: fixed;
+      right: 18px;
+      bottom: 20px;
+      z-index: 130;
+      display: none;
+      align-items: center;
+      gap: 7px;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light));
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(7, 89, 133, 0.36);
+      transition: transform 0.15s, box-shadow 0.2s;
+    }
+    .ai-fab.visible { display: inline-flex; }
+    .ai-fab:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(7, 89, 133, 0.42); }
+    .ai-fab:active { transform: scale(0.96); }
+
+    .ai-chat-panel {
+      position: fixed;
+      right: 18px;
+      bottom: 80px;
+      width: 400px;
+      max-width: calc(100vw - 24px);
+      height: 560px;
+      max-height: calc(100vh - 110px);
+      background: #fff;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.24);
+      z-index: 140;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      animation: fadeIn 0.2s ease;
+    }
+    .ai-chat-panel.open { display: flex; }
+
+    .ai-chat-head {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #fff;
+      padding: 13px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .ai-chat-head h3 { margin: 0; font-size: 15px; font-weight: 800; }
+    .ai-chat-head small { display: block; font-size: 11px; opacity: 0.9; }
+    .ai-head-btn {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 10px;
+      padding: 5px 9px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .ai-head-btn:hover { background: rgba(255,255,255,0.3); }
+
+    .ai-quick-bar {
+      display: flex;
+      gap: 6px;
+      padding: 8px 12px;
+      background: #F8FAFC;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      flex-shrink: 0;
+    }
+    .ai-quick-chip {
+      white-space: nowrap;
+      border: 1px solid #BAE6FD;
+      background: #fff;
+      color: var(--primary-dark);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .ai-quick-chip:hover { background: var(--primary-soft); }
+
+    .ai-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #F8FAFC;
+    }
+    .ai-msg {
+      max-width: 88%;
+      padding: 10px 13px;
+      border-radius: 16px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      word-wrap: break-word;
+    }
+    .ai-msg.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .ai-msg.model {
+      align-self: flex-start;
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 2px 6px rgba(15,23,42,0.04);
+    }
+    .ai-msg-time {
+      display: block;
+      font-size: 10.5px;
+      opacity: 0.7;
+      margin-top: 4px;
+      text-align: right;
+    }
+    .ai-msg.model .ai-msg-time { text-align: left; }
+
+    .ai-chat-input-bar {
+      display: flex;
+      gap: 8px;
+      padding: 10px 12px;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      align-items: flex-end;
+    }
+    .ai-chat-input-bar textarea {
+      flex: 1;
+      resize: none;
+      max-height: 92px;
+      padding: 9px 12px;
+      font-size: 13.5px;
+      line-height: 1.4;
+      border-radius: 14px;
+    }
+    .ai-send-btn {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .ai-send-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    @media (max-width: 720px) {
+      .ai-chat-panel {
+        right: 10px;
+        left: 10px;
+        width: auto;
+        bottom: 74px;
+        height: 70vh;
+      }
+      .ai-fab { right: 14px; bottom: 14px; padding: 11px 15px; font-size: 13px; }
+    }
+
     /* TOAST */
     .toast {
       position: fixed;
@@ -1489,6 +1663,37 @@
     </div>
   </div>
 
+  <!-- BONG BÓNG CHAT AI -->
+  <button class="ai-fab" id="aiFab" onclick="toggleAiChat()" title="Hỏi đáp cơ chế thuốc YHCT với AI">
+    ✨ <span>Hỏi AI</span>
+  </button>
+
+  <div class="ai-chat-panel" id="aiChatPanel">
+    <div class="ai-chat-head">
+      <div>
+        <h3>✨ Trợ lý AI Thuốc YHCT</h3>
+        <small id="aiChatOwner">Lưu lịch sử riêng theo tài khoản</small>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <button class="ai-head-btn" onclick="clearMyAiChat()" title="Xóa đoạn chat của bạn">🗑️ Xóa</button>
+        <button class="ai-head-btn" onclick="toggleAiChat()" title="Đóng khung chat">✖️</button>
+      </div>
+    </div>
+
+    <div class="ai-quick-bar">
+      <button class="ai-quick-chip" onclick="askQuickAi('current')">✨ Giải thích vị đang xem</button>
+      <button class="ai-quick-chip" onclick="askQuickAi('quiz')">🧪 Đố nhanh 3 câu cơ chế</button>
+      <button class="ai-quick-chip" onclick="askQuickAi('compare')">⚖️ Phân biệt cặp dễ nhầm</button>
+    </div>
+
+    <div class="ai-messages" id="aiMessages"></div>
+
+    <div class="ai-chat-input-bar">
+      <textarea id="aiInput" rows="1" placeholder="Hỏi vì sao có tính vị, quy kinh, so sánh..." onkeydown="handleAiKeyDown(event)"></textarea>
+      <button class="ai-send-btn" id="btnSendAi" onclick="sendAiMessage()">Gửi</button>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
   <script>
@@ -1500,6 +1705,8 @@
       herbs: [],
       progressMap: {},
       history: [],
+      chatHistory: [],
+      aiSending: false,
       config: {
         Thoi_Gian_Tram_Mac_Dinh_Giay: 45,
         So_Cay_Test_Mac_Dinh: 10,
@@ -1603,6 +1810,8 @@
       document.getElementById("loginOverlay").classList.add("hidden");
       document.getElementById("userChip").style.display = "inline-flex";
       document.getElementById("userChipName").textContent = `${user.hoTen} (${user.mssv})`;
+      document.getElementById("aiFab").classList.add("visible");
+      document.getElementById("aiChatOwner").textContent = `Lịch sử riêng của ${user.hoTen}`;
     }
 
     async function handleLogin(e) {
@@ -1649,6 +1858,9 @@
       document.getElementById("loginError").style.display = "none";
       document.getElementById("loginOverlay").classList.remove("hidden");
       resetTestUI();
+      state.chatHistory = [];
+      document.getElementById("aiFab").classList.remove("visible");
+      document.getElementById("aiChatPanel").classList.remove("open");
     }
 
     // =========================================================================
@@ -2125,6 +2337,8 @@
         state.progressMap = {};
         (res.progress || []).forEach(p => { state.progressMap[String(p.ID_Thuoc).trim()] = p; });
         state.history = res.history || [];
+        state.chatHistory = res.chatHistory || [];
+        renderAiChatMessages();
         if (res.config) state.config = Object.assign(state.config, res.config);
 
         setSyncStatus("ok", "Đã đồng bộ");
@@ -3414,6 +3628,158 @@
       document.getElementById("detailModal").classList.add("open");
     }
     function closeDetailModal() { document.getElementById("detailModal").classList.remove("open"); }
+
+    // =========================================================================
+    // TRỢ LÝ CHAT AI LƯU LỊCH SỬ RIÊNG THEO TÀI KHOẢN
+    // =========================================================================
+    function toggleAiChat() {
+      const panel = document.getElementById("aiChatPanel");
+      panel.classList.toggle("open");
+      if (panel.classList.contains("open")) {
+        renderAiChatMessages();
+        setTimeout(() => document.getElementById("aiInput").focus(), 120);
+      }
+    }
+
+    function formatAiText(raw) {
+      return esc(raw)
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+        .replace(/(?:^|\n)[\*\-]\s+/g, "\n• ")
+        .replace(/\n/g, "<br>");
+    }
+
+    function renderAiChatMessages() {
+      const box = document.getElementById("aiMessages");
+      if (!box) return;
+
+      if (!state.chatHistory.length && !state.aiSending) {
+        box.innerHTML = `
+          <div class="ai-msg model">
+            Chào <strong>${esc(state.user ? state.user.hoTen : "bạn")}</strong>! Mình có thể giải thích cơ chế <strong>Hoạt chất → Tính vị → Quy kinh → Công dụng</strong> cho từng vị thuốc, so sánh các cặp dễ nhầm hoặc đố nhanh để bạn hiểu bài không cần học vẹt.<br><br>
+            Toàn bộ lịch sử trò chuyện ở đây được lưu riêng theo MSSV của bạn nhé!
+          </div>
+        `;
+        return;
+      }
+
+      let html = state.chatHistory.map(m => {
+        const role = m.Vai_Tro_Tin_Nhan === "model" ? "model" : "user";
+        const content = role === "model" ? formatAiText(m.Noi_Dung) : esc(m.Noi_Dung).replace(/\n/g, "<br>");
+        return `
+          <div class="ai-msg ${role}">
+            <div>${content}</div>
+            ${m.Thoi_Gian ? `<span class="ai-msg-time">${esc(m.Thoi_Gian)}</span>` : ""}
+          </div>
+        `;
+      }).join("");
+
+      if (state.aiSending) {
+        html += `<div class="ai-msg model" style="color:var(--muted); font-style:italic;">⏳ AI đang phân tích cơ chế...</div>`;
+      }
+
+      box.innerHTML = html;
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function getCurrentHerbContext() {
+      const fcActive = document.getElementById("view-flashcard").classList.contains("active");
+      if (fcActive && state.fcDeck && state.fcDeck.length) {
+        const h = state.fcDeck[state.fcIndex];
+        if (h) {
+          return `Tên: ${h.Ten_Vi_Thuoc}; Nhóm: ${h.Nhom_Thuoc || ""}; Tính: ${h.Tinh || ""}; Vị: ${h.Vi || ""}; Quy kinh: ${h.Quy_Kinh || ""}; Công dụng: ${h.Cong_Dung || ""}`;
+        }
+      }
+      return "";
+    }
+
+    function askQuickAi(type) {
+      if (type === "current") {
+        const h = (state.fcDeck && state.fcDeck.length) ? state.fcDeck[state.fcIndex] : null;
+        if (!h) {
+          showToast("Hãy mở 1 thẻ vị thuốc ở tab Flashcard trước nhé!");
+          return;
+        }
+        sendAiMessage(`Giải thích giúp mình cơ chế của vị thuốc "${h.Ten_Vi_Thuoc}": vì sao có tính vị, quy kinh và công dụng như vậy?`);
+      } else if (type === "quiz") {
+        sendAiMessage("Đố nhanh mình 3 câu hỏi suy luận cơ chế từ các vị thuốc YHCT thường gặp (chưa hiện đáp án vội để mình tự trả lời).");
+      } else if (type === "compare") {
+        const h = (state.fcDeck && state.fcDeck.length) ? state.fcDeck[state.fcIndex] : null;
+        if (h && h.Thuoc_De_Nham) {
+          sendAiMessage(`So sánh ngắn gọn điểm khác biệt cốt lõi giữa ${h.Ten_Vi_Thuoc} và ${h.Thuoc_De_Nham}.`);
+        } else {
+          sendAiMessage("Chỉ giúp mình mẹo phân biệt các cặp vị thuốc dễ nhầm nhất trong nhóm Giải biểu và Thanh nhiệt.");
+        }
+      }
+    }
+
+    function handleAiKeyDown(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendAiMessage();
+      }
+    }
+
+    async function sendAiMessage(customText = null) {
+      if (state.aiSending || !state.user) return;
+      const input = document.getElementById("aiInput");
+      const msg = (customText !== null ? customText : input.value).trim();
+      if (!msg) return;
+
+      if (customText === null) input.value = "";
+      const nowStr = new Date().toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
+
+      state.chatHistory.push({ Vai_Tro_Tin_Nhan: "user", Noi_Dung: msg, Thoi_Gian: nowStr });
+      state.aiSending = true;
+      document.getElementById("btnSendAi").disabled = true;
+      renderAiChatMessages();
+
+      try {
+        const res = await apiPost("chatAI", {
+          mssv: state.user.mssv,
+          hoTen: state.user.hoTen,
+          message: msg,
+          herbContext: getCurrentHerbContext()
+        });
+
+        if (!res || !res.success) {
+          throw new Error((res && res.message) || "AI chưa phản hồi được.");
+        }
+
+        state.chatHistory.push({
+          Vai_Tro_Tin_Nhan: "model",
+          Noi_Dung: res.reply,
+          Thoi_Gian: res.modelTime || nowStr
+        });
+      } catch (err) {
+        state.chatHistory.push({
+          Vai_Tro_Tin_Nhan: "model",
+          Noi_Dung: "⚠️ " + err.message,
+          Thoi_Gian: nowStr
+        });
+      } finally {
+        state.aiSending = false;
+        document.getElementById("btnSendAi").disabled = false;
+        renderAiChatMessages();
+      }
+    }
+
+    async function clearMyAiChat() {
+      if (!state.user || !state.chatHistory.length) return;
+      if (!confirm("Bạn muốn xóa toàn bộ lịch sử trò chuyện AI của tài khoản mình?")) return;
+
+      setSyncStatus("syncing", "Đang xóa chat...");
+      try {
+        const res = await apiPost("clearChatAI", { mssv: state.user.mssv });
+        if (!res || !res.success) throw new Error((res && res.message) || "Lỗi xóa lịch sử chat.");
+        state.chatHistory = [];
+        renderAiChatMessages();
+        setSyncStatus("ok", "Đã xóa chat");
+        showToast("Đã làm mới đoạn chat AI của bạn!");
+      } catch (err) {
+        setSyncStatus("error", "Lỗi xóa chat");
+        showToast(err.message);
+      }
+    }
 
     // Khởi chạy kiểm tra đăng nhập
     initAuth();
