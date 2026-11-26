@@ -1114,6 +1114,224 @@
       .ai-fab { right: 14px; bottom: 14px; padding: 11px 15px; font-size: 13px; }
     }
 
+    /* DRILL CONFIG & REVERSE 4-IMAGE MODE */
+    .drill-config-box {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #F0F9FF;
+      border: 1px solid #BAE6FD;
+    }
+    .drill-mode-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .drill-mode-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 11px 12px;
+      border-radius: 13px;
+      background: #fff;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .drill-mode-card.active {
+      border-color: var(--primary);
+      background: #E0F2FE;
+    }
+    .drill-mode-card input {
+      margin-top: 3px;
+      accent-color: var(--primary);
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+    .drill-mode-card strong {
+      display: block;
+      font-size: 13.5px;
+      color: var(--primary-dark);
+    }
+    .drill-mode-card small {
+      display: block;
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.35;
+    }
+    .drill-sub-box {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed #93C5FD;
+    }
+    .leitner-hint {
+      margin-top: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 11px;
+      border-radius: 10px;
+      background: #fff;
+      color: var(--primary-dark);
+      border: 1px solid #BAE6FD;
+    }
+    .leitner-hint.locked {
+      background: #FEF3C7;
+      color: #92400E;
+      border-color: #FCD34D;
+    }
+
+    /* KHUNG ĐỀ NGƯỢC (TÍNH VỊ - QUY KINH - CÔNG DỤNG) */
+    .reverse-prompt-card {
+      background: #F8FAFC;
+      border: 1.5px solid #BAE6FD;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .reverse-prompt-row {
+      margin-bottom: 10px;
+    }
+    .reverse-prompt-row:last-child { margin-bottom: 0; }
+    .reverse-prompt-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      color: var(--primary-dark);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .reverse-prompt-val {
+      font-size: 14.5px;
+      color: var(--text);
+      line-height: 1.5;
+      font-weight: 600;
+    }
+    .reverse-prompt-uses {
+      margin: 4px 0 0;
+      padding-left: 18px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    /* LƯỚI 4 ẢNH TRẮC NGHIỆM */
+    .mcq-img-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .mcq-img-card {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 3px solid var(--border);
+      background: #0F172A;
+      cursor: pointer;
+      transition: transform 0.12s, border-color 0.15s, box-shadow 0.15s;
+    }
+    .mcq-img-card:hover { border-color: var(--primary-light); }
+    .mcq-img-card.selected {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25);
+    }
+    .mcq-img-card img {
+      width: 100%;
+      height: 175px;
+      object-fit: contain;
+      display: block;
+      background: #0F172A;
+    }
+    .mcq-letter {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(15, 23, 42, 0.82);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+    }
+    .mcq-img-card.selected .mcq-letter {
+      background: var(--primary);
+      border-color: #fff;
+    }
+    .mcq-zoom-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(15, 23, 42, 0.8);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* LƯỚI ĐỐI CHIẾU 4 ẢNH SAU KHI CHẤM */
+    .mcq-reveal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .mcq-reveal-item {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2.5px solid var(--border);
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+    .mcq-reveal-item.is-correct { border-color: #10B981; background: #ECFDF5; }
+    .mcq-reveal-item.is-wrong { border-color: #EF4444; background: #FEF2F2; }
+    .mcq-reveal-item img {
+      width: 100%;
+      height: 105px;
+      object-fit: contain;
+      background: #0F172A;
+      cursor: zoom-in;
+    }
+    .mcq-reveal-meta {
+      padding: 6px 8px;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .mcq-reveal-name {
+      font-weight: 800;
+      color: var(--primary-dark);
+      display: block;
+    }
+    .mcq-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .mcq-mini-tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 999px;
+    }
+    .mcq-mini-tag.ok { background: #D1FAE5; color: #065F46; }
+    .mcq-mini-tag.err { background: #FEE2E2; color: #991B1B; }
+    .mcq-mini-tag.trap { background: #FEF3C7; color: #92400E; }
+
+    @media (max-width: 720px) {
+      .drill-mode-grid { grid-template-columns: 1fr; }
+      .mcq-img-card img { height: 135px; }
+      .mcq-reveal-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
     /* TOAST */
     .toast {
       position: fixed;
@@ -1172,6 +1390,7 @@
       .fc-img-box { height: 240px; }
       .user-chip span.hide-sm { display: none; }
     }
+    .pt-tag { display: none !important; }
   </style>
 </head>
 <body>
@@ -1352,7 +1571,7 @@
 
             <div>
               <label style="font-size:12px; font-weight:700; color:var(--muted);">KIỂU CHẠY TRẠM</label>
-              <select id="cfgStyle" style="margin-top:4px;">
+              <select id="cfgStyle" style="margin-top:4px;" onchange="toggleDrillConfigUI()">
                 <option value="exam">Thi thật</option>
                 <option value="drill">Luyện tập</option>
               </select>
@@ -1368,6 +1587,49 @@
             </div>
           </div>
 
+          <!-- TÙY CHỈNH MỞ RỘNG CHO CHẾ ĐỘ LUYỆN TẬP -->
+          <div id="drillConfigBox" class="drill-config-box" style="display:none;">
+            <label style="font-size:12px; font-weight:800; color:var(--primary-dark);">CHẾ ĐỘ LUYỆN TẬP</label>
+            <div class="drill-mode-grid">
+              <label class="drill-mode-card active" id="cardDrillFields" onclick="setDrillMode('fields')">
+                <input type="radio" name="drillMode" id="radDrillFields" value="fields" checked onchange="setDrillMode('fields')">
+                <div>
+                  <strong>🖼️ Nhìn ảnh → Nội dung</strong>
+                  <small>Tự tick mục cần ôn</small>
+                </div>
+              </label>
+
+              <label class="drill-mode-card" id="cardDrillReverse" onclick="setDrillMode('reverse')">
+                <input type="radio" name="drillMode" id="radDrillReverse" value="reverse" onchange="setDrillMode('reverse')">
+                <div>
+                  <strong>🧠 Đọc cơ chế → Tên vị thuốc & Chọn hình</strong>
+                </div>
+              </label>
+            </div>
+
+            <!-- HƯỚNG 1: TICK MỤC -->
+            <div id="drillFieldsBox" class="drill-sub-box">
+              <label style="font-size:11.5px; font-weight:800; color:var(--muted);">CHỌN MỤC</label>
+              <div class="checkbox-group" style="margin-top:6px;">
+                <label class="check-pill"><input type="checkbox" id="chkFieldTen" checked onchange="updateDrillConfigHints()"> Tên</label>
+                <label class="check-pill"><input type="checkbox" id="chkFieldTinhVi" checked onchange="updateDrillConfigHints()"> Tính - vị</label>
+                <label class="check-pill"><input type="checkbox" id="chkFieldQuyKinh" checked onchange="updateDrillConfigHints()"> Quy kinh</label>
+                <label class="check-pill"><input type="checkbox" id="chkFieldCongDung" checked onchange="updateDrillConfigHints()"> Công dụng</label>
+              </div>
+              <div id="drillWeightPreview" style="margin-top:8px; font-size:12px; color:var(--primary-dark); font-weight:700;"></div>
+            </div>
+
+            <!-- HƯỚNG 2: NGƯỢC + 4 ẢNH -->
+            <div id="drillReverseBox" class="drill-sub-box" style="display:none;">
+              <label class="check-pill" style="background:#fff;">
+                <input type="checkbox" id="chkReverseName" checked onchange="updateDrillConfigHints()">
+                Yêu cầu gõ Tên vị thuốc + Chọn ảnh vị thuốc
+              </label>
+            </div>
+
+            <div id="drillLeitnerHint" class="leitner-hint"></div>
+          </div>
+
           <div style="margin-top:16px;">
             <label style="font-size:12px; font-weight:700; color:var(--muted);">CHỌN NHÓM THUỐC</label>
             <div id="testGroupChecks" class="checkbox-group"></div>
@@ -1376,9 +1638,6 @@
           <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:12px; padding-top:12px; border-top:1px solid var(--border);">
             <label class="check-pill">
               <input type="checkbox" id="cfgAutoNext" checked> Tự động chuyển trạm khi hết giờ
-            </label>
-            <label class="check-pill">
-              <input type="checkbox" id="cfgSound" checked> Tiếng bíp 5s cuối & chuông hết trạm
             </label>
           </div>
 
@@ -1401,25 +1660,44 @@
 
           <div class="progress-track"><div class="progress-fill" id="testProgressFill" style="width:10%"></div></div>
 
+          <!-- ĐỀ BÀI DẠNG ẢNH (THI THẬT & HƯỚNG 1) -->
           <div class="fc-img-box" id="testImgBox" style="height:290px;"></div>
 
-          <!-- 4 Ô NHẬP RIÊNG BIỆT -->
+          <!-- ĐỀ BÀI DẠNG DỮ KIỆN (HƯỚNG 2: NGƯỢC) -->
+          <div id="testReversePrompt" style="display:none;"></div>
+
+          <!-- 4 Ô NHẬP RIÊNG BIỆT (THI THẬT & HƯỚNG 1) -->
           <div id="testInputsWrap" class="station-inputs">
-            <div class="station-input-card">
-              <label>Tên <span class="pt-tag">0,2 đ</span></label>
+            <div class="station-input-card" id="cardAnsTen">
+              <label>Tên <span class="pt-tag" id="ptTagTen">0,2 đ</span></label>
               <input type="text" id="ansTen" placeholder="Nhập tên vị thuốc..." autocomplete="off">
             </div>
-            <div class="station-input-card">
-              <label>Tính - vị <span class="pt-tag">0,25 đ</span></label>
+            <div class="station-input-card" id="cardAnsTinhVi">
+              <label>Tính - vị <span class="pt-tag" id="ptTagTinhVi">0,25 đ</span></label>
               <input type="text" id="ansTinhVi" placeholder="VD: Ôn, ngọt (hoặc ấm, cam)..." autocomplete="off">
             </div>
-            <div class="station-input-card full">
-              <label>Quy kinh <span class="pt-tag">0,25 đ</span></label>
+            <div class="station-input-card full" id="cardAnsQuyKinh">
+              <label>Quy kinh <span class="pt-tag" id="ptTagQuyKinh">0,25 đ</span></label>
               <input type="text" id="ansQuyKinh" placeholder="VD: Tâm, Phế, Tỳ, Vị..." autocomplete="off">
             </div>
-            <div class="station-input-card full">
-              <label>Công dụng <span class="pt-tag">0,3 đ</span></label>
+            <div class="station-input-card full" id="cardAnsCongDung">
+              <label>Công dụng <span class="pt-tag" id="ptTagCongDung">0,3 đ</span></label>
               <textarea id="ansCongDung" rows="2" placeholder="Nhập các công dụng chính (cách nhau bởi dấu phẩy hoặc chấm phẩy)..."></textarea>
+            </div>
+          </div>
+
+          <!-- Ô TRẢ LỜI HƯỚNG 2 (GÕ TÊN + CHỌN 4 ẢNH) -->
+          <div id="testReverseWrap" style="display:none;">
+            <div class="station-input-card full" id="cardReverseTen" style="margin-bottom:12px;">
+              <label>Tên vị thuốc <span class="pt-tag" id="ptTagRevTen">0,5 đ</span></label>
+              <input type="text" id="ansReverseTen" placeholder="Gõ tên vị thuốc ứng với dữ kiện trên..." autocomplete="off">
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                <label style="font-size:12.5px; font-weight:800; color:var(--primary-dark);">CHỌN ĐÚNG 1 TRONG 4 ẢNH MẪU VẬT</label>
+                <span class="pt-tag" id="ptTagRevImg">0,5 đ</span>
+              </div>
+              <div class="mcq-img-grid" id="testReverseImgGrid"></div>
             </div>
           </div>
 
@@ -1443,6 +1721,7 @@
             <div>
               <h2 style="margin:0; font-size:20px; color:var(--primary-dark);">📝 Kết Quả & Review Chạy Trạm</h2>
               <small style="color:var(--muted);">Hệ thống đã tự chấm (thang 100). Bấm vào từng mục nhỏ nếu muốn sửa lại kết quả chấm.</small>
+              <div id="gradeLeitnerBanner" style="display:none; margin-top:8px;"></div>
             </div>
             <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
               <div class="badge b-blue" style="font-size:17px; padding:8px 16px;" id="gradeLiveScore">0 / 100 điểm</div>
@@ -2802,8 +3081,11 @@
     });
 
     // =========================================================================
-    // BỘ CHẤM ĐIỂM TỰ ĐỘNG CHÂM CHƯỚC (KIỂU B: TÊN 0.2 | TÍNH-VỊ 0.25 | QUY KINH 0.25 | CÔNG DỤNG 0.3)
+    // BỘ CHẤM ĐIỂM TỰ ĐỘNG CHÂM CHƯỚC & CHẾ ĐỘ LUYỆN TẬP NÂNG CAO
     // =========================================================================
+    const BASE_FIELD_WEIGHTS = { ten: 0.2, tinhVi: 0.25, quyKinh: 0.25, congDung: 0.3 };
+    const FIELD_LABELS = { ten: "Tên", tinhVi: "Tính - vị", quyKinh: "Quy kinh", congDung: "Công dụng" };
+
     const TINH_GROUPS = [
       ["han", "lanh"],
       ["luong", "mat"],
@@ -2835,8 +3117,18 @@
       { key: "dam", aliases: ["dam"] }
     ];
 
+    function fmtPt(v) {
+      return String(Math.round(v * 1000) / 1000).replace(".", ",");
+    }
+
     function hasWord(haystack, word) {
       return new RegExp(`(?:^|\\s)${word}(?:$|\\s)`).test(haystack);
+    }
+
+    function hasPhrase(haystack, phrase) {
+      if (!haystack || !phrase || phrase.length < 2) return false;
+      const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return new RegExp(`(?:^|\\s)${escaped}(?:$|\\s)`).test(haystack);
     }
 
     function extractMatchedGroups(text, groups) {
@@ -2851,7 +3143,6 @@
     function extractKinhs(text) {
       let n = normVi(text);
       const found = new Set();
-      // Kiểm tra các kinh 2 chữ trước để tránh "tam bao" bị bắt nhầm thành "tam"
       KINH_LIST.forEach(item => {
         for (const a of item.aliases) {
           const rx = new RegExp(`(?:^|\\s)${a}(?:$|\\s)`, "g");
@@ -2865,114 +3156,363 @@
       return [...found];
     }
 
-    function autoGradeStation(st) {
-      const h = st.herb;
-      const ans = st.answers;
+    // Cách A: Giữ tỷ trọng gốc, quy đổi tổng về đúng 1,0đ/trạm
+    function computeScaledWeights(activeFields) {
+      const weights = { ten: 0, tinhVi: 0, quyKinh: 0, congDung: 0 };
+      if (!activeFields || !activeFields.length) return weights;
+      const sumBase = activeFields.reduce((acc, k) => acc + BASE_FIELD_WEIGHTS[k], 0);
+      let running = 0;
+      activeFields.forEach((k, idx) => {
+        if (idx === activeFields.length - 1) {
+          weights[k] = Math.round((1 - running) * 1000) / 1000;
+        } else {
+          const w = Math.round((BASE_FIELD_WEIGHTS[k] / sumBase) * 1000) / 1000;
+          weights[k] = w;
+          running += w;
+        }
+      });
+      return weights;
+    }
 
-      // 1. CHẤM TÊN (0.2đ)
-      const uName = normVi(ans.ten);
-      const validNames = [h.Ten_Vi_Thuoc];
+    function getSelectedDrillFields() {
+      const fields = [];
+      if (document.getElementById("chkFieldTen")?.checked) fields.push("ten");
+      if (document.getElementById("chkFieldTinhVi")?.checked) fields.push("tinhVi");
+      if (document.getElementById("chkFieldQuyKinh")?.checked) fields.push("quyKinh");
+      if (document.getElementById("chkFieldCongDung")?.checked) fields.push("congDung");
+      return fields;
+    }
+
+    function getCurrentDrillMode() {
+      return document.getElementById("radDrillReverse")?.checked ? "reverse" : "fields";
+    }
+
+    function toggleDrillConfigUI() {
+      const style = document.getElementById("cfgStyle")?.value || "exam";
+      const box = document.getElementById("drillConfigBox");
+      if (!box) return;
+      box.style.display = style === "drill" ? "block" : "none";
+      if (style === "drill") {
+        setDrillMode(getCurrentDrillMode());
+      }
+    }
+
+    function setDrillMode(mode) {
+      const isRev = mode === "reverse";
+      const radF = document.getElementById("radDrillFields");
+      const radR = document.getElementById("radDrillReverse");
+      if (radF) radF.checked = !isRev;
+      if (radR) radR.checked = isRev;
+      document.getElementById("cardDrillFields")?.classList.toggle("active", !isRev);
+      document.getElementById("cardDrillReverse")?.classList.toggle("active", isRev);
+      const fBox = document.getElementById("drillFieldsBox");
+      const rBox = document.getElementById("drillReverseBox");
+      if (fBox) fBox.style.display = isRev ? "none" : "block";
+      if (rBox) rBox.style.display = isRev ? "block" : "none";
+      updateDrillConfigHints();
+    }
+
+    function updateDrillConfigHints() {
+      const mode = getCurrentDrillMode();
+      const preview = document.getElementById("drillWeightPreview");
+      const hint = document.getElementById("drillLeitnerHint");
+      if (!hint) return;
+
+      if (mode === "fields") {
+        const fields = getSelectedDrillFields();
+        if (!fields.length) {
+          if (preview) preview.textContent = "⚠️ Hãy chọn ít nhất 1 mục để kiểm tra.";
+          hint.className = "leitner-hint locked";
+          hint.textContent = "⚠️ Chưa chọn mục nào.";
+          return;
+        }
+        const w = computeScaledWeights(fields);
+        if (preview) {
+          preview.textContent = "Điểm quy đổi (1đ/trạm): " + fields.map(k => `${FIELD_LABELS[k]} ${fmtPt(w[k])}đ`).join(" • ");
+        }
+        if (fields.length <= 2) {
+          hint.className = "leitner-hint locked";
+          hint.textContent = "🔒 Luyện lẻ 1–2 mục: vẫn lưu điểm vào Lịch sử, nhưng giữ nguyên cấp độ Đã thuộc / Chưa thuộc (Leitner).";
+        } else {
+          hint.className = "leitner-hint";
+          hint.textContent = "✅ Luyện từ 3–4 mục: sẽ cập nhật tiến độ Đã thuộc / Chưa thuộc (Leitner) khi lưu kết quả.";
+        }
+      } else {
+        const reqName = document.getElementById("chkReverseName")?.checked;
+        if (reqName) {
+          hint.className = "leitner-hint";
+          hint.textContent = "✅ Đủ cả Gõ Tên (0,5đ) + Chọn 4 ảnh (0,5đ): sẽ cập nhật tiến độ Leitner khi lưu kết quả.";
+        } else {
+          hint.className = "leitner-hint locked";
+          hint.textContent = "🔒 Chỉ chọn nhanh 4 ảnh (1đ): vẫn lưu điểm vào Lịch sử, giữ nguyên cấp độ Leitner.";
+        }
+      }
+    }
+
+    // Tạo danh sách 4 lựa chọn ảnh cho Hướng 2 (ưu tiên cặp dễ nhầm 2 chiều -> cùng bộ phận dùng -> cùng nhóm -> ngẫu nhiên)
+    function normConfKey(s) {
+      return normVi(s || "").replace(/y/g, "i");
+    }
+
+    function getHerbAllNames(h) {
+      const names = [];
+      const main = normConfKey(h.Ten_Vi_Thuoc);
+      if (main) names.push(main);
       if (h.Ten_Khac_Ten_Khoa_Hoc) {
-        const beforeSlash = String(h.Ten_Khac_Ten_Khoa_Hoc).split("/")[0];
+        String(h.Ten_Khac_Ten_Khoa_Hoc)
+          .split(/[\/,;\(\)\n]+/)
+          .forEach(part => {
+            const k = normConfKey(part);
+            if (k && k.length >= 2 && !names.includes(k)) names.push(k);
+          });
+      }
+      return names;
+    }
+
+    function isConfusablePair(target, cand) {
+      const targetDeNham = normConfKey(target.Thuoc_De_Nham);
+      const candDeNham = normConfKey(cand.Thuoc_De_Nham);
+      const targetNames = getHerbAllNames(target);
+      const candNames = getHerbAllNames(cand);
+
+      if (targetDeNham && candNames.some(n => hasPhrase(targetDeNham, n))) return true;
+      if (candDeNham && targetNames.some(n => hasPhrase(candDeNham, n))) return true;
+      return false;
+    }
+
+    function shuffleArr(arr) {
+      const copy = arr.slice();
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function buildReverseChoices(targetHerb) {
+      const allWithImg = state.herbs
+        .filter(h => String(h.ID) !== String(targetHerb.ID) && getSingleImage(h.Link_Anh_Vi_Thuoc))
+        .map(h => ({ herb: h, imgUrl: getSingleImage(h.Link_Anh_Vi_Thuoc) }));
+
+      const confusables = [];
+      const samePart = [];
+      const sameGroup = [];
+      const others = [];
+
+      const tPart = normVi(targetHerb.Bo_Phan_Dung || "");
+      const tGroup = normVi(targetHerb.Nhom_Thuoc || "");
+
+      allWithImg.forEach(item => {
+        if (isConfusablePair(targetHerb, item.herb)) {
+          confusables.push(item);
+        } else {
+          const cPart = normVi(item.herb.Bo_Phan_Dung || "");
+          const cGroup = normVi(item.herb.Nhom_Thuoc || "");
+          if (tPart && cPart && (tPart === cPart || tPart.includes(cPart) || cPart.includes(tPart))) {
+            samePart.push(item);
+          } else if (tGroup && cGroup && tGroup === cGroup) {
+            sameGroup.push(item);
+          } else {
+            others.push(item);
+          }
+        }
+      });
+
+      const distractors = [];
+      const takeFrom = (list, limit, markTrap) => {
+        shuffleArr(list).forEach(item => {
+          if (distractors.length < 3 && limit > 0) {
+            distractors.push({
+              id: String(item.herb.ID),
+              name: item.herb.Ten_Vi_Thuoc,
+              imgUrl: item.imgUrl,
+              isCorrect: false,
+              isConfusable: markTrap
+            });
+            limit--;
+          }
+        });
+      };
+
+      // Bốc tối đa 2 ảnh từ cặp dễ nhầm (đảm bảo ít nhất 1 nếu có ảnh)
+      takeFrom(confusables, 2, true);
+      // Nếu thiếu thì lấp tiếp bằng cùng bộ phận dùng, cùng nhóm, rồi phần dễ nhầm còn lại, rồi ngẫu nhiên
+      takeFrom(samePart, 3, false);
+      takeFrom(sameGroup, 3, false);
+      if (distractors.length < 3 && confusables.length > 2) {
+        const pickedIds = new Set(distractors.map(d => d.id));
+        takeFrom(confusables.filter(c => !pickedIds.has(String(c.herb.ID))), 3, true);
+      }
+      takeFrom(others, 3, false);
+
+      const choices = [
+        {
+          id: String(targetHerb.ID),
+          name: targetHerb.Ten_Vi_Thuoc,
+          imgUrl: getSingleImage(targetHerb.Link_Anh_Vi_Thuoc),
+          isCorrect: true,
+          isConfusable: false
+        },
+        ...distractors
+      ];
+
+      return shuffleArr(choices);
+    }
+
+    function gradeNameMatch(userText, herb, maxPt) {
+      const uName = normVi(userText);
+      const validNames = [herb.Ten_Vi_Thuoc];
+      if (herb.Ten_Khac_Ten_Khoa_Hoc) {
+        const beforeSlash = String(herb.Ten_Khac_Ten_Khoa_Hoc).split("/")[0];
         beforeSlash.split(/[,;]+/).forEach(x => { if (x.trim()) validNames.push(x.trim()); });
       }
-      let tenScore = 0;
-      let tenNote = uName ? "Chưa khớp tên vị thuốc" : "Bỏ trống";
+      let score = 0;
+      let note = uName ? "Chưa khớp tên vị thuốc" : "Bỏ trống";
       if (uName) {
         for (const vn of validNames) {
           const nv = normVi(vn);
           if (!nv) continue;
           if (uName === nv || (nv.length >= 4 && levenshtein(uName, nv) <= 1)) {
-            tenScore = 0.2;
-            tenNote = uName === nv ? "Khớp chính xác" : "Châm chước lỗi gõ nhẹ";
+            score = maxPt;
+            note = uName === nv ? "Khớp chính xác" : "Châm chước lỗi gõ nhẹ";
             break;
           }
         }
       }
+      return { score, note };
+    }
 
-      // 2. CHẤM TÍNH - VỊ (0.25đ)
-      const expTinh = extractMatchedGroups(h.Tinh, TINH_GROUPS);
-      const expVi = extractMatchedGroups(h.Vi, VI_GROUPS);
-      const usrTinh = extractMatchedGroups(ans.tinhVi, TINH_GROUPS);
-      const usrVi = extractMatchedGroups(ans.tinhVi, VI_GROUPS);
+    function autoGradeStation(st) {
+      const h = st.herb;
+      const ans = st.answers;
 
-      const totalTV = expTinh.length + expVi.length;
-      let matchedTV = 0;
-      expTinh.forEach(g => { if (usrTinh.includes(g)) matchedTV++; });
-      expVi.forEach(g => { if (usrVi.includes(g)) matchedTV++; });
+      // CHẾ ĐỘ NGƯỢC (HƯỚNG 2): CHIA ĐỀU TÊN 0,5đ + ẢNH 0,5đ (HOẶC CHỈ ẢNH 1đ)
+      if (st.mode === "reverse") {
+        const wTen = st.weights.ten || 0;
+        const wImg = st.weights.img || 0;
+        let tenScore = 0, tenNote = "";
 
-      let tvScore = 0;
-      let tvNote = normVi(ans.tinhVi) ? `Đúng ${matchedTV}/${totalTV || 1} yếu tố` : "Bỏ trống";
-      if (totalTV === 0) {
-        tvScore = normVi(ans.tinhVi) ? 0.25 : 0;
-      } else {
-        const ratioTV = matchedTV / totalTV;
-        if (ratioTV >= 0.8) { tvScore = 0.25; tvNote = "Đạt đầy đủ Tính - vị"; }
-        else if (ratioTV >= 0.4) { tvScore = 0.125; tvNote = `Đúng một phần (${matchedTV}/${totalTV} yếu tố)`; }
+        if (wTen > 0) {
+          const r = gradeNameMatch(ans.ten, h, wTen);
+          tenScore = r.score;
+          tenNote = r.note;
+        }
+
+        const picked = (st.choices || []).find(c => c.id === String(ans.selectedImgId || ""));
+        const imgOk = !!(picked && picked.isCorrect);
+        const imgScore = imgOk ? wImg : 0;
+        const imgNote = !picked
+          ? "Chưa chọn ảnh"
+          : imgOk
+            ? "Chọn đúng ảnh mẫu vật"
+            : `Chọn nhầm sang ${picked.name}${picked.isConfusable ? " (cặp dễ nhầm)" : ""}`;
+
+        st.grade = { ten: tenScore, tenNote, img: imgScore, imgNote };
+        return;
       }
 
-      // 3. CHẤM QUY KINH (0.25đ)
-      const expKinh = extractKinhs(h.Quy_Kinh);
-      const usrKinh = extractKinhs(ans.quyKinh);
-      let matchedKinh = 0;
-      expKinh.forEach(k => { if (usrKinh.includes(k)) matchedKinh++; });
+      // CHẾ ĐỘ THI THẬT & HƯỚNG 1 (THEO TỶ TRỌNG CÁCH A)
+      const w = st.weights;
+      const g = {
+        ten: 0, tenNote: "",
+        tinhVi: 0, tvNote: "",
+        quyKinh: 0, qkNote: "",
+        congDung: 0, cdNote: ""
+      };
 
-      let qkScore = 0;
-      let qkNote = normVi(ans.quyKinh) ? `Đúng ${matchedKinh}/${expKinh.length || 1} kinh` : "Bỏ trống";
-      if (expKinh.length === 0) {
-        qkScore = normVi(ans.quyKinh) ? 0.25 : 0;
-      } else {
-        const ratioK = matchedKinh / expKinh.length;
-        if (ratioK === 1) {
-          qkScore = 0.25;
-          qkNote = `Đúng đủ ${matchedKinh}/${expKinh.length} kinh`;
-        } else if (expKinh.length >= 3 && ratioK >= 0.74) {
-          qkScore = 0.25;
-          qkNote = `Châm chước đạt (${matchedKinh}/${expKinh.length} kinh)`;
-        } else if (ratioK >= 0.5) {
-          qkScore = 0.125;
-          qkNote = `Đúng một phần (${matchedKinh}/${expKinh.length} kinh)`;
+      // 1. TÊN
+      if (w.ten > 0) {
+        const r = gradeNameMatch(ans.ten, h, w.ten);
+        g.ten = r.score;
+        g.tenNote = r.note;
+      }
+
+      // 2. TÍNH - VỊ
+      if (w.tinhVi > 0) {
+        const expTinh = extractMatchedGroups(h.Tinh, TINH_GROUPS);
+        const expVi = extractMatchedGroups(h.Vi, VI_GROUPS);
+        const usrTinh = extractMatchedGroups(ans.tinhVi, TINH_GROUPS);
+        const usrVi = extractMatchedGroups(ans.tinhVi, VI_GROUPS);
+        const totalTV = expTinh.length + expVi.length;
+        let matchedTV = 0;
+        expTinh.forEach(x => { if (usrTinh.includes(x)) matchedTV++; });
+        expVi.forEach(x => { if (usrVi.includes(x)) matchedTV++; });
+
+        g.tvNote = normVi(ans.tinhVi) ? `Đúng ${matchedTV}/${totalTV || 1} yếu tố` : "Bỏ trống";
+        if (totalTV === 0) {
+          g.tinhVi = normVi(ans.tinhVi) ? w.tinhVi : 0;
+        } else {
+          const ratioTV = matchedTV / totalTV;
+          if (ratioTV >= 0.8) { g.tinhVi = w.tinhVi; g.tvNote = "Đạt đầy đủ Tính - vị"; }
+          else if (ratioTV >= 0.4) { g.tinhVi = Math.round((w.tinhVi / 2) * 1000) / 1000; g.tvNote = `Đúng một phần (${matchedTV}/${totalTV} yếu tố)`; }
         }
       }
 
-      // 4. CHẤM CÔNG DỤNG (0.3đ) — châm chước theo từ khóa & >= 50% số ý
-      const expUses = String(h.Cong_Dung || "").split(/[;\n]+/).map(s => s.trim()).filter(Boolean);
-      const uUseNorm = normVi(ans.congDung);
-      let matchedUses = 0;
+      // 3. QUY KINH
+      if (w.quyKinh > 0) {
+        const expKinh = extractKinhs(h.Quy_Kinh);
+        const usrKinh = extractKinhs(ans.quyKinh);
+        let matchedKinh = 0;
+        expKinh.forEach(k => { if (usrKinh.includes(k)) matchedKinh++; });
 
-      if (uUseNorm && expUses.length) {
-        expUses.forEach(phrase => {
-          const words = normVi(phrase).split(" ").filter(w => w.length >= 2);
-          if (!words.length) return;
-          let hit = 0;
-          words.forEach(w => { if (hasWord(uUseNorm, w)) hit++; });
-          if (hit / words.length >= 0.5) matchedUses++;
-        });
+        g.qkNote = normVi(ans.quyKinh) ? `Đúng ${matchedKinh}/${expKinh.length || 1} kinh` : "Bỏ trống";
+        if (expKinh.length === 0) {
+          g.quyKinh = normVi(ans.quyKinh) ? w.quyKinh : 0;
+        } else {
+          const ratioK = matchedKinh / expKinh.length;
+          if (ratioK === 1) {
+            g.quyKinh = w.quyKinh;
+            g.qkNote = `Đúng đủ ${matchedKinh}/${expKinh.length} kinh`;
+          } else if (expKinh.length >= 3 && ratioK >= 0.74) {
+            g.quyKinh = w.quyKinh;
+            g.qkNote = `Châm chước đạt (${matchedKinh}/${expKinh.length} kinh)`;
+          } else if (ratioK >= 0.5) {
+            g.quyKinh = Math.round((w.quyKinh / 2) * 1000) / 1000;
+            g.qkNote = `Đúng một phần (${matchedKinh}/${expKinh.length} kinh)`;
+          }
+        }
       }
 
-      let cdScore = 0;
-      let cdNote = uUseNorm ? `Trúng ${matchedUses}/${expUses.length || 1} công dụng` : "Bỏ trống";
-      if (expUses.length === 0) {
-        cdScore = uUseNorm ? 0.3 : 0;
-      } else if (matchedUses / expUses.length >= 0.5) {
-        cdScore = 0.3;
-        cdNote = `Đạt (${matchedUses}/${expUses.length} công dụng)`;
-      } else if (matchedUses >= 1) {
-        cdScore = 0.15;
-        cdNote = `Đạt một phần (${matchedUses}/${expUses.length} công dụng)`;
+      // 4. CÔNG DỤNG
+      if (w.congDung > 0) {
+        const expUses = String(h.Cong_Dung || "").split(/[;\n]+/).map(s => s.trim()).filter(Boolean);
+        const uUseNorm = normVi(ans.congDung);
+        let matchedUses = 0;
+
+        if (uUseNorm && expUses.length) {
+          expUses.forEach(phrase => {
+            const words = normVi(phrase).split(" ").filter(wd => wd.length >= 2);
+            if (!words.length) return;
+            let hit = 0;
+            words.forEach(wd => { if (hasWord(uUseNorm, wd)) hit++; });
+            if (hit / words.length >= 0.5) matchedUses++;
+          });
+        }
+
+        g.cdNote = uUseNorm ? `Trúng ${matchedUses}/${expUses.length || 1} công dụng` : "Bỏ trống";
+        if (expUses.length === 0) {
+          g.congDung = uUseNorm ? w.congDung : 0;
+        } else if (matchedUses / expUses.length >= 0.5) {
+          g.congDung = w.congDung;
+          g.cdNote = `Đạt (${matchedUses}/${expUses.length} công dụng)`;
+        } else if (matchedUses >= 1) {
+          g.congDung = Math.round((w.congDung / 2) * 1000) / 1000;
+          g.cdNote = `Đạt một phần (${matchedUses}/${expUses.length} công dụng)`;
+        }
       }
 
-      st.grade = {
-        ten: tenScore, tenNote,
-        tinhVi: tvScore, tvNote,
-        quyKinh: qkScore, qkNote,
-        congDung: cdScore, cdNote
-      };
+      st.grade = g;
     }
 
     function getStationTotal(st) {
       if (!st.grade) return 0;
-      return Math.round((st.grade.ten + st.grade.tinhVi + st.grade.quyKinh + st.grade.congDung) * 1000) / 1000;
+      let sum = 0;
+      if (st.mode === "reverse") {
+        sum = (st.grade.ten || 0) + (st.grade.img || 0);
+      } else {
+        sum = (st.grade.ten || 0) + (st.grade.tinhVi || 0) + (st.grade.quyKinh || 0) + (st.grade.congDung || 0);
+      }
+      return Math.min(1, Math.round(sum * 1000) / 1000);
     }
 
     // =========================================================================
@@ -3005,6 +3545,45 @@
       unlockAudio();
       let { pool, groupLabel } = getFilteredTestPool();
 
+      const style = document.getElementById("cfgStyle").value;
+      const drillMode = style === "drill" ? getCurrentDrillMode() : "fields";
+      let activeFields = ["ten", "tinhVi", "quyKinh", "congDung"];
+      let reverseRequireName = true;
+      let weights = Object.assign({}, BASE_FIELD_WEIGHTS);
+      let updateLeitner = true;
+      let modeDisplayLabel = "Thi thật";
+
+      if (style === "drill") {
+        if (drillMode === "fields") {
+          activeFields = getSelectedDrillFields();
+          if (!activeFields.length) {
+            showToast("Hãy chọn ít nhất 1 mục cần test trước khi bắt đầu!");
+            return;
+          }
+          weights = computeScaledWeights(activeFields);
+          updateLeitner = activeFields.length >= 3;
+          modeDisplayLabel = activeFields.length === 4
+            ? "Luyện tập (Đủ 4 mục)"
+            : `Luyện tập (${activeFields.map(k => FIELD_LABELS[k]).join(", ")})`;
+        } else {
+          reverseRequireName = !!document.getElementById("chkReverseName")?.checked;
+          weights = reverseRequireName ? { ten: 0.5, img: 0.5 } : { ten: 0, img: 1 };
+          updateLeitner = reverseRequireName;
+          modeDisplayLabel = reverseRequireName ? "Luyện tập (Ngược: Tên + 4 ảnh)" : "Luyện tập (Ngược: 4 ảnh)";
+
+          // Chỉ lấy các cây đã có ảnh cho chế độ 4 ảnh
+          pool = pool.filter(h => !!getSingleImage(h.Link_Anh_Vi_Thuoc));
+          if (!pool.length) {
+            showToast("Nhóm đã chọn chưa có vị thuốc nào được tải ảnh để chạy chế độ 4 ảnh!");
+            return;
+          }
+          const totalAllImg = state.herbs.filter(h => !!getSingleImage(h.Link_Anh_Vi_Thuoc)).length;
+          if (totalAllImg < 4) {
+            showToast(`Kho hiện chỉ có ${totalAllImg} vị thuốc có ảnh, lưới chọn sẽ hiện ${totalAllImg} ảnh.`);
+          }
+        }
+      }
+
       const poolMode = document.getElementById("cfgPool").value;
       if (poolMode === "weakOnly") {
         const weak = pool.filter(h => Number(getProg(h.ID).Box_Leitner) <= 2);
@@ -3021,7 +3600,6 @@
       const finalCount = Math.min(reqCount, pool.length);
       const unlimited = document.getElementById("cfgUnlimitedTime").checked;
       const timeSec = unlimited ? 0 : Math.max(1, parseInt(document.getElementById("cfgTimeSlider").value, 10) || 45);
-      const style = document.getElementById("cfgStyle").value;
       const autoNext = document.getElementById("cfgAutoNext").checked;
       const sound = document.getElementById("cfgSound").checked;
 
@@ -3031,14 +3609,24 @@
         active: true,
         paused: false,
         style,
+        drillMode,
+        activeFields,
+        reverseRequireName,
+        weights,
+        updateLeitner,
+        modeDisplayLabel,
         timePerStation: timeSec,
         autoNext,
         sound,
         groupLabel,
         stations: selected.map(h => ({
           herb: h,
+          mode: (style === "drill" && drillMode === "reverse") ? "reverse" : "fields",
+          activeFields: activeFields.slice(),
+          weights: Object.assign({}, weights),
           imgUrl: getSingleImage(h.Link_Anh_Vi_Thuoc),
-          answers: { ten: "", tinhVi: "", quyKinh: "", congDung: "" },
+          choices: (style === "drill" && drillMode === "reverse") ? buildReverseChoices(h) : [],
+          answers: { ten: "", tinhVi: "", quyKinh: "", congDung: "", selectedImgId: "" },
           grade: null,
           revealed: false
         })),
@@ -3084,12 +3672,52 @@
     function saveCurrentStationInputs() {
       const st = state.test.stations[state.test.index];
       if (!st) return;
-      st.answers = {
-        ten: document.getElementById("ansTen").value.trim(),
-        tinhVi: document.getElementById("ansTinhVi").value.trim(),
-        quyKinh: document.getElementById("ansQuyKinh").value.trim(),
-        congDung: document.getElementById("ansCongDung").value.trim()
-      };
+      if (st.mode === "reverse") {
+        st.answers.ten = st.weights.ten > 0 ? (document.getElementById("ansReverseTen")?.value.trim() || "") : "";
+      } else {
+        st.answers = {
+          ten: document.getElementById("ansTen").value.trim(),
+          tinhVi: document.getElementById("ansTinhVi").value.trim(),
+          quyKinh: document.getElementById("ansQuyKinh").value.trim(),
+          congDung: document.getElementById("ansCongDung").value.trim(),
+          selectedImgId: ""
+        };
+      }
+    }
+
+    function selectReverseChoice(herbId) {
+      const st = state.test.stations[state.test.index];
+      if (!st || st.revealed) return;
+      st.answers.selectedImgId = String(herbId);
+      document.querySelectorAll("#testReverseImgGrid .mcq-img-card").forEach(card => {
+        card.classList.toggle("selected", card.dataset.id === String(herbId));
+      });
+    }
+
+    function buildReversePromptHTML(herb) {
+      const tinhVi = [herb.Tinh, herb.Vi].map(s => String(s || "").trim()).filter(Boolean).join(" — ") || "Chưa cập nhật";
+      const quyKinh = String(herb.Quy_Kinh || "").trim() || "Chưa cập nhật";
+      const uses = String(herb.Cong_Dung || "").split(/[;\n]+/).map(s => s.trim()).filter(Boolean);
+      const usesHtml = uses.length
+        ? `<ul class="reverse-prompt-uses">${uses.map(u => `<li>${esc(u)}</li>`).join("")}</ul>`
+        : `<div class="reverse-prompt-val">Chưa cập nhật</div>`;
+
+      return `
+        <div class="reverse-prompt-card">
+          <div class="reverse-prompt-row">
+            <div class="reverse-prompt-label">Tính – Vị</div>
+            <div class="reverse-prompt-val">${esc(tinhVi)}</div>
+          </div>
+          <div class="reverse-prompt-row">
+            <div class="reverse-prompt-label">Quy kinh</div>
+            <div class="reverse-prompt-val">${esc(quyKinh)}</div>
+          </div>
+          <div class="reverse-prompt-row">
+            <div class="reverse-prompt-label">Công dụng</div>
+            ${usesHtml}
+          </div>
+        </div>
+      `;
     }
 
     function renderTestStation() {
@@ -3098,42 +3726,102 @@
       const st = t.stations[t.index];
 
       document.getElementById("testStationLabel").textContent = `TRẠM ${t.index + 1} / ${t.stations.length}`;
-      document.getElementById("testModeTag").textContent = t.style === "exam" ? "Thi thật" : "Luyện tập";
+      document.getElementById("testModeTag").textContent = t.modeDisplayLabel;
       document.getElementById("testProgressFill").style.width = `${((t.index + 1) / t.stations.length) * 100}%`;
 
       const imgBox = document.getElementById("testImgBox");
-      imgBox.innerHTML = st.imgUrl
-        ? `<img src="${esc(st.imgUrl)}" alt="Trạm thi" data-src="${esc(st.imgUrl)}" onclick="openLightbox(this.dataset.src)" style="cursor:zoom-in;">
-           <button class="img-action-btn img-btn-zoom" data-src="${esc(st.imgUrl)}" onclick="event.stopPropagation(); openLightbox(this.dataset.src)">🔍 Phóng to</button>`
-        : `<div class="no-img-placeholder">
-             <span class="emoji">🌿</span>
-             <div style="font-weight:700; color:#fff;">Vị thuốc chưa có ảnh</div>
-             <small>Đặc điểm: ${esc(st.herb.Dac_Diem_Nhan_Dien || "Chưa cập nhật")}</small>
-           </div>`;
-
-      document.getElementById("ansTen").value = st.answers.ten || "";
-      document.getElementById("ansTinhVi").value = st.answers.tinhVi || "";
-      document.getElementById("ansQuyKinh").value = st.answers.quyKinh || "";
-      document.getElementById("ansCongDung").value = st.answers.congDung || "";
-
+      const revPrompt = document.getElementById("testReversePrompt");
       const inputsWrap = document.getElementById("testInputsWrap");
+      const revWrap = document.getElementById("testReverseWrap");
       const revealBox = document.getElementById("testDrillReveal");
       const btnArea = document.getElementById("testActionBtns");
 
-      if (t.style === "drill" && st.revealed) {
+      if (st.mode === "reverse") {
+        imgBox.style.display = "none";
+        revPrompt.style.display = "block";
+        revPrompt.innerHTML = buildReversePromptHTML(st.herb);
         inputsWrap.style.display = "none";
-        revealBox.style.display = "block";
-        revealBox.innerHTML = renderSingleGradeCardHTML(st, t.index, true);
-        const isLast = t.index === t.stations.length - 1;
-        btnArea.innerHTML = `<button class="btn btn-primary" onclick="nextFromDrill()">${isLast ? "🏁 Xem tổng kết & Lưu" : "Trạm tiếp theo ➡️"}</button>`;
-      } else {
-        inputsWrap.style.display = "grid";
-        revealBox.style.display = "none";
-        if (t.style === "drill") {
-          btnArea.innerHTML = `<button class="btn btn-primary" onclick="revealDrillStation()">✅ Chấm trạm này</button>`;
-        } else {
+
+        if (t.style === "drill" && st.revealed) {
+          revWrap.style.display = "none";
+          revealBox.style.display = "block";
+          revealBox.innerHTML = renderSingleGradeCardHTML(st, t.index, true);
           const isLast = t.index === t.stations.length - 1;
-          btnArea.innerHTML = `<button class="btn btn-primary" onclick="advanceTestStation()">${isLast ? "🏁 Hoàn tất & Chấm điểm" : "Trạm tiếp theo ➡️"}</button>`;
+          btnArea.innerHTML = `<button class="btn btn-primary" onclick="nextFromDrill()">${isLast ? "🏁 Xem tổng kết & Lưu" : "Trạm tiếp theo ➡️"}</button>`;
+        } else {
+          revWrap.style.display = "block";
+          revealBox.style.display = "none";
+
+          const cardRevTen = document.getElementById("cardReverseTen");
+          cardRevTen.style.display = st.weights.ten > 0 ? "block" : "none";
+          document.getElementById("ptTagRevTen").textContent = `${fmtPt(st.weights.ten)} đ`;
+          document.getElementById("ptTagRevImg").textContent = `${fmtPt(st.weights.img)} đ`;
+          document.getElementById("ansReverseTen").value = st.answers.ten || "";
+
+          const letters = ["A", "B", "C", "D"];
+          document.getElementById("testReverseImgGrid").innerHTML = st.choices.map((opt, cIdx) => {
+            const sel = st.answers.selectedImgId === opt.id ? "selected" : "";
+            return `
+              <div class="mcq-img-card ${sel}" data-id="${esc(opt.id)}" onclick="selectReverseChoice(this.dataset.id)">
+                <span class="mcq-letter">${letters[cIdx] || (cIdx + 1)}</span>
+                <button type="button" class="mcq-zoom-btn" data-src="${esc(opt.imgUrl)}" onclick="event.stopPropagation(); openLightbox(this.dataset.src)">🔍</button>
+                <img src="${esc(opt.imgUrl)}" alt="Lựa chọn ${letters[cIdx] || (cIdx + 1)}">
+              </div>
+            `;
+          }).join("");
+
+          btnArea.innerHTML = `<button class="btn btn-primary" onclick="revealDrillStation()">✅ Chấm trạm này</button>`;
+        }
+      } else {
+        // CHẾ ĐỘ THI THẬT & HƯỚNG 1
+        imgBox.style.display = "flex";
+        revPrompt.style.display = "none";
+        revWrap.style.display = "none";
+
+        imgBox.innerHTML = st.imgUrl
+          ? `<img src="${esc(st.imgUrl)}" alt="Trạm thi" data-src="${esc(st.imgUrl)}" onclick="openLightbox(this.dataset.src)" style="cursor:zoom-in;">
+             <button class="img-action-btn img-btn-zoom" data-src="${esc(st.imgUrl)}" onclick="event.stopPropagation(); openLightbox(this.dataset.src)">🔍 Phóng to</button>`
+          : `<div class="no-img-placeholder">
+               <span class="emoji">🌿</span>
+               <div style="font-weight:700; color:#fff;">Vị thuốc chưa có ảnh</div>
+               <small>Đặc điểm: ${esc(st.herb.Dac_Diem_Nhan_Dien || "Chưa cập nhật")}</small>
+             </div>`;
+
+        document.getElementById("ansTen").value = st.answers.ten || "";
+        document.getElementById("ansTinhVi").value = st.answers.tinhVi || "";
+        document.getElementById("ansQuyKinh").value = st.answers.quyKinh || "";
+        document.getElementById("ansCongDung").value = st.answers.congDung || "";
+
+        // Ẩn/hiện từng ô theo mục đã tick & cập nhật thang điểm Cách A
+        const mapCards = [
+          { key: "ten", card: "cardAnsTen", tag: "ptTagTen" },
+          { key: "tinhVi", card: "cardAnsTinhVi", tag: "ptTagTinhVi" },
+          { key: "quyKinh", card: "cardAnsQuyKinh", tag: "ptTagQuyKinh" },
+          { key: "congDung", card: "cardAnsCongDung", tag: "ptTagCongDung" }
+        ];
+        mapCards.forEach(item => {
+          const active = st.weights[item.key] > 0;
+          const el = document.getElementById(item.card);
+          if (el) el.style.display = active ? "block" : "none";
+          const tagEl = document.getElementById(item.tag);
+          if (tagEl && active) tagEl.textContent = `${fmtPt(st.weights[item.key])} đ`;
+        });
+
+        if (t.style === "drill" && st.revealed) {
+          inputsWrap.style.display = "none";
+          revealBox.style.display = "block";
+          revealBox.innerHTML = renderSingleGradeCardHTML(st, t.index, true);
+          const isLast = t.index === t.stations.length - 1;
+          btnArea.innerHTML = `<button class="btn btn-primary" onclick="nextFromDrill()">${isLast ? "🏁 Xem tổng kết & Lưu" : "Trạm tiếp theo ➡️"}</button>`;
+        } else {
+          inputsWrap.style.display = "grid";
+          revealBox.style.display = "none";
+          if (t.style === "drill") {
+            btnArea.innerHTML = `<button class="btn btn-primary" onclick="revealDrillStation()">✅ Chấm trạm này</button>`;
+          } else {
+            const isLast = t.index === t.stations.length - 1;
+            btnArea.innerHTML = `<button class="btn btn-primary" onclick="advanceTestStation()">${isLast ? "🏁 Hoàn tất & Chấm điểm" : "Trạm tiếp theo ➡️"}</button>`;
+          }
         }
       }
 
@@ -3230,6 +3918,7 @@
       document.getElementById("testGrading").style.display = "none";
       document.getElementById("testSetup").style.display = "block";
       updateTestSliderLimits();
+      toggleDrillConfigUI();
     }
 
     function openGradingScreen() {
@@ -3250,31 +3939,162 @@
     }
 
     function critBtnText(val, max) {
-      const fmt = v => String(v).replace(".", ",");
-      if (val >= max - 0.001) return `✅ ${fmt(val)}/${fmt(max)}đ`;
-      if (val > 0) return `🟡 ${fmt(val)}/${fmt(max)}đ`;
-      return `❌ 0/${fmt(max)}đ`;
+      if (val >= max - 0.001) return `✅ ${fmtPt(val)}/${fmtPt(max)}đ`;
+      if (val > 0) return `🟡 ${fmtPt(val)}/${fmtPt(max)}đ`;
+      return `❌ 0/${fmtPt(max)}đ`;
     }
 
     function renderSingleGradeCardHTML(st, idx, inDrill = false) {
       const h = st.herb;
       const g = st.grade;
+      const w = st.weights;
       const tot = getStationTotal(st);
       const passed = tot >= 0.8;
+
+      if (st.mode === "reverse") {
+        const pickedId = String(st.answers.selectedImgId || "");
+        const letters = ["A", "B", "C", "D"];
+        const choicesHtml = (st.choices || []).map((opt, cIdx) => {
+          const isPicked = opt.id === pickedId;
+          const cls = opt.isCorrect ? "is-correct" : (isPicked ? "is-wrong" : "");
+          const tags = [];
+          if (opt.isCorrect) tags.push(`<span class="mcq-mini-tag ok">✅ Đáp án</span>`);
+          if (isPicked && !opt.isCorrect) tags.push(`<span class="mcq-mini-tag err">❌ Bạn chọn</span>`);
+          if (opt.isConfusable) tags.push(`<span class="mcq-mini-tag trap">⚠️ Dễ nhầm</span>`);
+          return `
+            <div class="mcq-reveal-item ${cls}">
+              <img src="${esc(opt.imgUrl)}" data-src="${esc(opt.imgUrl)}" onclick="openLightbox(this.dataset.src)" alt="${esc(opt.name)}">
+              <div class="mcq-reveal-meta">
+                <span class="mcq-reveal-name">${letters[cIdx] || (cIdx + 1)}. ${esc(opt.name)}</span>
+                ${tags.length ? `<div class="mcq-tag-row">${tags.join("")}</div>` : ""}
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        return `
+          <div class="grade-item" style="border-color:${passed ? '#6EE7B7' : '#FCA5A5'};">
+            <div class="grade-top">
+              <div style="flex:1; min-width:210px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+                  <div>
+                    <strong style="font-size:17px; color:var(--primary-dark);">Trạm ${idx + 1}: ${esc(h.Ten_Vi_Thuoc)}</strong>
+                    <span class="badge ${passed ? 'b-green' : 'b-red'}" style="margin-left:6px;">${fmtPt(tot)} / 1 đ</span>
+                  </div>
+                  <div style="display:flex; gap:6px;">
+                    <button class="btn btn-sm" style="background:var(--success-soft); color:#065F46;" onclick="overrideWholeStation(${idx}, true, ${inDrill})">✅ Đúng hết</button>
+                    <button class="btn btn-sm" style="background:var(--danger-soft); color:#991B1B;" onclick="overrideWholeStation(${idx}, false, ${inDrill})">❌ Chấm 0đ</button>
+                  </div>
+                </div>
+                <small style="color:var(--muted);">Đối chiếu 4 hình ảnh bên dưới (bấm ảnh để phóng to soi chi tiết)</small>
+              </div>
+            </div>
+
+            <div class="crit-grid">
+              ${w.ten > 0 ? `
+                <div class="crit-box ${critClass(g.ten, w.ten)}">
+                  <div class="crit-head">
+                    <span class="crit-title">1. Gõ Tên vị thuốc</span>
+                    <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'ten', ${inDrill})">${critBtnText(g.ten, w.ten)}</button>
+                  </div>
+                  <div class="crit-ans"><b>Bạn ghi:</b> ${esc(st.answers.ten || "(Trống)")}</div>
+                  <div class="crit-ans"><b>Đáp án:</b> ${esc(h.Ten_Vi_Thuoc)}</div>
+                  <div class="crit-note">${esc(g.tenNote)}</div>
+                </div>
+              ` : ""}
+
+              <div class="crit-box ${critClass(g.img, w.img)}">
+                <div class="crit-head">
+                  <span class="crit-title">${w.ten > 0 ? "2. Chọn ảnh mẫu vật" : "1. Chọn ảnh mẫu vật"}</span>
+                  <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'img', ${inDrill})">${critBtnText(g.img, w.img)}</button>
+                </div>
+                <div class="crit-ans"><b>Kết quả:</b> ${esc(g.imgNote)}</div>
+                <div class="crit-note">Bấm nút điểm phía trên nếu muốn tự điều chỉnh</div>
+              </div>
+            </div>
+
+            <div class="mcq-reveal-grid">${choicesHtml}</div>
+          </div>
+        `;
+      }
+
+      // CHẾ ĐỘ THI THẬT & HƯỚNG 1
+      let stepNum = 0;
+      const critCards = [];
+
+      if (w.ten > 0) {
+        stepNum++;
+        critCards.push(`
+          <div class="crit-box ${critClass(g.ten, w.ten)}">
+            <div class="crit-head">
+              <span class="crit-title">${stepNum}. Tên</span>
+              <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'ten', ${inDrill})">${critBtnText(g.ten, w.ten)}</button>
+            </div>
+            <div class="crit-ans"><b>Bạn ghi:</b> ${esc(st.answers.ten || "(Trống)")}</div>
+            <div class="crit-ans"><b>Đáp án:</b> ${esc(h.Ten_Vi_Thuoc)}</div>
+            <div class="crit-note">${esc(g.tenNote)}</div>
+          </div>
+        `);
+      }
+
+      if (w.tinhVi > 0) {
+        stepNum++;
+        critCards.push(`
+          <div class="crit-box ${critClass(g.tinhVi, w.tinhVi)}">
+            <div class="crit-head">
+              <span class="crit-title">${stepNum}. Tính - vị</span>
+              <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'tinhVi', ${inDrill})">${critBtnText(g.tinhVi, w.tinhVi)}</button>
+            </div>
+            <div class="crit-ans"><b>Bạn ghi:</b> ${esc(st.answers.tinhVi || "(Trống)")}</div>
+            <div class="crit-ans"><b>Đáp án:</b> ${esc(h.Tinh || "—")}, ${esc(h.Vi || "—")}</div>
+            <div class="crit-note">${esc(g.tvNote)}</div>
+          </div>
+        `);
+      }
+
+      if (w.quyKinh > 0) {
+        stepNum++;
+        critCards.push(`
+          <div class="crit-box ${critClass(g.quyKinh, w.quyKinh)}">
+            <div class="crit-head">
+              <span class="crit-title">${stepNum}. Quy kinh</span>
+              <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'quyKinh', ${inDrill})">${critBtnText(g.quyKinh, w.quyKinh)}</button>
+            </div>
+            <div class="crit-ans"><b>Bạn ghi:</b> ${esc(st.answers.quyKinh || "(Trống)")}</div>
+            <div class="crit-ans"><b>Đáp án:</b> ${esc(h.Quy_Kinh || "—")}</div>
+            <div class="crit-note">${esc(g.qkNote)}</div>
+          </div>
+        `);
+      }
+
+      if (w.congDung > 0) {
+        stepNum++;
+        critCards.push(`
+          <div class="crit-box ${critClass(g.congDung, w.congDung)}">
+            <div class="crit-head">
+              <span class="crit-title">${stepNum}. Công dụng</span>
+              <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'congDung', ${inDrill})">${critBtnText(g.congDung, w.congDung)}</button>
+            </div>
+            <div class="crit-ans"><b>Bạn ghi:</b> ${esc(st.answers.congDung || "(Trống)")}</div>
+            <div class="crit-ans"><b>Đáp án:</b> ${esc(h.Cong_Dung || "—")}</div>
+            <div class="crit-note">${esc(g.cdNote)}</div>
+          </div>
+        `);
+      }
 
       return `
         <div class="grade-item" style="border-color:${passed ? '#6EE7B7' : '#FCA5A5'};">
           <div class="grade-top">
             ${!inDrill ? (
               st.imgUrl
-                ? `<img class="grade-thumb" src="${esc(st.imgUrl)}" onclick="openLightbox('${esc(st.imgUrl)}')">`
+                ? `<img class="grade-thumb" src="${esc(st.imgUrl)}" data-src="${esc(st.imgUrl)}" onclick="openLightbox(this.dataset.src)">`
                 : `<div class="grade-thumb" style="display:grid;place-items:center;color:#fff;font-size:26px;">🌿</div>`
             ) : ""}
             <div style="flex:1; min-width:210px;">
               <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
                 <div>
                   <strong style="font-size:17px; color:var(--primary-dark);">Trạm ${idx + 1}: ${esc(h.Ten_Vi_Thuoc)}</strong>
-                  <span class="badge ${passed ? 'b-green' : 'b-red'}" style="margin-left:6px;">${String(tot).replace(".", ",")} / 1 đ</span>
+                  <span class="badge ${passed ? 'b-green' : 'b-red'}" style="margin-left:6px;">${fmtPt(tot)} / 1 đ</span>
                 </div>
                 <div style="display:flex; gap:6px;">
                   <button class="btn btn-sm" style="background:var(--success-soft); color:#065F46;" onclick="overrideWholeStation(${idx}, true, ${inDrill})">✅ Đúng hết</button>
@@ -3285,83 +4105,53 @@
             </div>
           </div>
 
-          <div class="crit-grid">
-            <div class="crit-box ${critClass(g.ten, 0.2)}">
-              <div class="crit-head">
-                <span class="crit-title">1. Tên</span>
-                <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'ten', ${inDrill})">${critBtnText(g.ten, 0.2)}</button>
-              </div>
-              <div class="crit-ans"><b>Bạn ghi:</b> ${esc(st.answers.ten || "(Trống)")}</div>
-              <div class="crit-ans"><b>Đáp án:</b> ${esc(h.Ten_Vi_Thuoc)}</div>
-              <div class="crit-note">${esc(g.tenNote)}</div>
-            </div>
-
-            <div class="crit-box ${critClass(g.tinhVi, 0.25)}">
-              <div class="crit-head">
-                <span class="crit-title">2. Tính - vị</span>
-                <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'tinhVi', ${inDrill})">${critBtnText(g.tinhVi, 0.25)}</button>
-              </div>
-              <div class="crit-ans"><b>Bạn ghi:</b> ${esc(st.answers.tinhVi || "(Trống)")}</div>
-              <div class="crit-ans"><b>Đáp án:</b> ${esc(h.Tinh || "—")}, ${esc(h.Vi || "—")}</div>
-              <div class="crit-note">${esc(g.tvNote)}</div>
-            </div>
-
-            <div class="crit-box ${critClass(g.quyKinh, 0.25)}">
-              <div class="crit-head">
-                <span class="crit-title">3. Quy kinh</span>
-                <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'quyKinh', ${inDrill})">${critBtnText(g.quyKinh, 0.25)}</button>
-              </div>
-              <div class="crit-ans"><b>Bạn ghi:</b> ${esc(st.answers.quyKinh || "(Trống)")}</div>
-              <div class="crit-ans"><b>Đáp án:</b> ${esc(h.Quy_Kinh || "—")}</div>
-              <div class="crit-note">${esc(g.qkNote)}</div>
-            </div>
-
-            <div class="crit-box ${critClass(g.congDung, 0.3)}">
-              <div class="crit-head">
-                <span class="crit-title">4. Công dụng</span>
-                <button class="crit-toggle-btn" onclick="cycleCrit(${idx}, 'congDung', ${inDrill})">${critBtnText(g.congDung, 0.3)}</button>
-              </div>
-              <div class="crit-ans"><b>Bạn ghi:</b> ${esc(st.answers.congDung || "(Trống)")}</div>
-              <div class="crit-ans"><b>Đáp án:</b> ${esc(h.Cong_Dung || "—")}</div>
-              <div class="crit-note">${esc(g.cdNote)}</div>
-            </div>
-          </div>
+          <div class="crit-grid">${critCards.join("")}</div>
         </div>
       `;
     }
 
     function cycleCrit(idx, field, inDrill) {
-      const g = state.test.stations[idx].grade;
-      const steps = {
-        ten: [0.2, 0],
-        tinhVi: [0.25, 0.125, 0],
-        quyKinh: [0.25, 0.125, 0],
-        congDung: [0.3, 0.15, 0]
-      }[field];
-      const curIdx = steps.findIndex(v => Math.abs(v - g[field]) < 0.001);
+      const st = state.test.stations[idx];
+      const g = st.grade;
+      const maxVal = st.weights[field] || 0;
+      if (maxVal <= 0) return;
+
+      const halfVal = Math.round((maxVal / 2) * 1000) / 1000;
+      const steps = (field === "ten" || field === "img") ? [maxVal, 0] : [maxVal, halfVal, 0];
+      const curIdx = steps.findIndex(v => Math.abs(v - g[field]) < 0.002);
       const nextVal = steps[(curIdx + 1) % steps.length];
       g[field] = nextVal;
-      const noteKey = field === "ten" ? "tenNote" : field === "tinhVi" ? "tvNote" : field === "quyKinh" ? "qkNote" : "cdNote";
-      g[noteKey] = "Đã tự điều chỉnh điểm";
+
+      const noteKeyMap = { ten: "tenNote", tinhVi: "tvNote", quyKinh: "qkNote", congDung: "cdNote", img: "imgNote" };
+      g[noteKeyMap[field]] = "Đã tự điều chỉnh điểm";
 
       if (inDrill) {
-        document.getElementById("testDrillReveal").innerHTML = renderSingleGradeCardHTML(state.test.stations[idx], idx, true);
+        document.getElementById("testDrillReveal").innerHTML = renderSingleGradeCardHTML(st, idx, true);
       } else {
         renderGradeList();
       }
     }
 
     function overrideWholeStation(idx, fullPass, inDrill) {
-      const g = state.test.stations[idx].grade;
-      g.ten = fullPass ? 0.2 : 0;
-      g.tinhVi = fullPass ? 0.25 : 0;
-      g.quyKinh = fullPass ? 0.25 : 0;
-      g.congDung = fullPass ? 0.3 : 0;
+      const st = state.test.stations[idx];
+      const g = st.grade;
+      const w = st.weights;
       const label = fullPass ? "Tự chấm Đúng hết" : "Tự chấm Sai (0đ)";
-      g.tenNote = g.tvNote = g.qkNote = g.cdNote = label;
+
+      if (st.mode === "reverse") {
+        g.ten = (w.ten > 0 && fullPass) ? w.ten : 0;
+        g.img = (w.img > 0 && fullPass) ? w.img : 0;
+        g.tenNote = g.imgNote = label;
+      } else {
+        g.ten = (w.ten > 0 && fullPass) ? w.ten : 0;
+        g.tinhVi = (w.tinhVi > 0 && fullPass) ? w.tinhVi : 0;
+        g.quyKinh = (w.quyKinh > 0 && fullPass) ? w.quyKinh : 0;
+        g.congDung = (w.congDung > 0 && fullPass) ? w.congDung : 0;
+        g.tenNote = g.tvNote = g.qkNote = g.cdNote = label;
+      }
 
       if (inDrill) {
-        document.getElementById("testDrillReveal").innerHTML = renderSingleGradeCardHTML(state.test.stations[idx], idx, true);
+        document.getElementById("testDrillReveal").innerHTML = renderSingleGradeCardHTML(st, idx, true);
       } else {
         renderGradeList();
       }
@@ -3374,6 +4164,16 @@
       const sumPts = stations.reduce((acc, st) => acc + getStationTotal(st), 0);
       const score100 = stations.length ? Math.round((sumPts / stations.length) * 1000) / 10 : 0;
       const passCount = stations.filter(st => getStationTotal(st) >= 0.8).length;
+
+      const banner = document.getElementById("gradeLeitnerBanner");
+      if (banner) {
+        if (!state.test.updateLeitner) {
+          banner.style.display = "block";
+          banner.innerHTML = `<div class="leitner-hint locked" style="margin-top:0;">🔒 Chế độ luyện rút gọn (${esc(state.test.modeDisplayLabel)}): vẫn lưu điểm vào Lịch sử, nhưng giữ nguyên cấp độ Đã thuộc / Chưa thuộc (Leitner).</div>`;
+        } else {
+          banner.style.display = "none";
+        }
+      }
 
       document.getElementById("gradeLiveScore").textContent = `${String(score100).replace(".", ",")} / 100 điểm`;
       document.getElementById("gradePassCount").textContent = `Đạt ${passCount}/${stations.length} trạm`;
@@ -3398,18 +4198,21 @@
       const payload = {
         mssv: state.user.mssv,
         hoTen: state.user.hoTen,
-        kieuThi: state.test.style === "exam" ? "Thi thật" : "Luyện tập",
+        kieuThi: state.test.modeDisplayLabel || (state.test.style === "exam" ? "Thi thật" : "Luyện tập"),
         nhomThuocLoc: state.test.groupLabel,
         soTram: stations.length,
         thoiGianMoiTramGiay: state.test.timePerStation,
         diemThang100: score100,
         soTramDat: passCount,
         danhSachCanOnLai: needReviewNames,
-        chiTietCham: stations.map(st => ({
-          idThuoc: st.herb.ID,
-          tenViThuoc: st.herb.Ten_Vi_Thuoc,
-          isPassed: getStationTotal(st) >= 0.8
-        }))
+        // Nếu luyện lẻ 1-2 mục (hoặc chỉ chọn ảnh), gửi mảng rỗng để Code.gs không làm nhảy cấp Leitner
+        chiTietCham: state.test.updateLeitner
+          ? stations.map(st => ({
+              idThuoc: st.herb.ID,
+              tenViThuoc: st.herb.Ten_Vi_Thuoc,
+              isPassed: getStationTotal(st) >= 0.8
+            }))
+          : []
       };
 
       try {
@@ -3417,11 +4220,14 @@
         if (!res || !res.success) throw new Error((res && res.message) || "Không lưu được bài test");
         state.test.saved = true;
         if (res.historyRecord) state.history.unshift(res.historyRecord);
-        if (Array.isArray(res.updatedProgress)) {
+        if (state.test.updateLeitner && Array.isArray(res.updatedProgress)) {
           res.updatedProgress.forEach(p => { state.progressMap[p.ID_Thuoc] = p; });
         }
         setSyncStatus("ok", "Đã lưu bài test");
-        showToast(`Đã lưu kết quả ${score100}/100 điểm lên Sheet!`);
+        showToast(state.test.updateLeitner
+          ? `Đã lưu kết quả ${score100}/100 điểm & cập nhật tiến độ!`
+          : `Đã lưu kết quả ${score100}/100 điểm (giữ nguyên tiến độ Leitner)!`
+        );
         renderGradeList();
       } catch (err) {
         btn.disabled = false;
